@@ -50,6 +50,9 @@ Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware
 // Single Listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
+// Show cart
+Route::get('/cart', [ListingController::class, 'cart']);
+
 
 
 

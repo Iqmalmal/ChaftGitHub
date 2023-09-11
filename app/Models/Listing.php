@@ -27,4 +27,11 @@ class Listing extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    // Relationship To Product Variant
+    public function productVariants(){
+        return $this->hasMany(ProductVariant::class, 'product_id');
+    }
+
 }

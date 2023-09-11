@@ -2,7 +2,7 @@
   <x-card class="p-10">
     <header>
       <h1 class="text-3xl text-center font-bold my-6 uppercase">
-        Manage Item
+        Manage Product
       </h1>
     </header>
 
@@ -12,7 +12,10 @@
         @foreach($listings as $listing)
         <tr class="border-gray-300">
           <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-            <a href="/listings/{{$listing->id}}"> {{$listing->title}} </a>
+            <div class="flex">
+            <img src="{{$listing->logo ? asset('storage/' . $listing->logo) : asset('/images/no-image.png')}}" alt="" class="w-20">
+            <a href="/listings/{{$listing->id}}" class="font-bold" style="font-size: 20px;"> {{$listing->product_name}} </a>
+            </div>
           </td>
           <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
             <a href="/listings/{{$listing->id}}/edit" class="text-blue-400 px-6 py-2 rounded-xl"><i
