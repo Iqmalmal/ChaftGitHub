@@ -17,6 +17,7 @@
           extend: {
             colors: {
               laravel: '#8EDAD8',
+              register: '#D1EAF0',
             },
           },
         },
