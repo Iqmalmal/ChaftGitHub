@@ -203,7 +203,7 @@ textarea {
   </style>
   <body style="background-color: #D1EAF0;">
     <h1 class="heading" id="heading">GMi Chäft Account</h1>
-    <div class="form">
+    <div class="form overflow-hidden" >
       
         <ul class="tab-group">
           <li class="tab active"><a href="#signup">Register</a></li>
@@ -256,18 +256,11 @@ textarea {
             
             <button type="submit" class="button button-block"> Register </button>
             
-            <div class="mt-8 text-white text-lg">
-                <p> Already have an account?
-                    <a href="/login" class="text-laravel">Login</a>
-                </p>
-            </div>
             </form>
 
           </div>
           
           <div id="login">   
-            <h1>Welcome!</h1>
-            
             <form action="/users/authenticate" method="post">
             @csrf
                 <div class="field-wrap mb-6">
@@ -345,7 +338,11 @@ textarea {
             
             $(target).fadeIn(600);
             
-          });</script>
+          });
+
+            
+          
+        </script>
   
       
       
