@@ -141,33 +141,47 @@ class ListingController extends Controller
 
     // Add to cart
     public function addToCart(Request $request) {
-        $user = auth()->user(); // Assuming you have a logged-in user and a product ID
+
+        // Validate the request
+        $request->validate([
+            'selected-variants' => 'required|array',
+            'selected-variants.*' => 'required|string',
+        ]);
+
+
+        $user = auth()->user();
         $productId = $request->input('listing-id');
         $productName = $request->input('listing-name');
         $price = $request->input('listing-price');
+        $variants = $request->input('selected-variants');
         $quantity = 1; 
+
+        // Serialize the variants to a string for comparison
+        $serializedVariants = implode(', ', $variants);
 
         // Check if the item already exists in the cart for the user
         $cartItem = ShoppingCart::where('user_id', $user->id)
             ->where('product_id', $productId)
+            ->where('variant', $serializedVariants)
             ->first();
 
         if ($cartItem) {
-            // Update the quantity if the item is already in the cart
-            $cartItem->quantity += $quantity;
-            $cartItem->save();
+            // Variants are the same, update quantity
+            $cartItem->increment('quantity', $quantity);
         } else {
-            // Create a new cart item if it doesn't exist
+            // Variants are different or the item doesn't exist, create a new cart item
             ShoppingCart::create([
                 'user_id' => $user->id,
                 'product_id' => $productId,
                 'product_name' => $productName,
                 'price' => $price,
                 'quantity' => $quantity,
+                'variant' => $serializedVariants,
             ]);
         }
 
         return back()->with('message', 'Added to cart!');
-
     }
+
+    
 }

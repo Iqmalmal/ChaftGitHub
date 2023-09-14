@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
+            $table->string('variant')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
