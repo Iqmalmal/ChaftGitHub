@@ -63,7 +63,12 @@
 
           <div class="border border-gray-200 w-full mb-5"></div>
           <div class=" flex gap-3 mb-7">
-            <button type="submit" class="bg-green-600 text-white rounded py-2 px-4 hover:bg-black"> Add to cart </button>
+            <form action="/addCart">
+              <input type="hidden" name="listing-id" value="{{$listing->id}}">
+              <input type="hidden" name="listing-name" value="{{$listing->product_name}}">
+              <input type="hidden" name="listing-price" value="{{$listing->price}}">
+              <button type="submit" class="bg-green-600 text-white rounded py-2 px-4 hover:bg-black"> Add to cart </button>
+            </form>
             <a href="mailto:{{$listing->email}}?subject=Chaft%3A%20{{$listing->product_name}}&body=Hi%2C%20is%20this%20still%20available%3F">
               <button type="submit" class="bg-blue-600 text-white rounded py-2 px-4 hover:bg-black"> Contact Seller </button>
             </a>

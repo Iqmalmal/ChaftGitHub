@@ -53,6 +53,9 @@ Route::get('/listings/{listing}', [ListingController::class, 'show']);
 // Show cart
 Route::get('/cart', [ListingController::class, 'cart']);
 
+// Add to cart
+Route::get('/addCart', [ListingController::class, 'addToCart']);
+
 
 
 

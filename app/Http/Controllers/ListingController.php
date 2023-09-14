@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\ProductVariant;
+use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -136,5 +137,37 @@ class ListingController extends Controller
     // Show cart
     public function cart() {
         return view('listings.cart');
+    }
+
+    // Add to cart
+    public function addToCart(Request $request) {
+        $user = auth()->user(); // Assuming you have a logged-in user and a product ID
+        $productId = $request->input('listing-id');
+        $productName = $request->input('listing-name');
+        $price = $request->input('listing-price');
+        $quantity = 1; 
+
+        // Check if the item already exists in the cart for the user
+        $cartItem = ShoppingCart::where('user_id', $user->id)
+            ->where('product_id', $productId)
+            ->first();
+
+        if ($cartItem) {
+            // Update the quantity if the item is already in the cart
+            $cartItem->quantity += $quantity;
+            $cartItem->save();
+        } else {
+            // Create a new cart item if it doesn't exist
+            ShoppingCart::create([
+                'user_id' => $user->id,
+                'product_id' => $productId,
+                'product_name' => $productName,
+                'price' => $price,
+                'quantity' => $quantity,
+            ]);
+        }
+
+        return back()->with('message', 'Added to cart!');
+
     }
 }
