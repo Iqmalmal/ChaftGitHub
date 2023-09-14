@@ -141,14 +141,6 @@ class ListingController extends Controller
 
     // Add to cart
     public function addToCart(Request $request) {
-
-        // Validate the request
-        $request->validate([
-            'selected-variants' => 'required|array',
-            'selected-variants.*' => 'required|string',
-        ]);
-
-
         $user = auth()->user();
         $productId = $request->input('listing-id');
         $productName = $request->input('listing-name');
