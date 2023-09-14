@@ -1,6 +1,13 @@
 <x-layout>
-  <x-card class="p-10 max-w-lg mx-auto mt-24">
-    <header class="text-center">
+  <div class="overflow-hidden">
+    <x-card class="p-10 max-w-4xl mx-auto mt-5 bg-register">
+      @include('users.new_register')
+    </x-card>
+  </div>
+</x-layout>
+
+
+<!-- <header class="text-center">
       <h2 class="text-2xl font-bold uppercase mb-1">Register</h2>
       <p class="mb-4">Create an account to Buy and Sell Item</p>
     </header>
@@ -61,6 +68,4 @@
           <a href="/login" class="text-laravel">Login</a>
         </p>
       </div>
-    </form>
-  </x-card>
-</x-layout>
+    </form> -->
