@@ -105,11 +105,11 @@
             margin-right: 15px;
         }
 
-        span {
+        /* span {
             font-size: 70px;
             position: relative;
             top: -5px;
-        }
+        } */
 
         .owl-carousel .item {
             border-radius: 20px;
