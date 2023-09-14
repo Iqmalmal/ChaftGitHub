@@ -17,7 +17,6 @@
           extend: {
             colors: {
               laravel: '#8EDAD8',
-              register: '#D1EAF0'
             },
           },
         },
@@ -52,7 +51,10 @@
       </li>
       @else
       <li>
-        <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register / Login</a>
+        <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a>
+      </li>
+      <li>
+        <a href="/login" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
       </li>
       @endauth
     </ul>
