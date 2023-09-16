@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->string('variant')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

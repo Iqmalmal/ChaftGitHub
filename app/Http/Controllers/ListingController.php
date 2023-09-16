@@ -134,9 +134,14 @@ class ListingController extends Controller
         return view('listings.manage', ['listings' => auth()->user()->listings]);
     }
 
+
+
+    /* SHOPPING CART */
+
+
     // Show cart
     public function cart() {
-        return view('listings.cart');
+        return view('listings.cart', ['cartItems' => auth()->user()->shoppingCart]);
     }
 
     // Add to cart
@@ -169,11 +174,36 @@ class ListingController extends Controller
                 'price' => $price,
                 'quantity' => $quantity,
                 'variant' => $serializedVariants,
+                'logo' => Listing::find($productId)->logo
             ]);
         }
 
         return back()->with('message', 'Added to cart!');
     }
 
-    
+    // Delete cart
+    /* public function destroyCart(ShoppingCart $shopping_cart) {
+        
+        $shopping_cart->delete();
+        return redirect('/cart')->with('message', 'Item has been removed from cart');
+    } */
+
+    // Remove an item from the shopping cart
+    public function destroyCart($id) {
+        $cartItem = ShoppingCart::find($id);
+
+        // Make sure logged in user is owner
+        if($cartItem->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
+        if (!$cartItem) {
+            return redirect('/cart')->with('error', 'Item not found in cart');
+        }
+
+        $cartItem->delete();
+
+        return redirect('/cart')->with('message', 'Item has been removed from cart');
+    }
+
 }

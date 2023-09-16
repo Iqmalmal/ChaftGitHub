@@ -46,4 +46,9 @@ class User extends Authenticatable
     public function listings() {
         return $this->hasMany(Listing::class, 'user_id');
     }
+
+    // Relationship With ShoppingCart
+    public function shoppingCart() {
+        return $this->hasMany(ShoppingCart::class, 'user_id');
+    }
 }
