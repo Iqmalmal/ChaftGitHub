@@ -181,13 +181,6 @@ class ListingController extends Controller
         return back()->with('message', 'Added to cart!');
     }
 
-    // Delete cart
-    /* public function destroyCart(ShoppingCart $shopping_cart) {
-        
-        $shopping_cart->delete();
-        return redirect('/cart')->with('message', 'Item has been removed from cart');
-    } */
-
     // Remove an item from the shopping cart
     public function destroyCart($id) {
         $cartItem = ShoppingCart::find($id);
