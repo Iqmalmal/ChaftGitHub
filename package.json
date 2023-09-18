@@ -1,12 +1,50 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "vite": "^4.0.0"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "axios": "^1.1.2",
+    "laravel-vite-plugin": "^0.7.2",
+    "vite": "^4.0.0"
+  },
+  "name": "chaft",
+  "description": "Chaft E-Commerce is an shopping platform for student and staff to sell anything within the GMI Community. User can sell any unwanted item they want for an extra cash or provide service of selling food and printing services.",
+  "version": "1.0.0",
+  "main": "vite.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "asynckit": "^0.4.0",
+    "delayed-stream": "^1.0.0",
+    "combined-stream": "^1.0.8",
+    "mime-db": "^1.52.0",
+    "follow-redirects": "^1.15.2",
+    "picocolors": "^1.0.0",
+    "mime-types": "^2.1.35",
+    "nanoid": "^3.3.6",
+    "picomatch": "^2.3.1",
+    "esbuild": "^0.18.20",
+    "rollup": "^3.29.2",
+    "proxy-from-env": "^1.1.0",
+    "postcss": "^8.4.29",
+    "source-map-js": "^1.0.2",
+    "vite-plugin-full-reload": "^1.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iqmalmal/ChaftGitHub.git"
+  },
+  "keywords": [
+    "12345"
+  ],
+  "author": "iqmal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iqmalmal/ChaftGitHub/issues"
+  },
+  "homepage": "https://github.com/Iqmalmal/ChaftGitHub#readme"
 }
