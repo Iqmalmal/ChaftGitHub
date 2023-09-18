@@ -21,14 +21,14 @@
 
             
             @php
-            $total = 0; <!--Initialize the total variable -->
+            $total = 0; //Initialize the total variable
             @endphp
             @unless($cartItems->isEmpty())
             @foreach($cartItems as $item)
             @php
-            <!-- Calculate the subtotal for the current item -->
+            //Calculate the subtotal for the current item
             $subtotal = $item->price * $item->quantity;
-            <!-- Add the subtotal to the total -->
+            //Add the subtotal to the total
             $total += $subtotal;
             @endphp
             <tr class="border-gray-300">
