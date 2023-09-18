@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\ProductVariant;
+use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -133,8 +134,69 @@ class ListingController extends Controller
         return view('listings.manage', ['listings' => auth()->user()->listings]);
     }
 
+
+
+    /* SHOPPING CART */
+
+
     // Show cart
     public function cart() {
-        return view('listings.cart');
+        return view('listings.cart', ['cartItems' => auth()->user()->shoppingCart]);
     }
+
+    // Add to cart
+    public function addToCart(Request $request) {
+        $user = auth()->user();
+        $productId = $request->input('listing-id');
+        $productName = $request->input('listing-name');
+        $price = $request->input('listing-price');
+        $variants = $request->input('selected-variants');
+        $quantity = 1; 
+
+        // Serialize the variants to a string for comparison
+        $serializedVariants = implode(', ', $variants);
+
+        // Check if the item already exists in the cart for the user
+        $cartItem = ShoppingCart::where('user_id', $user->id)
+            ->where('product_id', $productId)
+            ->where('variant', $serializedVariants)
+            ->first();
+
+        if ($cartItem) {
+            // Variants are the same, update quantity
+            $cartItem->increment('quantity', $quantity);
+        } else {
+            // Variants are different or the item doesn't exist, create a new cart item
+            ShoppingCart::create([
+                'user_id' => $user->id,
+                'product_id' => $productId,
+                'product_name' => $productName,
+                'price' => $price,
+                'quantity' => $quantity,
+                'variant' => $serializedVariants,
+                'logo' => Listing::find($productId)->logo
+            ]);
+        }
+
+        return back()->with('message', 'Added to cart!');
+    }
+
+    // Remove an item from the shopping cart
+    public function destroyCart($id) {
+        $cartItem = ShoppingCart::find($id);
+
+        // Make sure logged in user is owner
+        if($cartItem->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
+        if (!$cartItem) {
+            return redirect('/cart')->with('error', 'Item not found in cart');
+        }
+
+        $cartItem->delete();
+
+        return redirect('/cart')->with('message', 'Item has been removed from cart');
+    }
+
 }

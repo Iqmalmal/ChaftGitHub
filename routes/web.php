@@ -50,8 +50,16 @@ Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware
 // Single Listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
+/* SHOPPING CART */
+
 // Show cart
 Route::get('/cart', [ListingController::class, 'cart']);
+
+// Add to cart
+Route::get('/addCart', [ListingController::class, 'addToCart']);
+
+// Delete Listing
+Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])->middleware('auth');
 
 
 
