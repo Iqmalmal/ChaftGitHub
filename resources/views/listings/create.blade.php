@@ -113,7 +113,6 @@
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
               @enderror
             </div>
-
           </div>
 
 
@@ -223,7 +222,9 @@
           </div>
         </x-card>
       </div>
+      <!-- end product variant -->
 
+      
       <div class="mb-6">
         <label for="tags" class="inline-block text-lg mb-2">
           Tags (Comma Separated)
@@ -236,13 +237,24 @@
         @enderror
       </div>
 
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <label for="logo" class="inline-block text-lg mb-2">
           Product image
         </label>
         <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
 
         @error('logo')
+        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+        @enderror
+      </div> -->
+
+      <div class="mb-6">
+        <label for="images" class="inline-block text-lg mb-2">
+            Product Images
+        </label>
+        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="images[]" multiple />
+
+        @error('images')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
       </div>

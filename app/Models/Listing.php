@@ -34,4 +34,8 @@ class Listing extends Model
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
 
+    protected $casts = [
+        'images' => 'array',
+    ];
+
 }

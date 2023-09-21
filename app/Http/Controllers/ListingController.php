@@ -50,8 +50,15 @@ class ListingController extends Controller
             'description' => 'required'
         ]);
 
-        if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+    
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('images', 'public');
+                $imagePaths[] = $imagePath;
+            }
+    
+            $formFields['images'] = json_encode($imagePaths);
         }
 
         $formFields['user_id'] = auth()->id();
