@@ -8,7 +8,7 @@
     <form method="POST" action="/listings/{{$listing->id}}" enctype="multipart/form-data">
       @csrf
       @method('PUT')
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <label for="seller" class="inline-block text-lg mb-2">Seller</label>
         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="seller"
           value="{{$listing->seller}}" />
@@ -16,7 +16,7 @@
         @error('seller')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
-      </div>
+      </div> -->
 
       <div class="mb-6">
         <label for="product_name" class="inline-block text-lg mb-2">Product name</label>
@@ -38,7 +38,7 @@
         @enderror
       </div>
 
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <label for="email" class="inline-block text-lg mb-2">
           Contact Email
         </label>
@@ -47,7 +47,7 @@
         @error('email')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
-      </div>
+      </div> -->
 
       <div class="mb-6">
         <label for="price" class="inline-block text-lg mb-2">
@@ -238,15 +238,12 @@
       </div>
 
       <div class="mb-6">
-        <label for="logo" class="inline-block text-lg mb-2">
-          Product image
+        <label for="images" class="inline-block text-lg mb-2">
+            Product Images
         </label>
-        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
+        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="images[]" multiple />
 
-        <img class="w-48 mr-6 mb-6"
-          src="{{$listing->logo ? asset('storage/' . $listing->logo) : asset('/images/no-image.png')}}" alt="" />
-
-        @error('logo')
+        @error('images')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
       </div>

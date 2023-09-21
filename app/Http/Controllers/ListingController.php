@@ -42,10 +42,8 @@ class ListingController extends Controller
     public function store(Request $request) {
         $formFields = $request->validate([
             'product_name' => 'required',
-            'seller' => 'required',
             'location' => 'required',
             'price' => 'required',
-            'email' => ['required', 'email'],
             'tags' => 'required',
             'description' => 'required'
         ]);
@@ -62,8 +60,11 @@ class ListingController extends Controller
         }
 
         $formFields['user_id'] = auth()->id();
+        $formFields['seller'] = auth()->user()->name;
+        $formFields['email'] = auth()->user()->email;
 
         $listing = Listing::create($formFields);
+
 
         $listingId = $listing->id;
 
@@ -80,9 +81,6 @@ class ListingController extends Controller
             'stock_1' => 'nullable',
             'stock_2' => 'nullable',
             'stock_3' => 'nullable',
-            'image_1' => 'nullable',
-            'image_2' => 'nullable',
-            'image_3' => 'nullable',
         ]);
 
         $productVariantData['product_id'] = $listingId;
@@ -97,30 +95,37 @@ class ListingController extends Controller
     }
 
     // Update Listing Data
-    public function update(Request $request, Listing $listing) {
-        // Make sure logged in user is owner
-        if($listing->user_id != auth()->id()) {
-            abort(403, 'Unauthorized Action');
-        }
-        
-        $formFields = $request->validate([
-            'product_name' => 'required',
-            'seller' => 'required',
-            'location' => 'required',
-            'price' => 'required',
-            'email' => ['required', 'email'],
-            'tags' => 'required',
-            'description' => 'required'
-        ]);
-
-        if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
-        }
-
-        $listing->update($formFields);
-
-        return back()->with('message', 'Listing updated successfully!');
+public function update(Request $request, Listing $listing) {
+    // Make sure logged in user is the owner
+    if ($listing->user_id != auth()->id()) {
+        abort(403, 'Unauthorized Action');
     }
+
+    $formFields = $request->validate([
+        'product_name' => 'required',
+        'location' => 'required',
+        'price' => 'required',
+        'tags' => 'required',
+        'description' => 'required'
+    ]);
+
+    if ($request->hasFile('images')) {
+        $imagePaths = [];
+
+        foreach ($request->file('images') as $image) {
+            $imagePath = $image->store('images', 'public');
+            $imagePaths[] = $imagePath;
+        }
+
+        // Update the 'images' field with the new image paths
+        $formFields['images'] = json_encode($imagePaths);
+    }
+
+    $listing->update($formFields);
+
+    return back()->with('message', 'Listing updated successfully!');
+}
+
 
     // Delete Listing
     public function destroy(Listing $listing) {
@@ -134,6 +139,7 @@ class ListingController extends Controller
         }
         $listing->delete();
         return redirect('/')->with('message', 'Listing deleted successfully');
+        
     }
 
     // Manage Listings
@@ -181,7 +187,7 @@ class ListingController extends Controller
                 'price' => $price,
                 'quantity' => $quantity,
                 'variant' => $serializedVariants,
-                'logo' => Listing::find($productId)->logo
+                'images' => Listing::find($productId)->images
             ]);
         }
 

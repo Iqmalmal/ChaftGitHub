@@ -19,7 +19,7 @@
       <div class="owl-carousel owl-theme">
         @foreach (json_decode($listing->images) as $image)
         <div class="item">
-          <img style="max-height: 60vh; max-width: 60vh;" src="{{ asset('storage/' . $image) }}" alt="Product Image">
+          <img style="max-height: 50vh; max-width: 50vh;" class="w-auto ml-60" src="{{ asset('storage/' . $image) }}" alt="Product Image">
         </div>
         @endforeach
       </div>
@@ -118,6 +118,40 @@
               autoplayTimeout: 3000, // Autoplay interval in milliseconds
               autoplayHoverPause: true, // Pause on hover
             });
+          });
+        </script>
+
+<script>
+          const variantButtons = document.querySelectorAll('.variant-button');
+          const selectedVariantsInput = document.getElementById('selected-variants');
+
+          const selectedVariants = {};
+
+          variantButtons.forEach(button => {
+              button.addEventListener('click', () => {
+                  const variantType = button.getAttribute('data-variant-type');
+                  const variantValue = button.textContent; // Get the text content of the button
+
+                  // Deselect the previously selected button in the same variant group, if any
+                  if (selectedVariants[variantType]) {
+                      selectedVariants[variantType].classList.remove('bg-gray-400');
+                  }
+
+                  // Toggle the selection state of the clicked button
+                  if (selectedVariants[variantType] === button) {
+                      // Same button clicked again, so deselect it
+                      delete selectedVariants[variantType];
+                      button.classList.remove('bg-gray-400');
+                  } else {
+                      // Different button clicked, so select it
+                      selectedVariants[variantType] = button;
+                      button.classList.add('bg-gray-400');
+                  }
+
+                  // Update the selected variants in the hidden input
+                  const selectedValues = Object.values(selectedVariants).map(btn => btn.textContent);
+                  selectedVariantsInput.value = selectedValues.join(', ');
+              });
           });
         </script>
       </x-card>

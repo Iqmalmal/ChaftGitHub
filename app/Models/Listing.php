@@ -38,4 +38,6 @@ class Listing extends Model
         'images' => 'array',
     ];
 
+    
+
 }

@@ -10,4 +10,8 @@ class ProductVariant extends Model
     use HasFactory;
 
     protected $table = 'product_variant';
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 }

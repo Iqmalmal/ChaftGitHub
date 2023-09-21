@@ -13,7 +13,9 @@
         <tr class="border-gray-300">
           <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
             <div class="flex">
-            <img src="{{$listing->logo ? asset('storage/' . $listing->logo) : asset('/images/no-image.png')}}" alt="" class="w-20">
+            @if (!empty($listing->images))
+              <img class="hidden w-20 mr-6 md:block" src="{{ asset('storage/' . json_decode($listing->images)[0]) }}" alt="Product Image">
+            @endif
             <a href="/listings/{{$listing->id}}" class="font-bold" style="font-size: 20px;"> {{$listing->product_name}} </a>
             </div>
           </td>
