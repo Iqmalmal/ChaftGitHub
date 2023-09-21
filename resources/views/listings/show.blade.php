@@ -11,17 +11,27 @@
         margin: 0; /* Remove any margin */
         padding: 0; /* Remove any padding */
     }
+
+   /*  .owl-carousel .owl-stage-outer {
+        position: sticky;
+        top: 0%;
+        margin-bottom: 80%;
+        margin-top: 15%;
+        z-index: -1;
+    } */
   </style>
 
   <a href="/" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Back</a>
   <div class="flex mx-4 items-center justify-center">
     <div class="w-1/2 p-4">
-      <div class="owl-carousel owl-theme">
-        @foreach (json_decode($listing->images) as $image)
-        <div class="item">
-          <img style="max-height: 50vh; max-width: 50vh;" class="w-auto ml-60" src="{{ asset('storage/' . $image) }}" alt="Product Image">
+      <div class="owl-container">
+        <div class="owl-carousel owl-theme">
+          @foreach (json_decode($listing->images) as $image)
+          <div class="item">
+            <img style="max-height: 50vh; max-width: 50vh;" class="w-auto ml-60" src="{{ asset('storage/' . $image) }}" alt="Product Image">
+          </div>
+          @endforeach
         </div>
-        @endforeach
       </div>
     </div>
     <div class="w-1/2 p-4 mr-60">
