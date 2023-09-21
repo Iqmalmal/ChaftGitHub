@@ -102,7 +102,8 @@
           <div>
             <h3 class="text-3xl font-bold mb-4">Job Description</h3>
             <div class="text-lg space-y-6">
-              {{$listing->description}}
+            {!! nl2br(e($listing->description)) !!}
+
             </div>
           </div>
         </div>
