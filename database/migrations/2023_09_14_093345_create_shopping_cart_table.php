@@ -19,11 +19,11 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->string('variant')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('images')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('product_id')->references('id')->on('listings');
+            $table->foreign('product_id')->references('id')->on('listings')->onDelete('cascade');
         });
     }
 

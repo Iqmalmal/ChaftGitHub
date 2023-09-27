@@ -7,7 +7,7 @@
 
     <form method="POST" action="/listings" enctype="multipart/form-data">
       @csrf
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <label for="seller" class="inline-block text-lg mb-2">Seller Name</label>
         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="seller" placeholder="Example: John Doe"
           value="{{old('seller')}}" />
@@ -15,10 +15,10 @@
         @error('seller')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
-      </div>
+      </div> -->
 
       <div class="mb-6">
-        <label for="product_name" class="inline-block text-lg mb-2">Item name</label>
+        <label for="product_name" class="inline-block text-lg mb-2">Product name</label>
         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="product_name"
           placeholder="Example: Hotwheel, Cover set, Voltbar" value="{{old('product_name')}}" />
 
@@ -37,7 +37,7 @@
         @enderror
       </div>
 
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <label for="email" class="inline-block text-lg mb-2">
           Contact Email
         </label>
@@ -46,7 +46,7 @@
         @error('email')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
-      </div>
+      </div> -->
 
       <div class="mb-6">
         <label for="price" class="inline-block text-lg mb-2">
@@ -113,7 +113,6 @@
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
               @enderror
             </div>
-
           </div>
 
 
@@ -223,7 +222,9 @@
           </div>
         </x-card>
       </div>
+      <!-- end product variant -->
 
+      
       <div class="mb-6">
         <label for="tags" class="inline-block text-lg mb-2">
           Tags (Comma Separated)
@@ -237,12 +238,12 @@
       </div>
 
       <div class="mb-6">
-        <label for="logo" class="inline-block text-lg mb-2">
-          Product image
+        <label for="images" class="inline-block text-lg mb-2">
+            Product Images
         </label>
-        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
+        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="images[]" multiple />
 
-        @error('logo')
+        @error('images')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
       </div>

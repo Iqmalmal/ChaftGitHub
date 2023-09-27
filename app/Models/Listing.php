@@ -17,8 +17,7 @@ class Listing extends Model
         }
 
         if($filters['search'] ?? false) {
-            $query->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('description', 'like', '%' . request('search') . '%')
+            $query->where('product_name', 'like', '%' . request('search') . '%')
                 ->orWhere('tags', 'like', '%' . request('search') . '%');
         }
     }
@@ -33,5 +32,11 @@ class Listing extends Model
     public function productVariants(){
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
+
+    protected $casts = [
+        'images' => 'array',
+    ];
+
+    
 
 }
