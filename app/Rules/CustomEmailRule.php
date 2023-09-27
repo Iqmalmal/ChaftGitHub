@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Rule;
 
 class CustomEmailRule implements Rule
 {
