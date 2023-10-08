@@ -57,7 +57,7 @@ class ListingController extends Controller
             foreach ($request->file('images') as $image) {
                 $imagePath = $image->getClientOriginalName();
                 $image_resize = ImageManagerStatic::make($image->getRealPath());
-                $image_resize->resize(300, 300);
+                $image_resize->resize(1024, 1024);
                 $imagePath = $image->store('images', 'public');
                 $imagePaths[] = $imagePath;
             }
@@ -101,7 +101,7 @@ class ListingController extends Controller
     }
 
     // Update Listing Data
-public function update(Request $request, Listing $listing) {
+    public function update(Request $request, Listing $listing) {
     // Make sure logged in user is the owner
     if ($listing->user_id != auth()->id()) {
         abort(403, 'Unauthorized Action');
@@ -121,7 +121,7 @@ public function update(Request $request, Listing $listing) {
         foreach ($request->file('images') as $image) {
             $imagePath = $image->getClientOriginalName();
             $image_resize = ImageManagerStatic::make($image->getRealPath());
-            $image_resize->resize(300, 300);
+            $image_resize->resize(1024, 1024);
             $imagePath = $image->store('images', 'public');
             $imagePaths[] = $imagePath;
         }

@@ -142,6 +142,7 @@
       </div>
     </div>
 
+    <x-card style="max-width: 75%; max-height: 800px; float: left; margin">
       <div class="details">
         <h2 class="product-brand"><b>{{$listing->product_name}}</b></h2>
         <p class="product-short-des">{{$listing->seller}}</p>
@@ -207,7 +208,7 @@
           </div>
         </div>
 
-        <div class="border border-gray-200 w-full mb-5"></div>
+        
         <div class="flex gap-3 mb-7">
 
           
@@ -217,11 +218,12 @@
             <input type="hidden" name="listing-price" value="{{ $listing->price }}">
             <input type="hidden" name="selected-variants[]" id="selected-variants" value="" multiple>
 
-            <button type="submit" class="bg-green-600 text-white rounded w-48 h-5 py-2 px-4 hover:bg-black">Add to cart</button>
+            <button type="submit" class="bg-green-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Add to cart</button>
           </form>
 
         <button class="btn">add to wishlist</button>
       </div>
+    </x-card>
   </section>
 
   <section class="detail-des">
