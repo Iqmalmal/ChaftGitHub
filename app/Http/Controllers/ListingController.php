@@ -119,6 +119,9 @@ public function update(Request $request, Listing $listing) {
         $imagePaths = [];
 
         foreach ($request->file('images') as $image) {
+            $imagePath = $image->getClientOriginalName();
+            $image_resize = ImageManagerStatic::make($image->getRealPath());
+            $image_resize->resize(300, 300);
             $imagePath = $image->store('images', 'public');
             $imagePaths[] = $imagePath;
         }

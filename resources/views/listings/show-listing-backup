@@ -54,44 +54,54 @@
             <i class="fa-solid fa-location-dot"></i> {{$listing->location}}
           </div>
 
-          <!-- product variants menu -->
+          <form action="/addCart">
+            @csrf
           <div class="mb-5">
             <h5 class="text-2xl font-bold mb-5">Product Variants</h5>
-            <div class="text-lg space-y-6">
+            <div class=" inline-block text-lg space-y-6"></div>
               @if ($productVariantData->isNotEmpty())
-
-              @if (!empty($productVariantData->first()->colour_1))
-              <!-- product variant 1 -->
-              <div class="flex gap-3">
-                <p><b>Variant</b></p>
-                @foreach([$productVariantData->first()->colour_1, $productVariantData->first()->colour_2, $productVariantData->first()->colour_3] as $color)
-                <button type="button" class="variant-button bg-gray-200 text-black rounded py-2 px-4" data-variant-type="color" value="{{ $color }}">{{ $color }}</button>
-                @endforeach
+              <span>Colour:</span>
+              <div>
+                <select name="variant-select" id="variant-colour">
+                  @foreach ($productVariantData as $variant)
+                    <option value="-">-</option>
+                    @foreach([$productVariantData->first()->colour_1, $productVariantData->first()->colour_2, $productVariantData->first()->colour_3] as $color)
+                    <option value="{{$color}}">{{$color}}</option>
+                    @endforeach
+                  @endforeach
+                </select>
               </div>
-              @endif
-
-              @if (!empty($productVariantData->first()->size_1))
-              <!-- product variant 2 -->
-              <div class="flex gap-3">
-                <p><b>Size</b></p>
-                @foreach([$productVariantData->first()->size_1, $productVariantData->first()->size_2, $productVariantData->first()->size_3] as $size)
-                <button type="button" class="variant-button bg-gray-200 text-black rounded py-2 px-4" data-variant-type="size" value="{{ $size }}">{{ $size }}</button>
-                @endforeach
+              <br>
+              <span>Size:</span>
+              <div>
+                <select name="variant-select" id="variant-size">
+                  @foreach ($productVariantData as $variant)
+                    <option value="-">-</option>
+                    @foreach([$productVariantData->first()->size_1, $productVariantData->first()->size_2, $productVariantData->first()->size_3] as $size)
+                    <option value="{{$size}}">{{$size}}</option>
+                    @endforeach
+                  @endforeach
+                </select>
               </div>
-              @endif
-
-              @if (!empty($productVariantData->first()->capacity_1))
-              <!-- product variant 3 -->
-              <div class="flex gap-3">
-                <p><b>Capacity</b></p>
-                @foreach([$productVariantData->first()->capacity_1, $productVariantData->first()->capacity_2, $productVariantData->first()->capacity_3] as $capacity)
-                <button type="button" class="variant-button bg-gray-200 text-black rounded py-2 px-4" data-variant-type="capacity" value="{{ $capacity }}">{{ $capacity }}</button>
-                @endforeach
+              <br>
+              <span>Capacity:</span>
+              <div>
+                
+                <select name="variant-select" id="variant-capacity">
+                  @foreach ($productVariantData as $variant)
+                    <option value="-">-</option>
+                    @if (!empty($productVariantData->first()->capacity_1))
+                      @foreach([$productVariantData->first()->capacity_1, $productVariantData->first()->capacity_2, $productVariantData->first()->capacity_3] as $capacity)
+                      <option value="{{$capacity}}">{{$capacity}}</option>
+                      @endforeach
+                    @endif
+                  @endforeach
+                </select>
+                
               </div>
-              @endif
-              <!-- working code -->
+
               @else
-              <p>No product variants available for this listing.</p>
+                <span> empty </span>
               @endif
             </div>
           </div>
@@ -99,8 +109,7 @@
           <div class="border border-gray-200 w-full mb-5"></div>
           <div class="flex gap-3 mb-7">
 
-            <form action="/addCart">
-              @csrf
+            
 
               <input type="hidden" name="listing-id" value="{{ $listing->id }}">
               <input type="hidden" name="listing-name" value="{{ $listing->product_name }}">
@@ -110,9 +119,18 @@
               <button type="submit" class="bg-green-600 text-white rounded py-2 px-4 hover:bg-black">Add to cart</button>
             </form>
 
-            <a href="mailto:{{$listing->email}}?subject=Chaft%3A%20{{$listing->product_name}}&body=Hi%2C%20is%20this%20still%20available%3F">
+            @if (Auth::check())
+              <a href="mailto:{{$listing->email}}?subject=Chaft%3A%20{{$listing->product_name}}&body=Hi%2C%20is%20this%20still%20available%3F">
+                <button type="submit" class="bg-blue-600 text-white rounded py-2 px-4 hover:bg-black"> Contact Seller </button>
+              </a>
+            @else
+              <a href="/register">
+                <button type="submit" class="bg-blue-600 text-white rounded py-2 px-4 hover:bg-black"> Contact Seller </button>
+              </a>
+            @endif
+            {{-- <a href="mailto:{{$listing->email}}?subject=Chaft%3A%20{{$listing->product_name}}&body=Hi%2C%20is%20this%20still%20available%3F">
               <button type="submit" class="bg-blue-600 text-white rounded py-2 px-4 hover:bg-black"> Contact Seller </button>
-            </a>
+            </a> --}}
           </div>
           <div class="border border-gray-200 w-full mb-6"></div>
           <div>
@@ -139,38 +157,21 @@
           });
         </script>
 
-<script>
-          const variantButtons = document.querySelectorAll('.variant-button');
+        <script>
+
           const selectedVariantsInput = document.getElementById('selected-variants');
 
-          const selectedVariants = {};
+          $(document).ready(function() {
+            $('#variant-colour, #variant-size, #variant-capacity').change(function() {
+                var selectedVariants = [];
+                selectedVariants.push($('#variant-colour').val());
+                selectedVariants.push($('#variant-size').val());
+                selectedVariants.push($('#variant-capacity').val());
 
-          variantButtons.forEach(button => {
-              button.addEventListener('click', () => {
-                  const variantType = button.getAttribute('data-variant-type');
-                  const variantValue = button.textContent; // Get the text content of the button
-
-                  // Deselect the previously selected button in the same variant group, if any
-                  if (selectedVariants[variantType]) {
-                      selectedVariants[variantType].classList.remove('bg-gray-400');
-                  }
-
-                  // Toggle the selection state of the clicked button
-                  if (selectedVariants[variantType] === button) {
-                      // Same button clicked again, so deselect it
-                      delete selectedVariants[variantType];
-                      button.classList.remove('bg-gray-400');
-                  } else {
-                      // Different button clicked, so select it
-                      selectedVariants[variantType] = button;
-                      button.classList.add('bg-gray-400');
-                  }
-
-                  // Update the selected variants in the hidden input
-                  const selectedValues = Object.values(selectedVariants).map(btn => btn.textContent);
-                  selectedVariantsInput.value = selectedValues.join(', ');
-              });
-          });
+                console.log(selectedVariants); // This will log the array to the console
+                selectedVariantsInput.value = selectedVariants.join(', ');
+            });
+        });
         </script>
       </x-card>
     </div>
