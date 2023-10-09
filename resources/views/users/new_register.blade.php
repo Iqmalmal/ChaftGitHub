@@ -218,7 +218,7 @@ textarea {
 
             <div class="field-wrap mb-6">
                 <label for="name" class="inline-block text-2g mb-2"> Name <span class="req">*</span></label>
-                <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"/>
+                <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name" value="{{old('name')}}" />
 
                 @error('name')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -228,7 +228,7 @@ textarea {
   
             <div class="field-wrap mb-6">
                 <label for="email" class="inline-block text-2g mb-2"> Email <span class="req">*</span></label>
-                <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email" />
+                <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email" value="{{old('email')}}" />
 
                 @error('email')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -265,7 +265,7 @@ textarea {
             @csrf
                 <div class="field-wrap mb-6">
                     <label for="email" class="inline-block text-2g mb-2"> Email <span class="req">*</span></label>
-                    <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email"/>
+                    <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email" value="{{old('email')}}" />
 
                     @error('email')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -275,7 +275,7 @@ textarea {
             
                 <div class="field-wrap mb-6">
                     <label for="password" class="inline-block text-2g mb-2"> Password <span class="req">*</span></label>
-                    <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password" />
+                    <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password" value="{{old('password')}}" />
 
                     @error('password')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>

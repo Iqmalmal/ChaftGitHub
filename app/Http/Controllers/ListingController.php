@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\ProductVariant;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
-use App\Models\ProductVariant;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class ListingController extends Controller
 {
@@ -47,7 +45,6 @@ class ListingController extends Controller
             'location' => 'required',
             'price' => 'required',
             'tags' => 'required',
-            'images' => 'required',
             'description' => 'required'
         ]);
 
@@ -98,7 +95,7 @@ class ListingController extends Controller
     }
 
     // Update Listing Data
-    public function update(Request $request, Listing $listing) {
+public function update(Request $request, Listing $listing) {
     // Make sure logged in user is the owner
     if ($listing->user_id != auth()->id()) {
         abort(403, 'Unauthorized Action');
@@ -152,6 +149,13 @@ class ListingController extends Controller
 
 
     /* SHOPPING CART */
+
+
+    // Show cart
+    public function cart() {
+        return view('listings.cart', ['cartItems' => auth()->user()->shoppingCart]);
+    }
+
     // Add to cart
     public function addToCart(Request $request) {
         $user = auth()->user();
@@ -189,13 +193,6 @@ class ListingController extends Controller
         return back()->with('message', 'Added to cart!');
     }
 
-    // Show cart
-    public function cart() {
-        return view('listings.cart', ['cartItems' => auth()->user()->shoppingCart]);
-    }
-
-    
-
     // Remove an item from the shopping cart
     public function destroyCart($id) {
         $cartItem = ShoppingCart::find($id);
@@ -213,7 +210,5 @@ class ListingController extends Controller
 
         return redirect('/cart')->with('message', 'Item has been removed from cart');
     }
-
-    
 
 }
