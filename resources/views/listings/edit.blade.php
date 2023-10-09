@@ -72,7 +72,7 @@
                 Variant 1
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="colour_1" placeholder="Red"
-                value="{{old('colour_1')}}" />
+                value="{{$productVariantData->colour_1}}" />
 
               @error('colour_1')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -84,7 +84,7 @@
                 Size 1
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="size_1" placeholder="S"
-                value="{{old('size_1')}}" />
+                value="{{$productVariantData->size_2}}" />
 
               @error('size_1')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -96,7 +96,7 @@
                 Capacity 1
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="capacity_1" placeholder="1"
-                value="{{old('capacity_1')}}" />
+                value="{{$productVariantData->capacity_1}}" />
 
               @error('capacity_1')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -108,7 +108,7 @@
                 Stock 1
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock_1" placeholder="10"
-                value="{{old('stock_1')}}" />
+                value="{{$productVariantData->stock_1}}" />
 
               @error('stock_1')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -126,7 +126,7 @@
                 Variant 2
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="colour_2" placeholder="Blue"
-                value="{{old('colour_2')}}" />
+                value="{{$productVariantData->colour_2}}" />
 
               @error('colour_2')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -138,7 +138,7 @@
                 Size 2
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="size_2" placeholder="M"
-                value="{{old('size_2')}}" />
+                value="{{$productVariantData->size_2}}" />
 
               @error('size_2')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -150,7 +150,7 @@
                 Capacity 2
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="capacity_2" placeholder="2"
-                value="{{old('capacity_2')}}" />
+                value="{{$productVariantData->capacity_2}}" />
 
               @error('capacity_2')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -162,7 +162,7 @@
                 Stock 2
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock_2" placeholder="20"
-                value="{{old('stock_2')}}" />
+                value="{{$productVariantData->stock_2}}" />
 
               @error('stock_2')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -178,8 +178,7 @@
               <label for="colour_3" class="inline-block text-lg mb-2">
                 Variant 3
               </label>
-              <input type="text" class="border border-gray-200 rounded p-2 w-full" name="colour_3" placeholder="Green"
-                value="{{old('colour_3')}}" />
+              <input type="text" class="border border-gray-200 rounded p-2 w-full" name="colour_3" placeholder="Green" value="{{$productVariantData->colour_3}}" />
 
               @error('colour_3')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -191,7 +190,7 @@
                 Variant 3
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="size_3" placeholder="L"
-                value="{{old('size_3')}}" />
+                value="{{$productVariantData->size_3}}" />
 
               @error('size_3')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -203,7 +202,7 @@
                 Capacity 3
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="capacity_3" placeholder="3"
-                value="{{old('capacity_3')}}" />
+                value="{{$productVariantData->capacity_3}}" />
 
               @error('capacity_3')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -215,7 +214,7 @@
                 Stock 3
               </label>
               <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock_3" placeholder="30"
-                value="{{old('stock_3')}}" />
+                value="{{$productVariantData->stock_2}}" />
 
               @error('stock_3')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>

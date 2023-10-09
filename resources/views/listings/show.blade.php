@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <x-card style="max-width: 75%; max-height: 800px; float: left; margin">
+    <x-card style=" max-height: 600px; float: left; margin-right: 400px; width: 900px;">
       <div class="details">
         <h2 class="product-brand"><b>{{$listing->product_name}}</b></h2>
         <p class="product-short-des">{{$listing->seller}}</p>

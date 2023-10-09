@@ -91,11 +91,17 @@ class ListingController extends Controller
 
     // Show Edit Form
     public function edit(Listing $listing) {
-        return view('listings.edit', ['listing' => $listing]);
+
+        $productVariantData = $listing->productVariants->first();
+
+        return view('listings.edit', [
+            'listing' => $listing,
+            'productVariantData' => $productVariantData,
+        ]);
     }
 
     // Update Listing Data
-public function update(Request $request, Listing $listing) {
+    public function update(Request $request, Listing $listing) {
     // Make sure logged in user is the owner
     if ($listing->user_id != auth()->id()) {
         abort(403, 'Unauthorized Action');
@@ -121,6 +127,24 @@ public function update(Request $request, Listing $listing) {
     }
 
     $listing->update($formFields);
+
+    $productVariantData = $request->validate([
+        'colour_1' => 'nullable',
+        'colour_2' => 'nullable',
+        'colour_3' => 'nullable',
+        'size_1' => 'nullable',
+        'size_2' => 'nullable',
+        'size_3' => 'nullable',
+        'capacity_1' => 'nullable',
+        'capacity_2' => 'nullable',
+        'capacity_3' => 'nullable',
+        'stock_1' => 'nullable',
+        'stock_2' => 'nullable',
+        'stock_3' => 'nullable',
+    ]);
+
+    $listing->productVariants()->update($productVariantData);
+
 
     return back()->with('message', 'Listing updated successfully!');
 }
