@@ -55,9 +55,6 @@ class ListingController extends Controller
             $imagePaths = [];
     
             foreach ($request->file('images') as $image) {
-                $imagePath = $image->getClientOriginalName();
-                $image_resize = ImageManagerStatic::make($image->getRealPath());
-                $image_resize->resize(1024, 1024);
                 $imagePath = $image->store('images', 'public');
                 $imagePaths[] = $imagePath;
             }
@@ -119,14 +116,10 @@ class ListingController extends Controller
         $imagePaths = [];
 
         foreach ($request->file('images') as $image) {
-            $imagePath = $image->getClientOriginalName();
-            $image_resize = ImageManagerStatic::make($image->getRealPath());
-            $image_resize->resize(1024, 1024);
             $imagePath = $image->store('images', 'public');
             $imagePaths[] = $imagePath;
         }
 
-        // Update the 'images' field with the new image paths
         $formFields['images'] = json_encode($imagePaths);
     }
 
