@@ -8,6 +8,10 @@
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 
+    <!-- Include Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
     <style>
         body {
             scroll-behavior: smooth;
@@ -233,8 +237,8 @@
 <body>
     <h2 class="font-bold">CATEGORIES</h2>
 
-    <div class="owl-slider">
-        <div id="carousel" class="owl-carousel">
+    <div class="owl-container">
+        <div class="owl-carousel owl-theme">
             <div class="item">
                 <img src="images/gadgets.jpeg" class="w-1/2" alt="1000X1000">
                 <div class="image-text" style="font-size: 1.5rem;">Mobile</div>
@@ -261,35 +265,26 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-        jQuery(document).ready(function($) {
-            $("#carousel").owlCarousel({
-                loop: true,
-                margin: 20,
-                responsiveClass: true,
-                autoHeight: true,
-                autoplay: false,
-                nav: false,
-                dots: false,
-                navText: [],
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1024: {
-                        items: 4
-                    },
-                    1366: {
-                        items: 4
-                    }
-                }
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+            items: 4, // Number of items to display
+            loop: true, // Enable looping
+            autoplay: true, // Enable autoplay
+            autoplayTimeout: 3000, // Autoplay interval in milliseconds
+            autoplayHoverPause: true, // Pause on hover
+            dots: false, // Disable dots
+            margin: 30, // Spacing between items (in px)
             });
         });
     </script>
+
+
+
 </body>
 </html>
+

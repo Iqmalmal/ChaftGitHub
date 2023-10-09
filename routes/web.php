@@ -56,7 +56,7 @@ Route::get('/listings/{listing}', [ListingController::class, 'show']);
 Route::get('/cart', [ListingController::class, 'cart']);
 
 // Add to cart
-Route::get('/addCart', [ListingController::class, 'addToCart']);
+Route::get('/addCart', [ListingController::class, 'addToCart'])->middleware('auth');
 
 // Delete Listing
 Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])->middleware('auth');
@@ -66,7 +66,7 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 
 
 // Show Register/Create Form
-Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+Route::get('/register', [UserController::class, 'create'])->name('create')->middleware('guest');
 
 // Create New User
 Route::post('/users', [UserController::class, 'store']);
