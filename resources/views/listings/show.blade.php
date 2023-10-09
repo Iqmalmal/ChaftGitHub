@@ -246,4 +246,21 @@
       });
     });
   </script>
+
+  <script>
+
+    const selectedVariantsInput = document.getElementById('selected-variants');
+
+    $(document).ready(function() {
+      $('#variant-colour, #variant-size, #variant-capacity').change(function() {
+          var selectedVariants = [];
+          selectedVariants.push($('#variant-colour').val());
+          selectedVariants.push($('#variant-size').val());
+          selectedVariants.push($('#variant-capacity').val());
+
+          console.log(selectedVariants); // This will log the array to the console
+          selectedVariantsInput.value = selectedVariants.join(', ');
+      });
+  });
+  </script>
 </x-layout>
