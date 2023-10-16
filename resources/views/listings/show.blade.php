@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <x-card style="max-width: 75%; max-height: 800px; float: left; margin">
+    <x-card style=" max-height: 600px; float: left; margin-right: 400px; width: 900px;">
       <div class="details">
         <h2 class="product-brand"><b>{{$listing->product_name}}</b></h2>
         <p class="product-short-des">{{$listing->seller}}</p>
@@ -220,8 +220,6 @@
 
             <button type="submit" class="bg-green-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Add to cart</button>
           </form>
-
-        <button class="btn">add to wishlist</button>
       </div>
     </x-card>
   </section>

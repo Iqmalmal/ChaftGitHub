@@ -211,4 +211,13 @@ public function update(Request $request, Listing $listing) {
         return redirect('/cart')->with('message', 'Item has been removed from cart');
     }
 
+
+
+
+    //Payment
+
+    //Show checkout page
+    public function checkout() {
+        return view('payment.checkout');
+    }
 }

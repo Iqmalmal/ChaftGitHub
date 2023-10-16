@@ -1,3 +1,8 @@
+@php
+  use App\Models\User;
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +39,8 @@
       @auth
       <li>
         <span class="font-bold uppercase">
-          Welcome {{auth()->user()->name}}
+          <a href="/profile">Welcome {{auth()->user()->name}}</a>
+          
         </span>
       </li>
       <li>

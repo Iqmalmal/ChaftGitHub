@@ -65,4 +65,61 @@ class UserController extends Controller
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
+
+    // Store price in DB
+    public function storePrice(Request $request, User $user) {
+        // Check if the user is authenticated
+        if (auth()->check()) {
+            $formFields = $request->validate([
+                'totalPrice' => 'required'
+            ]);
+
+            $user->update($formFields);
+            return redirect('/checkout')->with('message', 'Price updated successfully!');
+        } else {
+            // Handle the case when the user is not authenticated
+            return redirect('users.register');
+        }
+    }
+
+    // Show User Profile
+    public function profile(User $user) {
+        return view('users.profile', ['user' => $user]);
+    }
+
+    //Show User Address
+    public function showAddress(User $user) {
+        return view('users.address', ['user' => $user]);
+    }
+
+    //Show My Purchase Section
+    public function showMyPurchase(User $user) {
+        return view('users.mypurchase.toPay', ['user' => $user]);
+    }
+
+    //Show To Pay Section
+    public function showToPay(User $user) {
+        return view('users.mypurchase.toPay', ['user' => $user]);
+    }
+
+    //Show To Receive Section
+    public function showToReceive(User $user) {
+        return view('users.mypurchase.toReceive', ['user' => $user]);
+    }
+
+    //Show To Ship Section
+    public function showToShip(User $user) {
+        return view('users.mypurchase.toShip', ['user' => $user]);
+    }
+
+    //Show Completed Section
+    public function showCompleted(User $user) {
+        return view('users.mypurchase.completed', ['user' => $user]);
+    }
+
+    //Show Cancelled Section
+    public function showCancelled(User $user) {
+        return view('users.mypurchase.cancelled', ['user' => $user]);
+    }
+
 }

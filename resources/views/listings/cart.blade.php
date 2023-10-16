@@ -1,3 +1,7 @@
+@php
+    use App\Models\User;
+@endphp
+
 <x-layout>
     <x-card class="p-10 max-w-7xl mx-auto mt-5">
         <header>
@@ -28,6 +32,12 @@
                 $subtotal = $item->price * $item->quantity;
                 // Add the subtotal to the total
                 $total += $subtotal;
+                
+                $user = Auth::user(); // Retrieve the authenticated user instance
+                $user->totalPrice = $total; // Assign the value of $total to the 'total' field
+                $user->save(); // Save the user model to persist the changes
+
+
                 $images = json_decode($item->images);
                 $imagePath = !empty($images) ? asset('storage/' . $images[0]) : asset('/images/logo-crop.png');
                 @endphp
@@ -63,9 +73,12 @@
         @if(!$cartItems->isEmpty())
         <div class="text-right mt-4">
             <p class="text-xl font-bold">Total: RM {{ $total }}</p>
-            <a href="/checkout"
-                class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to
-                Checkout</a>
+            <form action="/price">
+                @csrf
+                <a href="/checkout" class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to Checkout</a>
+                <input type="hidden" name="totalPrice" value="{{ $total }}">
+            </form>
+            
         </div>
         @endif
 

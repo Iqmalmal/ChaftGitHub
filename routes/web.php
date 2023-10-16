@@ -63,6 +63,13 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 
 
 
+//Payment
+
+//checkout
+Route::get('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+
+
+
 
 
 // Show Register/Create Form
@@ -79,3 +86,37 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 // Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+//Store price in DB
+Route::post('/price', [UserController::class, 'storePrice'])->middleware('auth');
+
+
+
+//Profile
+
+// Show User Profile
+Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
+
+//Show User Address Section
+Route::get('/address', [UserController::class, 'showAddress'])->middleware('auth');
+
+//Show My Purchase Section
+Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware('auth');
+
+//Register Seller
+Route::get('/registerSeller', [UserController::class, 'registerSeller'])->middleware('auth');
+
+//Show To Pay Section
+Route::get('/toPay', [UserController::class, 'showToPay'])->name('toPay')->middleware('auth');
+
+//Show To Receive Section
+Route::get('/toReceive', [UserController::class, 'showToReceive'])->name('toReceive')->middleware('auth');
+
+//Show To Ship Section
+Route::get('/toShip', [UserController::class, 'showToShip'])->name('toShip')->middleware('auth');
+
+//Show Completed Section
+Route::get('/completed', [UserController::class, 'showCompleted'])->name('completed')->middleware('auth');
+
+//Show Cancelled Section
+Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancel')->middleware('auth');
