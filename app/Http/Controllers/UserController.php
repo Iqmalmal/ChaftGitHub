@@ -92,6 +92,11 @@ class UserController extends Controller
         return view('users.address', ['user' => $user]);
     }
 
+
+
+
+
+    
     //Show My Purchase Section
     public function showMyPurchase(User $user) {
         return view('users.mypurchase.toPay', ['user' => $user]);

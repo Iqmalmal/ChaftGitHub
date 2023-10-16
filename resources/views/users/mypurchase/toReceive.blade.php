@@ -207,6 +207,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 87%;
    }
    .status-item {
     display: flex;
@@ -320,62 +321,12 @@ p {
 }
   </style>
   <body>
+
     <div class="container">
-        <h1>Order Status</h1>
-
-        <div class="status-container">
-            <div class="status-item" id="toPay">
-                <div class="status-icon">
-                    
-                    <i class="bx bx-cart"></i>
-                    
-                </div>
-
-                <div class="status-text">
-                    To Pay
-                </div>
-        </div>
-        
-
-            <div class="status-item" id="toShip">
-                <div class="status-icon">
-                    <i class="bx bxs-truck"></i>
-                   
-                </div>
-                <div class="status-text">
-                    To Ship
-                </div>
-            </div>
-
-            <div class="status-item" id="toReceive">
-                <div class="status-icon">
-                    <i class="bx bx-package"></i>
-                </div>
-                <div class="status-text">
-                    To Receive
-                </div>
-            </div>
-
-            <div class="status-item">
-                <div class="status-icon">
-                    <i class="bx bx-check"></i>
-                </div>
-                <div class="status-text">
-                    Completed
-                </div>
-            </div>
-
-            <div class="status-item">
-                <div class="status-icon">
-                    <i class="bx bx-x"></i>
-                </div>
-                <div class="status-text">
-                    Cancelled
-                </div>
-            </div>
-
-        </div>
+      <h1 style="margin-right: 260px;">Order Status</h1>
+        @include('partials._myPurchase')
     </div>
+
     <div class="box">
       
         <div class="to-receive">
@@ -386,7 +337,5 @@ p {
     </div>
     
     <x-profile-nav />
-    
-    @include('partials._search')
 </body>
 </html>

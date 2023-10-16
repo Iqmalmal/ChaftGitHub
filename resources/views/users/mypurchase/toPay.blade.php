@@ -207,6 +207,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 87%;
    }
    .status-item {
     display: flex;
@@ -320,100 +321,21 @@ p {
 }
   </style>
   <body>
+    
     <div class="container">
-        <h1>Order Status</h1>
+      <h1 style="margin-right: 260px;">Order Status</h1>
+        @include('partials._myPurchase')
+    </div>
 
-        <div class="status-container" id="toPay">
-          <div class="status-item" >
-              <div class="status-icon">
-                  
-                  <i class="bx bx-cart"></i>
-                  
-              </div>
-
-              <div class="status-text">
-                  To Pay
-              </div>
-      </div>
-      
-
-          <div class="status-item" id="toShip">
-              <div class="status-icon">
-                  <i class="bx bxs-truck"></i>
-                 
-              </div>
-              <div class="status-text">
-                  To Ship
-              </div>
-          </div>
-
-          <div class="status-item" id="toReceive">
-              <div class="status-icon">
-                  <i class="bx bx-package"></i>
-              </div>
-              <div class="status-text">
-                  To Receive
-              </div>
-          </div>
-
-          <div class="status-item" id="toComplete">
-              <div class="status-icon">
-                  <i class="bx bx-check"></i>
-              </div>
-              <div class="status-text">
-                  Completed
-              </div>
-          </div>
-
-          <div class="status-item" id="toCancelled">
-              <div class="status-icon">
-                  <i class="bx bx-x"></i>
-              </div>
-              <div class="status-text">
-                  Cancelled
-              </div>
-          </div>
-
-      </div>
-  </div>
     <div class="box">
       
         <div class="to-pay">
-         <img src="images/pay-per-click.gif" id="pay-img"> 
-         <p>No Orders Yet</p>
+          <img src="images/pay-per-click.gif" id="pay-img"> 
+          <p>No Orders Yet</p>
         </div>
 
     </div>
     
     <x-profile-nav />
-    
-    <script>
-      const toPay = document.getElementById("toPay");
-      const toReceive = document.getElementById("toReceive");
-      const toShip = document.getElementById("toShip");
-      const toComplete = document.getElementById("toComplete");
-      const toCancelled = document.getElementById("toCancelled");
-  
-      // Add click event listeners for each status item
-      toPay.addEventListener("click", () => {
-          window.location.href = "{{ route('toPay') }}";
-      });
-  
-      toReceive.addEventListener("click", () => {
-          window.location.href = "{{ route('toReceive') }}";
-      });
-  
-      toShip.addEventListener("click", () => {
-          window.location.href = "{{ route('toShip') }}";
-      });
-  
-      toComplete.addEventListener("click", () => {
-          window.location.href = "{{ route('completed') }}";
-      });
-  
-      toCancelled.addEventListener("click", () => {
-          window.location.href = "{{ route('cancel') }}";
-      });
-  </script>
 </body>
 </html>
