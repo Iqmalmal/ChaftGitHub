@@ -36,6 +36,8 @@
     body {
       height: 100vh;
       background: var(--body-color);
+      overflow-x: hidden;
+      overflow-y: hidden;
     }
 
     .sidebar .text {
@@ -326,6 +328,31 @@
       color: #fff;
       width: 100%;
       display: none;
+    }
+
+    .status-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+    .status-button{
+      display: flex;
+      align-items: center;
+      text-align: left;
+      background-color: #7bb4e3;
+      padding: 10px;
+      margin-right: 20px;
+      border-radius: 5px;
+      width: 300px;
+      height: 60px;
+
+      font-size: 15px;
+    }
+
+    .status-button:hover {
+      background-color: #c5c7c5;
     }
   </style>
 

@@ -1,53 +1,38 @@
 
 
-<div class="status-container" id="toPay">
+{{-- <div class="status-container"> --}}
     <div class="status-item" >
-        <div class="status-icon">
-            
-            <i class="bx bx-cart"></i>
-            
+        <div class="status-text">
+            <form action="toPay">
+                <button class="status-button"><div class="status-icon"><i class="bx bx-cart"></i></div>To Pay</button>
+            </form>
         </div>
+        
+        <div class="status-text">
+            <form action="/toShip">
+                <button class="status-button"><div class="status-icon"><i class="bx bxs-truck"></i></div>To Ship</button>
+            </form>
+        </div>
+        
 
         <div class="status-text">
-            <a href="/toPay" style="text-decoration:none;">To Pay</a>
+            <form action="/toReceive">
+                <button class="status-button"><div class="status-icon"><i class="bx bx-package"></i></div>To Receive</button>
+            </form>
         </div>
-</div>
+        
 
-
-    <div class="status-item" id="toShip">
-        <div class="status-icon">
-            <i class="bx bxs-truck"></i>
-        </div>
         <div class="status-text">
-            <a href="/toShip" style="text-decoration:none;">To Ship</a>
+            <form action="/completed">
+                <button class="status-button"><div class="status-icon"><i class="bx bx-check"></i></div>Completed</button>
+            </form>
+        </div>
+
+
+        <div class="status-text">
+            <form action="/cancelled">
+                <button class="status-button"><div class="status-icon"><i class="bx bx-x"></i></div>Cancelled</button>
+            </form>
         </div>
     </div>
-
-    <div class="status-item" id="toReceive">
-        <div class="status-icon">
-            <i class="bx bx-package"></i>
-        </div>
-        <div class="status-text">
-            <a href="/toReceive" style="text-decoration:none;">To Receive</a>
-        </div>
-    </div>
-
-    <div class="status-item" id="toComplete">
-        <div class="status-icon">
-            <i class="bx bx-check"></i>
-        </div>
-        <div class="status-text">
-            <a href="/completed" style="text-decoration:none;">Completed</a>
-        </div>
-    </div>
-
-    <div class="status-item" id="toCancelled">
-        <div class="status-icon">
-            <i class="bx bx-x"></i>
-        </div>
-        <div class="status-text">
-            <a href="/cancelled" style="text-decoration:none;">Cancelled</a>
-        </div>
-    </div>
-
-</div>
+{{-- </div> --}}

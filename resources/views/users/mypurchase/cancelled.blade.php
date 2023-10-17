@@ -209,19 +209,7 @@ h1 {
     flex-wrap: wrap;
     max-width: 87%;
    }
-   .status-item {
-    display: flex;
-    align-items: center;
-    background-color: #7bb4e3;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    width: calc(20% - 10px);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-.status-item:hover {
-  background-color: #c5c7c5;
-}
+   
 .status-icon {
     font-size: 24px;
     color: #e1e8e1;
