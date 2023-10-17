@@ -88,17 +88,7 @@
         }
 
         h2:before,
-        h2:after {
-            content: "";
-            display: block;
-            width: 30%;
-            height: 1.4375rem;
-            background: #D1EAF0;
-            left: 0;
-            top: 40%;
-            border-radius: 1.375rem;
-            position: absolute;
-        }
+        
 
         .owl-carousel .owl-stage {
             display: flex;
@@ -249,11 +239,11 @@
             </div>
             <div class="item">
                 <img src="images/fashion.jpeg" alt="">
-                <div class="image-text" style="font-size: 1.5rem;">Fashion & Accesories</div>
+                <div class="image-text" style="font-size: 1.5rem; ">Fashion & Accesories</div>
             </div>
             <div class="item">
                 <img src="images/automotive.jpeg" alt="">
-                <div class="image-text" style="font-size: 1.5rem;">Automotive</div>
+                <div class="image-text" style="font-size: 1.5rem; ">Automotive</div>
             </div>
             <div class="item">
                 <img src="images/hobbies.jpeg" alt="">
