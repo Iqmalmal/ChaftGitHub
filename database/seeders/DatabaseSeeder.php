@@ -5,6 +5,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Listing;
+use App\Models\studentEmail;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -19,14 +20,11 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(5)->create();
 
-        $user = User::factory()->create([
+        /* $user = User::factory()->create([
             'name' => 'John Doe',
             'email' => 'john@gmail.com'
-        ]);
+        ]); */
 
-        Listing::factory(6)->create([
-            'user_id' => $user->id
-        ]);
 
         // Listing::create([
         //     'title' => 'Laravel Senior Developer', 
@@ -47,5 +45,13 @@ class DatabaseSeeder extends Seeder
         //     'website' => 'https://www.starkindustries.com',
         //     'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam minima et illo reprehenderit quas possimus voluptas repudiandae cum expedita, eveniet aliquid, quam illum quaerat consequatur! Expedita ab consectetur tenetur delensiti?'
         //   ]);
+
+        $email = studentEmail::create([
+            'email' => 'miqmaldaniel.zainal@student.gmi.edu.my'
+        ]);
+
+        studentEmail::factory(1)->create([
+            'email' => $email->email
+        ]);
     }
 }

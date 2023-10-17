@@ -295,13 +295,12 @@ p {
 
   .sidebar .menu-links li a .icon {
     display: inline-block;
-   
     margin-right: 10px;
   }
 
   .sidebar .menu-links li a .text {
     display: inline-block;
-   
+  
   }
 
   .sidebar .bottom-content {

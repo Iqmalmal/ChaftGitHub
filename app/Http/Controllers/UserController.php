@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\studentEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Rules\CustomEmailRule;
@@ -25,13 +26,19 @@ class UserController extends Controller
         // Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
 
-        // Create User
-        $user = User::create($formFields);
 
-        // Login
-        auth()->login($user);
+        //check if email exist in db
+        if(studentEmail::where('email', $formFields['email'])->doesntExist()) {
+            return back()->withErrors(['email' => 'Email is not registered within Chaft, Please uses valid student email'])->onlyInput('email');
+        } else {
+            // Create User
+            $user = User::create($formFields);
 
-        return redirect('/')->with('message', 'User created and logged in');
+            // Login
+            auth()->login($user);
+
+            return redirect('/')->with('message', 'User created and logged in');
+        }
     }
 
     // Logout User
@@ -51,7 +58,7 @@ class UserController extends Controller
     }
 
     // Authenticate User
-    public function authenticate(Request $request) {
+    public function authenticate(Request $request, User $user) {
         $formFields = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required'
@@ -61,9 +68,11 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             return redirect('/')->with('message', 'You are now logged in!');
-        }
-
+        } elseif ($user->where('email', $formFields['email'])->doesntExist()) {
+            return back()->withErrors(['email' => 'Account is not registered'])->onlyInput('email');
+        } else {
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+        }
     }
 
     // Store price in DB
