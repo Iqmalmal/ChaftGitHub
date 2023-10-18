@@ -57,21 +57,33 @@ class UserController extends Controller
         return view('users.login');
     }
 
+    //Show Admin Dashboard
+    public function showAdmin(User $users) {
+        $users = User::all();
+        return view('userAdmin.dashboard', ['users' => $users]);
+    }
+
     // Authenticate User
-    public function authenticate(Request $request, User $user) {
+    public function authenticate(Request $request, User $user, studentEmail $email) {
         $formFields = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required'
         ]);
 
-        if(auth()->attempt($formFields)) {
+        if( auth()->attempt($formFields) && $email->where('email', $formFields['email'])->value('email') == 'admin@student.gmi.edu.my') {
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'You are now logged in!');
-        } elseif ($user->where('email', $formFields['email'])->doesntExist()) {
-            return back()->withErrors(['email' => 'Account is not registered'])->onlyInput('email');
+            return redirect('/admin')->with('message', 'You are now logged in as Admin!');
         } else {
-        return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+            if(auth()->attempt($formFields)) {
+                $request->session()->regenerate();
+    
+                return redirect('/')->with('message', 'You are now logged in!');
+            } elseif ($user->where('email', $formFields['email'])->doesntExist()) {
+                return back()->withErrors(['email' => 'Account is not registered'])->onlyInput('email');
+            } else {
+            return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+            }
         }
     }
 

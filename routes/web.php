@@ -123,3 +123,11 @@ Route::get('/completed', [UserController::class, 'showCompleted'])->name('comple
 
 //Show Cancelled Section
 Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancel')->middleware('auth');
+
+
+
+
+//Admin
+
+//Show Admin Dashboard
+Route::get('/admin', [UserController::class, 'showAdmin'])->name('admin')->middleware('auth');

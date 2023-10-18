@@ -1,12 +1,12 @@
 @props(['listing'])
 
 <x-card>
-  <div class="flex">
-    <!-- <img class="hidden w-48 mr-6 md:block"
-      src="{{$listing->images ? asset('storage/' . $listing->images) : asset('/images/logo-crop.png')}}" alt="" /> -->
-      @if (!empty($listing->images))
-    <img class="hidden w-48 mr-6 md:block" src="{{ asset('storage/' . json_decode($listing->images)[0]) }}" alt="Product Image">
-@endif
+  <div class="flex flex-col md:flex-row">
+    @if (!empty($listing->images))
+      <a href="/listings/{{$listing->id}}">
+        <img class="md:w-auto md:mr-0" style="hidden; max-width: 300px; margin-right:20px;" src="{{ asset('storage/' . json_decode($listing->images)[0]) }}" alt="Product Image">
+      </a>
+    @endif
     <div>
       <h3 class="text-2xl">
         <a href="/listings/{{$listing->id}}">{{$listing->product_name}}</a>
