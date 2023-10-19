@@ -107,6 +107,10 @@ Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware
 Route::get('/registerSeller', [UserController::class, 'registerSeller'])->middleware('auth');
 
 
+//Seller Page
+Route::get('/sellers/{seller}', [UserController::class, 'sellerPage'])->middleware('auth');
+
+
 
 
 //Show To Pay Section

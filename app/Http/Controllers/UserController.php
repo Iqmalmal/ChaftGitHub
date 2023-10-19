@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\studentEmail;
 use App\Models\User;
+use App\Models\Listing;
+use App\Models\studentEmail;
 use Illuminate\Http\Request;
 use App\Rules\CustomEmailRule;
 use Illuminate\Validation\Rule;
@@ -112,11 +113,6 @@ class UserController extends Controller
     public function showAddress(User $user) {
         return view('users.address', ['user' => $user]);
     }
-
-
-
-
-
     
     //Show My Purchase Section
     public function showMyPurchase(User $user) {
@@ -148,4 +144,32 @@ class UserController extends Controller
         return view('users.mypurchase.cancelled', ['user' => $user]);
     }
 
+
+
+    public function sellerPage($id) {
+        $sellerListing = User::find($id);
+    
+        if ($sellerListing) {
+            $listings = Listing::where('user_id', $id);
+    
+            // Get the search query from the request
+            $searchQuery = request('search');
+    
+            // Apply the search filter if a query is present
+            if ($searchQuery) {
+                $listings = $listings->where('product_name', 'like', '%' . $searchQuery . '%');
+            }
+    
+            $listings = $listings->get();
+    
+            return view('seller.seller-page', [
+                'sellerListing' => $sellerListing,
+                'listings' => $listings,
+                'search' => Listing::latest()->filter(request(['tag', 'search']))->paginate(25),
+            ]);
+        } else {
+            // Handle the case when the seller does not exist
+            return back()->with(['message' => 'Seller not found']);
+        }
+    }
 }
