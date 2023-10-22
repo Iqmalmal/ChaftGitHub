@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Listing;
 use App\Models\User;
-use App\Models\ProductVariant;
+use App\Models\Seller;
+use App\Models\Listing;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use App\Models\ProductVariant;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,7 @@ class ListingController extends Controller
     }
 
     //show listing
-    public function show($id) {
+    public function show($id, Seller $seller) {
         // Retrieve the listing data
         $listing = Listing::find($id);
         $sellerListings = User::find($listing->user_id);
@@ -30,6 +31,7 @@ class ListingController extends Controller
     
         return view('listings.show', [
             'listing' => $listing,
+            'seller' => $seller,
             'productVariantData' => $productVariantData,
             'sellerListings' => $sellerListings,
         ]);
@@ -63,8 +65,9 @@ class ListingController extends Controller
         }
 
         $formFields['user_id'] = auth()->id();
-        $formFields['seller'] = auth()->user()->name;
+        $formFields['sellerName'] = auth()->user()->seller->sellerName;
         $formFields['email'] = auth()->user()->email;
+
 
         $listing = Listing::create($formFields);
 

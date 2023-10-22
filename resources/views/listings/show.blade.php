@@ -145,7 +145,7 @@
     <x-card style=" max-height: 600px; float: left; margin-right: 400px; width: 900px;">
       <div class="details">
         <h2 class="product-brand"><b>{{$listing->product_name}}</b></h2>
-        <a href="/sellers/{{$sellerListings->id ?? ''}}"><p class="product-short-des">{{$listing->seller}}</p></a>
+        <a href="/sellers/{{$sellerListings->id ?? ''}}"><p class="product-short-des">{{$listing->sellerName}}</p></a>
         <span class="product-price">RM{{$listing->price}}</span>
         {{-- <span class="product-actual-price">$200</span>
         <span class="product-discount">( 50% off )</span> --}}

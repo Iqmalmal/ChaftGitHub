@@ -103,12 +103,21 @@ Route::get('/address', [UserController::class, 'showAddress'])->middleware('auth
 //Show My Purchase Section
 Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware('auth');
 
+
+
+//Seller
+
 //Register Seller
 Route::get('/registerSeller', [UserController::class, 'registerSeller'])->middleware('auth');
 
-
 //Seller Page
 Route::get('/sellers/{seller}', [UserController::class, 'sellerPage'])->middleware('auth');
+
+//Show Seller Register Page
+Route::get('/sellerRegister', [UserController::class, 'showSellerRegister'])->middleware('auth');
+
+//Store Seller Data
+Route::post('/seller', [UserController::class, 'storeSeller'])->middleware('auth');
 
 
 

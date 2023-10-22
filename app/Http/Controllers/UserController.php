@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Listing;
+use App\Models\Seller;
 use App\Models\studentEmail;
 use Illuminate\Http\Request;
 use App\Rules\CustomEmailRule;
@@ -172,4 +173,38 @@ class UserController extends Controller
             return back()->with(['message' => 'Seller not found']);
         }
     }
+
+
+    //Seller
+
+    //Show Seller Register Page
+    public function showSellerRegister() {
+        $user_id = auth()->id();
+        if(Seller::where('user_id', $user_id)->exists()) {
+            return redirect('/listings/create')->with(['message', 'You are already registered as a seller!']);
+        } else {
+        return view('seller.register-seller');
+        }
+    }
+
+    //Store Seller Data
+    public function storeSeller(Request $request) {
+        $formFields = $request->validate([
+            'SellerName' => 'required',
+            'BankName' => 'required',
+            'BankAccountNumber' => 'required',
+            'PhoneNumber' => 'required'
+            ]);
+
+        $formFields['user_id'] = auth()->id();
+
+        if(Seller::where('user_id', $formFields['user_id'])->exists()) {
+            return redirect('/')->with(['message', 'You are already registered as a seller!']);
+
+        } else {
+            Seller::create($formFields);
+            return redirect('/')->with('message', 'Seller successfully registered!');
+        }
+    }
 }
+
