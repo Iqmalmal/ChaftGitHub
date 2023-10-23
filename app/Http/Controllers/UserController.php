@@ -59,11 +59,20 @@ class UserController extends Controller
         return view('users.login');
     }
 
+
     //Show Admin Dashboard
-    public function showAdmin(User $users) {
-        $users = User::all();
-        return view('userAdmin.dashboard', ['users' => $users]);
+    public function showAdmin() {
+        $seller = Seller::all();
+        $user = User::all();
+
+
+        return view('userAdmin.dashboard', [
+            'user' => $user,
+            'seller' => $seller,
+
+        ]);
     }
+
 
     // Authenticate User
     public function authenticate(Request $request, User $user, studentEmail $email) {
@@ -146,12 +155,14 @@ class UserController extends Controller
     }
 
 
+    
+    //Seller
 
     public function sellerPage($id) {
-        $sellerListing = User::find($id);
+        $sellerListing = Seller::find($id);
     
         if ($sellerListing) {
-            $listings = Listing::where('user_id', $id);
+            $listings = Listing::where('seller_id', $id);
     
             // Get the search query from the request
             $searchQuery = request('search');
@@ -174,8 +185,6 @@ class UserController extends Controller
         }
     }
 
-
-    //Seller
 
     //Show Seller Register Page
     public function showSellerRegister() {

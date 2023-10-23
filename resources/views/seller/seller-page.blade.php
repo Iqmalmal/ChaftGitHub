@@ -6,7 +6,7 @@
         
         <div class="z-10">
             <h1 class="text-4xl md:text-7xl font-bold uppercase text-white">
-                <span class="text-black">{{$sellerListing->name}}</span>
+                <span class="text-black">{{$sellerListing->sellerName}}</span>
             </h1>
             <p class="text-lg md:text-2xl text-gray-200 font-bold my-4">
                 Buy or Sell your item

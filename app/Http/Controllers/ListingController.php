@@ -21,17 +21,16 @@ class ListingController extends Controller
     }
 
     //show listing
-    public function show($id, Seller $seller) {
+    public function show($id) {
         // Retrieve the listing data
         $listing = Listing::find($id);
-        $sellerListings = User::find($listing->user_id);
+        $sellerListings = Seller::find($listing->seller_id);
     
         // Retrieve associated product variant data
         $productVariantData = $listing->productVariants; // Assuming you have defined the relationship
     
         return view('listings.show', [
             'listing' => $listing,
-            'seller' => $seller,
             'productVariantData' => $productVariantData,
             'sellerListings' => $sellerListings,
         ]);
@@ -45,6 +44,7 @@ class ListingController extends Controller
 
     // Store Listing Data
     public function store(Request $request) {
+
         $formFields = $request->validate([
             'product_name' => 'required',
             'location' => 'required',
@@ -63,8 +63,8 @@ class ListingController extends Controller
     
             $formFields['images'] = json_encode($imagePaths);
         }
-
-        $formFields['user_id'] = auth()->id();
+        
+        $formFields['seller_id'] = auth()->user()->seller->id;
         $formFields['sellerName'] = auth()->user()->seller->sellerName;
         $formFields['email'] = auth()->user()->email;
 
@@ -103,7 +103,7 @@ class ListingController extends Controller
     // Update Listing Data
 public function update(Request $request, Listing $listing) {
     // Make sure logged in user is the owner
-    if ($listing->user_id != auth()->id()) {
+    if ($listing->seller_id != auth()->id()) {
         abort(403, 'Unauthorized Action');
     }
 
@@ -135,7 +135,7 @@ public function update(Request $request, Listing $listing) {
     // Delete Listing
     public function destroy(Listing $listing) {
         // Make sure logged in user is owner
-        if($listing->user_id != auth()->id()) {
+        if($listing->seller_id != auth()->id()) {
             abort(403, 'Unauthorized Action');
         }
         
@@ -149,8 +149,12 @@ public function update(Request $request, Listing $listing) {
 
     // Manage Listings
     public function manage() {
-        return view('listings.manage', ['listings' => auth()->user()->listings]);
+        $sellerId = auth()->user()->seller->id; // Assuming you have a Seller model
+        $listings = Listing::where('seller_id', $sellerId)->get();
+        
+        return view('listings.manage', ['listings' => $listings]);
     }
+
 
 
 

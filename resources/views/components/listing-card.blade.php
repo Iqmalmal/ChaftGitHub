@@ -11,7 +11,7 @@
       <h3 class="text-2xl">
         <a href="/listings/{{$listing->id}}">{{$listing->product_name}}</a>
       </h3>
-      <div class="text-xl font-bold mb-4">{{$listing->seller}}</div>
+      <div class="text-xl font-bold mb-4">{{$listing->sellerName}}</div>
       <x-listing-tags :tagsCsv="$listing->tags" />
       <div class="text-lg mt-4">
         <i class="fa-solid fa-location-dot"></i> {{$listing->location}}

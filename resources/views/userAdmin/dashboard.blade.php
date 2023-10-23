@@ -192,12 +192,12 @@
           <th>View Seller Page</th>
           <th>-</th>
         </tr>
-        @foreach ($users as $seller)
+        @foreach ($seller as $sellers)
         <tr>
-          <td>{{$seller->id}}</td>
-          <td>{{$seller->name}}</td>
-          <td>{{$seller->email}}</td>
-          <td>password123</td>
+          <td>{{$sellers->id}}</td>
+          <td>{{$sellers->sellerName}}</td>
+          {{-- <td>{{$user->email}}</td> --}}
+          <td>{{-- <a href="/sellers/{{$sellerListings->id ?? ''}}"><p class="product-short-des">View --}} Seller Page{{-- </p></a> --}}</td>
           <td>123 Main St, City, State, 12345</td>
         </tr>
         @endforeach
