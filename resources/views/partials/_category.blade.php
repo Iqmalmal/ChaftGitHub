@@ -54,9 +54,6 @@ height: 0;
 transition: all 0.3s ease-in-out;
 }
 
-inputtype="search"]:focus + .suggestions li {
-height: 63px;
-}
 
 .byline {
 text-align: center;
@@ -189,31 +186,35 @@ color: #069187;
         <div class="owl-carousel owl-theme">
             <div class="item">
                 <img src="images/gadgets.jpeg" class="w-1/2" alt="1000X1000">
+                <br>
                 <div class="image-text" style="font-size: 1.5rem;">Mobile</div>
             </div>
             <div class="item">
-                <img src="images/outfits.jpeg" alt="">
+                <img src="images/outfits.jpeg" alt=""> <br>
                 <div class="image-text" style="font-size: 1.5rem;">Outfits</div>
             </div>
             <div class="item">
-                <img src="images/fashion.jpeg" alt="">
+                <img src="images/fashion.jpeg" alt=""><br>
                 <div class="image-text" style="font-size: 1.5rem; ">Fashion & Accesories</div>
             </div>
             <div class="item">
-                <img src="images/automotive.jpeg" alt="">
+                <img src="images/automotive.jpeg" alt=""><br>
                 <div class="image-text" style="font-size: 1.5rem; ">Automotive</div>
             </div>
             <div class="item">
-                <img src="images/hobbies.jpeg" alt="">
+                <img src="images/hobbies.jpeg" alt=""><br>
                 <div class="image-text" style="font-size: 1.5rem;">Hobbies</div>
             </div>
             <div class="item">
-                <img src="images/services.jpeg" alt="">
+                <img src="images/services.jpeg" alt=""><br>
                 <div class="image-text" style="font-size: 1.5rem;">Services</div>
             </div>
         </div>
     </div>
 
+    <br><br>
+    <div class="border"></div>
+    <br>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
