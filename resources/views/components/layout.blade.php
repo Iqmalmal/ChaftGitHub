@@ -118,11 +118,17 @@ footer a {
   <main>
     {{$slot}}
   </main>
-  <!-- <footer>
+
+  @if(\App\Models\Seller::where('user_id', auth()->id())->exists())
+    
+  @else
+  <footer>
     <p>Copyright &copy; 2022, All Rights reserved</p>
 
     <a href="/sellerRegister">Sell</a>
-  </footer> -->
+  </footer>
+  @endif
+  
 
   <x-flash-message />
 </body>
