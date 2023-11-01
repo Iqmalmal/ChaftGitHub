@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -66,7 +67,10 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 //Payment
 
 //checkout
-Route::get('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+Route::post('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+
+//pending
+Route::post('/pending', [ListingController::class, 'pending'])->middleware('auth');
 
 
 

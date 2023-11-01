@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Listing;
 use App\Models\Seller;
+use App\Models\Listing;
+use App\Models\PendingOrder;
 use App\Models\studentEmail;
 use Illuminate\Http\Request;
 use App\Rules\CustomEmailRule;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -98,21 +100,7 @@ class UserController extends Controller
         }
     }
 
-    // Store price in DB
-    public function storePrice(Request $request, User $user) {
-        // Check if the user is authenticated
-        if (auth()->check()) {
-            $formFields = $request->validate([
-                'totalPrice' => 'required'
-            ]);
-
-            $user->update($formFields);
-            return redirect('/checkout')->with('message', 'Price updated successfully!');
-        } else {
-            // Handle the case when the user is not authenticated
-            return redirect('users.register');
-        }
-    }
+    
 
     // Show User Profile
     public function profile(User $user) {
@@ -124,14 +112,21 @@ class UserController extends Controller
         return view('users.address', ['user' => $user]);
     }
     
-    //Show My Purchase Section
-    public function showMyPurchase(User $user) {
-        return view('users.mypurchase.toPay', ['user' => $user]);
+    // Show My Purchase Section
+    public function showMyPurchase(User $user, PendingOrder $pendingOrder) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+
+        $totalPrice = $orders->sum(function ($order) {
+            return $order->price * $order->quantity;
+        });
+
+        return view('users.mypurchase.toPay', compact('orders', 'totalPrice'));
     }
 
     //Show To Pay Section
-    public function showToPay(User $user) {
-        return view('users.mypurchase.toPay', ['user' => $user]);
+    public function showToPay(User $user, PendingOrder $pendingOrder) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        return view('users.mypurchase.toPay', compact('orders'));
     }
 
     //Show To Receive Section

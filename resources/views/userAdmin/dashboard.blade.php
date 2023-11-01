@@ -146,6 +146,11 @@
       <div class="logo"></div>
       <ul class="menu">
         <li class="active">
+          <a href="/"> <img style="height: 50px;" src="images/logo.png" alt="logo" />
+          </a>
+        </li>
+
+        <li class="active">
           <a href="#">
             <i class="fas fa-tachometer-alt"></i>
             <span>Data</span>
@@ -166,9 +171,8 @@
             </a>
 
             <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                <!-- Add any additional form fields if needed -->
-                @csrf <!-- Include CSRF token for Laravel -->
-              </form>
+              @csrf
+            </form>
         </li>
       </ul>
     </div>
@@ -190,18 +194,15 @@
           <th>Seller Name</th>
           <th>Email</th>
           <th>View Seller Page</th>
-          <th>-</th>
         </tr>
         @foreach ($seller as $sellers)
-        <tr>
-          <td>{{$sellers->id}}</td>
-          <td>{{$sellers->sellerName}}</td>
-          {{-- <td>{{$user->email}}</td> --}}
-          <td>{{-- <a href="/sellers/{{$sellerListings->id ?? ''}}"><p class="product-short-des">View --}} Seller Page{{-- </p></a> --}}</td>
-          <td>123 Main St, City, State, 12345</td>
-        </tr>
+          <tr>
+            <td>{{$sellers->id}}</td>
+            <td>{{$sellers->sellerName}}</td>
+            <td>{{$sellers->user->email}}</td> {{-- fetch seller email from user db --}}
+            <td><a href="/sellers/{{$sellers->id}}">View Seller Page</a></td>
+          </tr>
         @endforeach
-        <!-- Add more rows for each user -->
       </table>
     </div>
   </body>

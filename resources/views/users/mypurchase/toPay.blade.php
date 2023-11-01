@@ -305,6 +305,18 @@ p {
   .status-item {
     width: 420px;
   }
+
+  .even{
+    background: #fbf8f0;
+  }
+
+  .odd {
+	background: greenyellow;
+  }
+
+  table tr td{
+    border: 1px solid black;
+  }
 }
   </style>
   <body>
@@ -315,14 +327,78 @@ p {
     </div>
 
     <div class="box">
-      
-        <div class="to-pay">
-          <img src="images/pay-per-click.gif" id="pay-img"> 
-          <p>No Orders Yet</p>
+
+      @unless($orders->isEmpty())
+        @foreach($orders as $order)
+
+        @php
+        $images = json_decode($order->images);
+        $imagePath = !empty($images) ? asset('storage/' . $images[0]) : asset('/images/logo-crop.png');
+        @endphp
+
+
+        <table class="m-12 p-4" style="margin-left: 50px; padding:15px;">
+          <tbody>
+            <tr>
+              <td rowspan="3"><img style="max-height: 20vh;" class="w-30" src="{{ $imagePath }}"
+                alt="Product Image"></td>
+              <td style="width: 70%">Product Name: {{$order->product_name}} </td>
+              <td rowspan="3">Price: {{$order->price * $order->quantity}}</td>
+            </tr>
+            <tr>
+              <td style="width: 70%">Product Variant: {{$order->variant}}</td>
+            </tr>
+            <tr>
+              <td style="width: 70%">Quantity: {{$order->quantity}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        @endforeach
+
+        <div class="total-price" style="margin-left: 825px">
+          <h2>Total Price: RM{{ $totalPrice }}</h2>
         </div>
+
+      <form action="/pending" method="POST">
+
+        @csrf
+        <button class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block" style="background: green; color: white; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; margin-left: 1000px">Pay Now</button>
+      </form>
+        @else
+
+          <div class="to-pay">
+            <img src="images/pay-per-click.gif" id="pay-img"> 
+            <p>No Orders Yet</p>
+          </div>
+
+      @endunless
+        
 
     </div>
     
     <x-profile-nav />
 </body>
+
+{{-- <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              laravel: '#8EDAD8',
+              laravelHover: '#2D8A88',
+              register: '#D1EAF0'
+            },
+          },
+        },
+      }
+  </script> --}}
 </html>
+
+
+{{-- <div class="to-pay">
+  <img src="images/pay-per-click.gif" id="pay-img"> 
+  <p>No Orders Yet</p>
+</div> --}}

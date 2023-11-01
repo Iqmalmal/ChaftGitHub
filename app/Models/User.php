@@ -52,4 +52,9 @@ class User extends Authenticatable
     public function shoppingCart() {
         return $this->hasMany(ShoppingCart::class, 'user_id');
     }
+
+    // Relationship With PendingOrder
+    public function pendingOrder() {
+        return $this->hasMany(PendingOrder::class, 'user_id');
+    }
 }

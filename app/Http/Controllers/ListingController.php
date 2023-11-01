@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Listing;
+use App\Models\PendingOrder;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use App\Models\ProductVariant;
@@ -226,8 +227,38 @@ public function update(Request $request, Listing $listing) {
 
     //Payment
 
-    //Show checkout page
-    public function checkout() {
-        return view('payment.checkout');
+    // Show checkout page
+    public function checkout(Request $request) {
+
+        $cart = ShoppingCart::where('user_id', auth()->user()->id)->get();
+
+        foreach ($cart as $cartItem) {
+            PendingOrder::create([
+                'user_id' => auth()->user()->id,
+                'product_id' => $cartItem->product_id,
+                'product_name' => $cartItem->product_name,
+                'price' => $cartItem->price,
+                'quantity' => $cartItem->quantity,
+                'variant' => $cartItem->variant,
+                'images' => $cartItem->images,
+                'totalPrice' => $request->input('totalPrice')
+            ]);
+        }
+
+        // Delete data in shopping_cart table
+        ShoppingCart::where('user_id', auth()->user()->id)->delete();
+
+        // Reset totalPrice in users table to 0
+        User::where('id', auth()->user()->id)->update(['totalPrice' => 0]);
+
+    return view('payment.checkout');
+    }
+
+    //Pending
+    public function pending() {
+
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        PendingOrder::where('user_id', auth()->user()->id)->delete();
+        return back()->with('message', 'Your order has been placed!');
     }
 }
