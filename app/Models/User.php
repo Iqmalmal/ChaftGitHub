@@ -43,13 +43,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Relationship With Listings
-    public function listings() {
-        return $this->hasMany(Listing::class, 'user_id');
+    // Relationship With Seller
+    public function seller() {
+        return $this->hasOne(Seller::class, 'user_id');
     }
 
     // Relationship With ShoppingCart
     public function shoppingCart() {
         return $this->hasMany(ShoppingCart::class, 'user_id');
+    }
+
+    // Relationship With PendingOrder
+    public function pendingOrder() {
+        return $this->hasMany(PendingOrder::class, 'user_id');
     }
 }

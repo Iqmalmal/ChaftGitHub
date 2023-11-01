@@ -73,9 +73,9 @@
         @if(!$cartItems->isEmpty())
         <div class="text-right mt-4">
             <p class="text-xl font-bold">Total: RM {{ $total }}</p>
-            <form action="/price">
+            <form action="/checkout" method="POST">
                 @csrf
-                <a href="/checkout" class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to Checkout</a>
+                <button class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to Checkout</button>
                 <input type="hidden" name="totalPrice" value="{{ $total }}">
             </form>
             

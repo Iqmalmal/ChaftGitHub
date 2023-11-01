@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Seller;
 use App\Models\Listing;
+use App\Models\PendingOrder;
 use App\Models\studentEmail;
 use Illuminate\Http\Request;
 use App\Rules\CustomEmailRule;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -58,11 +61,20 @@ class UserController extends Controller
         return view('users.login');
     }
 
+
     //Show Admin Dashboard
-    public function showAdmin(User $users) {
-        $users = User::all();
-        return view('userAdmin.dashboard', ['users' => $users]);
+    public function showAdmin() {
+        $seller = Seller::all();
+        $user = User::all();
+
+
+        return view('userAdmin.dashboard', [
+            'user' => $user,
+            'seller' => $seller,
+
+        ]);
     }
+
 
     // Authenticate User
     public function authenticate(Request $request, User $user, studentEmail $email) {
@@ -88,21 +100,7 @@ class UserController extends Controller
         }
     }
 
-    // Store price in DB
-    public function storePrice(Request $request, User $user) {
-        // Check if the user is authenticated
-        if (auth()->check()) {
-            $formFields = $request->validate([
-                'totalPrice' => 'required'
-            ]);
-
-            $user->update($formFields);
-            return redirect('/checkout')->with('message', 'Price updated successfully!');
-        } else {
-            // Handle the case when the user is not authenticated
-            return redirect('users.register');
-        }
-    }
+    
 
     // Show User Profile
     public function profile(User $user) {
@@ -114,14 +112,21 @@ class UserController extends Controller
         return view('users.address', ['user' => $user]);
     }
     
-    //Show My Purchase Section
-    public function showMyPurchase(User $user) {
-        return view('users.mypurchase.toPay', ['user' => $user]);
+    // Show My Purchase Section
+    public function showMyPurchase(User $user, PendingOrder $pendingOrder) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+
+        $totalPrice = $orders->sum(function ($order) {
+            return $order->price * $order->quantity;
+        });
+
+        return view('users.mypurchase.toPay', compact('orders', 'totalPrice'));
     }
 
     //Show To Pay Section
-    public function showToPay(User $user) {
-        return view('users.mypurchase.toPay', ['user' => $user]);
+    public function showToPay(User $user, PendingOrder $pendingOrder) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        return view('users.mypurchase.toPay', compact('orders'));
     }
 
     //Show To Receive Section
@@ -145,12 +150,14 @@ class UserController extends Controller
     }
 
 
+    
+    //Seller
 
     public function sellerPage($id) {
-        $sellerListing = User::find($id);
+        $sellerListing = Seller::find($id);
     
         if ($sellerListing) {
-            $listings = Listing::where('user_id', $id);
+            $listings = Listing::where('seller_id', $id);
     
             // Get the search query from the request
             $searchQuery = request('search');
@@ -172,4 +179,36 @@ class UserController extends Controller
             return back()->with(['message' => 'Seller not found']);
         }
     }
+
+
+    //Show Seller Register Page
+    public function showSellerRegister() {
+        $user_id = auth()->id();
+        if(Seller::where('user_id', $user_id)->exists()) {
+            return redirect('/listings/create')->with(['message', 'You are already registered as a seller!']);
+        } else {
+        return view('seller.register-seller');
+        }
+    }
+
+    //Store Seller Data
+    public function storeSeller(Request $request) {
+        $formFields = $request->validate([
+            'SellerName' => 'required',
+            'BankName' => 'required',
+            'BankAccountNumber' => 'required',
+            'PhoneNumber' => 'required'
+            ]);
+
+        $formFields['user_id'] = auth()->id();
+
+        if(Seller::where('user_id', $formFields['user_id'])->exists()) {
+            return redirect('/')->with(['message', 'You are already registered as a seller!']);
+
+        } else {
+            Seller::create($formFields);
+            return redirect('/')->with('message', 'Seller successfully registered!');
+        }
+    }
 }
+

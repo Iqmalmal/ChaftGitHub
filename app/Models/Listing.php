@@ -22,9 +22,9 @@ class Listing extends Model
         }
     }
 
-    // Relationship To User
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id');
+    // Relationship To Seller
+    public function seller() {
+        return $this->belongsTo(Seller::class, 'seller_id');
     }
 
 

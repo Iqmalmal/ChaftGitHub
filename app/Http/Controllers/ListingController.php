@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Listing;
 use App\Models\User;
-use App\Models\ProductVariant;
+use App\Models\Seller;
+use App\Models\Listing;
+use App\Models\PendingOrder;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use App\Models\ProductVariant;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +25,7 @@ class ListingController extends Controller
     public function show($id) {
         // Retrieve the listing data
         $listing = Listing::find($id);
-        $sellerListings = User::find($listing->user_id);
+        $sellerListings = Seller::find($listing->seller_id);
     
         // Retrieve associated product variant data
         $productVariantData = $listing->productVariants; // Assuming you have defined the relationship
@@ -43,6 +45,7 @@ class ListingController extends Controller
 
     // Store Listing Data
     public function store(Request $request) {
+
         $formFields = $request->validate([
             'product_name' => 'required',
             'location' => 'required',
@@ -61,10 +64,11 @@ class ListingController extends Controller
     
             $formFields['images'] = json_encode($imagePaths);
         }
-
-        $formFields['user_id'] = auth()->id();
-        $formFields['seller'] = auth()->user()->name;
+        
+        $formFields['seller_id'] = auth()->user()->seller->id;
+        $formFields['sellerName'] = auth()->user()->seller->sellerName;
         $formFields['email'] = auth()->user()->email;
+
 
         $listing = Listing::create($formFields);
 
@@ -100,7 +104,7 @@ class ListingController extends Controller
     // Update Listing Data
 public function update(Request $request, Listing $listing) {
     // Make sure logged in user is the owner
-    if ($listing->user_id != auth()->id()) {
+    if ($listing->seller_id != auth()->id()) {
         abort(403, 'Unauthorized Action');
     }
 
@@ -132,7 +136,7 @@ public function update(Request $request, Listing $listing) {
     // Delete Listing
     public function destroy(Listing $listing) {
         // Make sure logged in user is owner
-        if($listing->user_id != auth()->id()) {
+        if($listing->seller_id != auth()->id()) {
             abort(403, 'Unauthorized Action');
         }
         
@@ -146,8 +150,12 @@ public function update(Request $request, Listing $listing) {
 
     // Manage Listings
     public function manage() {
-        return view('listings.manage', ['listings' => auth()->user()->listings]);
+        $sellerId = auth()->user()->seller->id; // Assuming you have a Seller model
+        $listings = Listing::where('seller_id', $sellerId)->get();
+        
+        return view('listings.manage', ['listings' => $listings]);
     }
+
 
 
 
@@ -219,8 +227,38 @@ public function update(Request $request, Listing $listing) {
 
     //Payment
 
-    //Show checkout page
-    public function checkout() {
-        return view('payment.checkout');
+    // Show checkout page
+    public function checkout(Request $request) {
+
+        $cart = ShoppingCart::where('user_id', auth()->user()->id)->get();
+
+        foreach ($cart as $cartItem) {
+            PendingOrder::create([
+                'user_id' => auth()->user()->id,
+                'product_id' => $cartItem->product_id,
+                'product_name' => $cartItem->product_name,
+                'price' => $cartItem->price,
+                'quantity' => $cartItem->quantity,
+                'variant' => $cartItem->variant,
+                'images' => $cartItem->images,
+                'totalPrice' => $request->input('totalPrice')
+            ]);
+        }
+
+        // Delete data in shopping_cart table
+        ShoppingCart::where('user_id', auth()->user()->id)->delete();
+
+        // Reset totalPrice in users table to 0
+        User::where('id', auth()->user()->id)->update(['totalPrice' => 0]);
+
+    return view('payment.checkout');
+    }
+
+    //Pending
+    public function pending() {
+
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        PendingOrder::where('user_id', auth()->user()->id)->delete();
+        return back()->with('message', 'Your order has been placed!');
     }
 }

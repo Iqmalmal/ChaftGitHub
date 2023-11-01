@@ -14,4 +14,9 @@ class ProductVariant extends Model
     protected $casts = [
         'images' => 'array',
     ];
+
+    // Relationship To Listing
+    public function listing() {
+        return $this->belongsTo(Listing::class, 'product_id');
+    }
 }

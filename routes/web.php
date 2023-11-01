@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -66,7 +67,10 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 //Payment
 
 //checkout
-Route::get('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+Route::post('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+
+//pending
+Route::post('/pending', [ListingController::class, 'pending'])->middleware('auth');
 
 
 
@@ -103,12 +107,21 @@ Route::get('/address', [UserController::class, 'showAddress'])->middleware('auth
 //Show My Purchase Section
 Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware('auth');
 
+
+
+//Seller
+
 //Register Seller
 Route::get('/registerSeller', [UserController::class, 'registerSeller'])->middleware('auth');
 
-
 //Seller Page
 Route::get('/sellers/{seller}', [UserController::class, 'sellerPage'])->middleware('auth');
+
+//Show Seller Register Page
+Route::get('/sellerRegister', [UserController::class, 'showSellerRegister'])->middleware('auth');
+
+//Store Seller Data
+Route::post('/seller', [UserController::class, 'storeSeller'])->middleware('auth');
 
 
 
