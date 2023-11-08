@@ -107,6 +107,9 @@ Route::get('/address', [UserController::class, 'showAddress'])->middleware('auth
 //Show My Purchase Section
 Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware('auth');
 
+//Update Profile
+Route::post('/profile/update', [UserController::class, 'updateProfile'])->middleware('auth');
+
 
 
 //Seller
@@ -146,5 +149,7 @@ Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancel
 
 //Admin
 
-//Show Admin Dashboard
-Route::get('/admin', [UserController::class, 'showAdmin'])->name('admin')->middleware('auth');
+use App\Http\Middleware\AdminMiddleware;
+
+// Show Admin Dashboard
+Route::get('/admin', [UserController::class, 'showAdmin'])->name('admin')->middleware(AdminMiddleware::class);

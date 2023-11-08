@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('course')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('block')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('profile_image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->decimal('totalPrice', 8, 2);

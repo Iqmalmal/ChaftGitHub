@@ -104,11 +104,40 @@ class UserController extends Controller
 
     // Show User Profile
     public function profile(User $user) {
+        $user = auth()->user();
         return view('users.profile', ['user' => $user]);
     }
 
+
+    // Update Profile
+    public function updateProfile(Request $request, User $user) {
+        $formFields = $request->validate([
+            'name' => ['min:3'],
+            'course' => ['min:3'],
+            'semester' => ['min:1'],
+            'block' => ['min:1' , 'max:2'],
+            'unit' => ['min:1', 'max:3','regex:/^\d+-\d+$/'],
+        ], [
+            'unit.regex' => 'The unit field must be in the format of number-number. Example: 1-2, 1-3, 1-4',
+        ]);
+
+        // Add Image to Table
+        if ($request->hasFile('profile_image')) {
+            $imagePath = $request->file('profile_image')->store('images', 'public');
+            $formFields['profile_image'] = $imagePath;
+        }
+
+        // Update User
+        User::where('id', auth()->user()->id)->update($formFields);
+
+        return redirect('/profile')->with('message', 'Profile updated!');
+    }
+
+
+
     //Show User Address
     public function showAddress(User $user) {
+        $user = auth()->user();
         return view('users.address', ['user' => $user]);
     }
     

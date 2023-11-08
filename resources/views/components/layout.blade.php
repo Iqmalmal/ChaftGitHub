@@ -89,7 +89,7 @@ footer a {
       @auth
       <li>
         <span class="font-bold uppercase">
-          <a href="/profile">Welcome {{auth()->user()->name}}</a>
+          <a href="/profile" class="hover:text-laravel">Welcome {{auth()->user()->name}}</a>
           
         </span>
       </li>
@@ -102,8 +102,8 @@ footer a {
       <li>
         <form class="inline" method="POST" action="/logout">
           @csrf
-          <button type="submit">
-            <i class="fa-solid fa-door-closed"></i> <span class="text"> Logout</span>
+          <button type="submit" class="hover:text-laravel">
+            <i class="fa-solid fa-door-closed "></i> <span class="text"> Logout</span>
           </button>
         </form>
       </li>

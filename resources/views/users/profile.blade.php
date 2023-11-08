@@ -1,3 +1,15 @@
+@include('partials._tailwind')
+
+@if(session()->has('message'))
+    <div x-data="{show: true}" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+      class="fixed top-0 left-1/2 transform -translate-x-1/2 bg-sky-600 text-white px-48 py-3">
+      <p>
+        {{session('message')}}
+      </p>
+    </div>
+    @endif
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -331,56 +343,59 @@
 
   <body>
     <section>
-      <form id="create">
+      <form id="create" action="/profile/update" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
         <fieldset id="basics">
           <legend id="basic">Basic Info</legend>
+
+          
           <label for="name">Name</label>
           <input
             type="text"
             name="name"
             id="name"
             value="{{$user->name}}"
-            required
+            placeholder="{{$user->name}}"
             autofocus
           />
 
+          
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="Email" />
+          <input type="email" name="email" id="email" value="{{$user->email}}" readonly/>
 
-          <label for="phone">Phone</label>
+          <label for="phone">Course</label>
           <input
-            type="tel"
+            type="text"
             id="phone"
-            name="phone"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-            placeholder="No. Phone"
+            name="course"
+            value="{{$user->course}}"
+            placeholder="Example: DSET, DNWS, DCRM"
           />
 
-          <label for="age">Age</label>
+          <label for="age">Semester</label>
           <input
             type="number"
-            name="age"
+            name="semester"
             id="age"
             min="1"
-            max="130"
-            value="12"
-            required
+            max="6"
+            value="{{$user->semester}}"
+            placeholder="Example: 1, 2, 3"
           />
 
           <div class="container">
             <div class="profile">
-              <img id="blah" src="images/user.png" />
+              <img id="blah" src="{{$user->profile_image ? asset('storage/' . $user->profile_image) : asset('/images/user.png')}}" />
               <div class="overlay">
-                <input id="imgInp" type="file" />
+                <input id="imgInp" type="file" name="profile_image"/>
                 <p>Change Picture</p>
               </div>
             </div>
           </div>
         </fieldset>
 
-        <fieldset id="options">
+
+        <!-- <fieldset id="options">
           <legend>Optional Info</legend>
           <label class="grplabel">Gender</label>
           <label><input type="radio" name="gender" value="m" /> Male</label>
@@ -394,10 +409,11 @@
           <div class="date-ps">
             <input type="datetime-local" id="Test_DatetimeLocal" />
           </div>
-        </fieldset>
+        </fieldset> -->
 
-        <button type="submit" value="Save">Update</button>
+        <button type="submit" value="Save" class="bg-sky-600 text-black rounded py-4 px-4 mt-2 hover:bg-sky-400 inline-block"><b>Update</b></button>
       </form>
+
     </section>
 
     <x-profile-nav />
