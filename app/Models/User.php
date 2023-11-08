@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function pendingOrder() {
         return $this->hasMany(PendingOrder::class, 'user_id');
     }
+
+    public function isAdmin() {
+        return $this->email === 'admin@student.gmi.edu.my';
+    }
 }
