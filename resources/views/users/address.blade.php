@@ -1,3 +1,5 @@
+@include('partials._tailwind')
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -305,7 +307,8 @@
 
   <body>
     <section>
-      <form id="create">
+      <form id="create" action="/profile/update" method="POST">
+        @csrf
         <fieldset id="basics">
           <legend id="basic">Shipping Address</legend>
           <label for="name">Block</label>
@@ -313,24 +316,33 @@
             type="text"
             name="block"
             id="name"
-            placeholder="Block"
+            placeholder="Example: A2, A3, A4"
+            value="{{$user->block}}"
             required
             autofocus
           />
 
-          <label for="unit">Unit No.</label>
-          <input type="unit" name="unit" id="unit" required autofocus />
+          @error('block')
+            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+          @enderror
 
-          <label for="phone">Phone</label>
+          <label for="unit">Unit No.</label>
+          <input type="unit" name="unit" id="unit" required autofocus max="3" placeholder="Example: 6-4, 5-1" value="{{$user->unit}}"/>
+
+          @error('unit')
+            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+          @enderror
+
+          {{-- <label for="phone">Phone</label>
           <input
             type="tel"
             id="phone"
             name="phone"
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-          />
+          /> --}}
         </fieldset>
 
-        <input type="submit" value="Save" />
+        <button type="submit" value="Save" class="bg-sky-600 text-black rounded py-4 px-4 mt-2 hover:bg-sky-400 inline-block"><b>Update</b></button>
       </form>
     </section>
 

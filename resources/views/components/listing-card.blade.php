@@ -4,7 +4,7 @@
   <div class="flex flex-col md:flex-row">
     @if (!empty($listing->images))
       <a href="/listings/{{$listing->id}}">
-        <img class="md:w-auto md:mr-0" style="hidden:0; max-width: 300px;" src="{{ asset('storage/' . json_decode($listing->images)[0]) }}" alt="Product Image">
+        <img class="md:w-auto md:mr-1,5" style="hidden:0; max-width: 300px; margin-right: 15px;" src="{{ asset('storage/' . json_decode($listing->images)[0]) }}" alt="Product Image">
       </a>
     @endif
     <div>

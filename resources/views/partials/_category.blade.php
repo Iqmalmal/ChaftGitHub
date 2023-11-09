@@ -185,29 +185,40 @@ color: #069187;
     <div class="owl-container">
         <div class="owl-carousel owl-theme">
             <div class="item">
-                <img src="images/gadgets.jpeg" class="w-1/2" alt="1000X1000">
-                <br>
-                <div class="image-text" style="font-size: 1.5rem;">Mobile</div>
+                <a href="/?tag=Mobile">
+                    <img src="images/gadgets.jpeg" class="w-1/2" alt="1000X1000"> <br>
+                    <div class="image-text" style="font-size: 1.5rem;">Mobile</div>
+                </a>
             </div>
             <div class="item">
-                <img src="images/outfits.jpeg" alt=""> <br>
-                <div class="image-text" style="font-size: 1.5rem;">Outfits</div>
+                <a href="/?tag=Outfit">
+                    <img src="images/outfits.jpeg" alt=""> <br>
+                    <div class="image-text" style="font-size: 1.5rem;">Outfits</div>
+                </a>
             </div>
             <div class="item">
-                <img src="images/fashion.jpeg" alt=""><br>
-                <div class="image-text" style="font-size: 1.5rem; ">Fashion & Accesories</div>
+                <a href="/?tag=Fasion">
+                    <img src="images/fashion.jpeg" alt=""><br>
+                    <div class="image-text" style="font-size: 1.5rem; ">Fashion</div>
+                </a>
             </div>
             <div class="item">
-                <img src="images/automotive.jpeg" alt=""><br>
-                <div class="image-text" style="font-size: 1.5rem; ">Automotive</div>
+                <a href="/?tag=Automotive">
+                    <img src="images/automotive.jpeg" alt=""><br>
+                    <div class="image-text" style="font-size: 1.5rem; ">Automotive</div>
+                </a>
             </div>
             <div class="item">
-                <img src="images/hobbies.jpeg" alt=""><br>
-                <div class="image-text" style="font-size: 1.5rem;">Hobbies</div>
+                <a href="/?tag=Hobbies">
+                    <img src="images/hobbies.jpeg" alt=""><br>
+                    <div class="image-text" style="font-size: 1.5rem;">Hobbies</div>
+                </a>
             </div>
             <div class="item">
-                <img src="images/services.jpeg" alt=""><br>
-                <div class="image-text" style="font-size: 1.5rem;">Services</div>
+                <a href="/?tag=Service">
+                    <img src="images/services.jpeg" alt=""><br>
+                    <div class="image-text" style="font-size: 1.5rem;">Services</div>
+                </a>
             </div>
         </div>
     </div>

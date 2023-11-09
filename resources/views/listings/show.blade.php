@@ -193,22 +193,24 @@
         </div>
 
           
-            <div class="flex gap-3 mb-7">
-              <input type="hidden" name="listing-id" value="{{ $listing->id }}">
-              <input type="hidden" name="listing-name" value="{{ $listing->product_name }}">
-              <input type="hidden" name="listing-price" value="{{ $listing->price }}">
-              <input type="hidden" name="selected-variants[]" id="selected-variants" value="" multiple>
+        @if(Auth::check() && (Auth::user()->seller && Auth::user()->seller->id == $listing->seller_id) || (Auth::check() && Auth::user()->isAdmin()))
+    <span><b>Listing Owner cannot purchase own listing</b></span>
+@else
+          <div class="flex gap-3 mb-7">
+            <input type="hidden" name="listing-id" value="{{ $listing->id }}">
+            <input type="hidden" name="listing-name" value="{{ $listing->product_name }}">
+            <input type="hidden" name="listing-price" value="{{ $listing->price }}">
+            <input type="hidden" name="selected-variants[]" id="selected-variants" value="" multiple>
 
-              <button type="submit" class="bg-green-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Add to cart</button>
+            <button type="submit" class="bg-green-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Add to cart</button>
 
-              </form>
+            </form>
 
-              <a href="mailto:{{$listing->email}}?subject=Chaft: {{$listing->product_name}}&body=Hello, is this {{$listing->product_name}} still available?">
-                <button class="bg-blue-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Contact Seller</button>
-              </a>
-            </div>
-          
-        
+            <a href="mailto:{{$listing->email}}?subject=Chaft: {{$listing->product_name}}&body=Hello, is this {{$listing->product_name}} still available?">
+              <button class="bg-blue-600 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black">Contact Seller</button>
+            </a>
+          </div>
+        @endif
       </x-card>
       </div>
 

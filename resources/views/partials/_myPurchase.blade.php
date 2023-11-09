@@ -15,11 +15,11 @@
         </div>
         
 
-        <div class="status-text">
+        {{-- <div class="status-text">
             <form action="/toReceive">
                 <button class="status-button"><div class="status-icon"><i class="bx bx-package"></i></div>To Receive</button>
             </form>
-        </div>
+        </div> --}}
         
 
         <div class="status-text">
