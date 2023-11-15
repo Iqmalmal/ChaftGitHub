@@ -45,7 +45,7 @@
     .desc{
       text-transform: capitalize;
       margin-top: 50px;
-      margin-left: 300px;
+      margin-left: 270px;
     }
 
     .description-card {
@@ -93,7 +93,7 @@
 
       .description-card {
         width: 118%; /* Adjust the width as needed for smartphones */
-        margin-left: 60px;
+        margin-left: 55px;
       }
 
 
@@ -211,6 +211,9 @@
             </a>
           </div>
         @endif
+
+        <a href="mailto:admin@example.com?subject=Item%20report%20for%20{{$listing->product_name}}&amp;body=I%20want%20to%20report%20this%20item.%0D%0AReason: ">Report</a>
+
       </x-card>
       </div>
 

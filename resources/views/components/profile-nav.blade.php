@@ -409,12 +409,19 @@
               </a>
             </li>
 
-            {{-- <li class="nav-link">
-              <a href="/registerSeller">
-                <i class="bx bx-carousel icon"></i>
-                <span class="text nav-text">Register as Seller</span>
+            <li class="nav-link">
+              <a href="mailto:chaft@chaft.online">
+                <i class="bx bx-support icon"></i>
+                <span class="text nav-text">Contact Admin</span>
               </a>
-            </li> --}}
+            </li>
+
+            <li class="nav-link">
+            <a href="mailto:admin@example.com?subject=Reqeust%20for%20account%20deletion&amp;body=I%20reqeuest%20for%20account%deletion.%0D%0AFull%20Name:%20%0D%0AStudent%20ID:%20 ">
+                <i class="bx bx-trash icon"></i>
+                <span class="text nav-text">Account Deletion</span>
+              </a>
+            </li>
           </ul>
         </div>
 

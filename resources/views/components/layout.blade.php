@@ -107,6 +107,9 @@ footer a {
           </button>
         </form>
       </li>
+      <li>
+		    <a href="/profile" class="hover:text-laravel"><img src="{{auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('/images/user.png')}}" style=" max-height:50px; max-width:50px;"/> </a> 
+	    </li>	
       @else
       <li>
         <a href="/register" class="hover:text-laravelHover"><i class="fa-solid fa-user-plus"></i> <span class="text">Register/Login</span></a>
