@@ -182,6 +182,9 @@ class UserController extends Controller
     
     //Seller
 
+
+
+    //Show Seller Page
     public function sellerPage($id) {
         $sellerListing = Seller::find($id);
     
@@ -239,5 +242,24 @@ class UserController extends Controller
             return redirect('/')->with('message', 'Seller successfully registered!');
         }
     }
+
+    //Show Seller Dashboard
+public function showSellerDashboard($sellerId) {
+    $sellerId = auth()->user()->seller->id;
+    $seller = Seller::find($sellerId);
+    $listings = Listing::where('seller_id', $sellerId);
+
+    if (!$seller) {
+        // Handle the case when the seller is not found
+        return back()->with(['message' => 'Seller not found']);
+    }
+
+    $listings = $listings->get();
+
+    return view('seller.seller-dashboard', [
+        'seller' => $seller,
+        'listings' => $listings,
+    ]);
+}
 }
 

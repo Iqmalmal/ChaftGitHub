@@ -126,6 +126,9 @@ Route::get('/sellerRegister', [UserController::class, 'showSellerRegister'])->mi
 //Store Seller Data
 Route::post('/seller', [UserController::class, 'storeSeller'])->middleware('auth');
 
+//Show Seller Dashboard
+Route::get('/sellers/dashboard/{seller}', [UserController::class, 'showSellerDashboard'])->middleware('auth');
+
 
 
 
