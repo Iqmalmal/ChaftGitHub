@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ToyyibPayController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
+use Tarsoft\Toyyibpay\Toyyibpay;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,16 @@ Route::post('/checkout', [ListingController::class, 'checkout'])->middleware('au
 
 //pending
 Route::post('/pending', [ListingController::class, 'pending'])->middleware('auth');
+
+//Toyyibpay Create Bill
+Route::get('/toyyibpay', [ToyyibPayController::class, 'createBill'])->name('toyyibpay-create');
+
+//Toyyibpay Payment Status
+Route::get('/toyyibpay/status', [ToyyibPayController::class, 'paymentStatus'])->name('toyyibpay-status');
+
+//Toyyibpay Callback
+Route::post('/toyyibpay/callback', [ToyyibPayController::class, 'callback'])->name('toyyibpay-callback');
+
 
 
 

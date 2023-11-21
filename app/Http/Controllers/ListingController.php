@@ -136,12 +136,14 @@ public function update(Request $request, Listing $listing) {
     // Delete Listing
     public function destroy(Listing $listing) {
         // Make sure logged in user is owner
+
         if($listing->seller_id = auth()->id()) {
             if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
                 Storage::disk('public')->delete($listing->logo);
             }
             $listing->delete();
             return redirect('/')->with('message', 'Listing deleted successfully');
+
         } else {
             abort(403, 'Unauthorized Action');
         }
@@ -204,7 +206,7 @@ public function update(Request $request, Listing $listing) {
     }
 
     // Remove an item from the shopping cart
-    public function destroyCart($id) {
+    public function destroyCart(Request $request,$id) {
         $cartItem = ShoppingCart::find($id);
 
         // Make sure logged in user is owner
@@ -217,6 +219,12 @@ public function update(Request $request, Listing $listing) {
         }
 
         $cartItem->delete();
+
+        $total = $request->input('total');
+        $price = $request->input('price');
+        $totalPrice = $total - $price;
+        // Reset totalPrice in users table to 0
+        User::where('id', auth()->user()->id)->update(['totalPrice' => $totalPrice]);
 
         return redirect('/cart')->with('message', 'Item has been removed from cart');
     }
@@ -252,7 +260,22 @@ public function update(Request $request, Listing $listing) {
         // Reset totalPrice in users table to 0
         User::where('id', auth()->user()->id)->update(['totalPrice' => 0]);
 
-    return view('payment.checkout');
+        // Retrieve the product details from the pending orders
+        $user_id = auth()->id();
+
+        // Retrieve the product names
+        $productNames = PendingOrder::where('user_id', $user_id)->pluck('product_name')->toArray();
+        $productPrice = PendingOrder::where('user_id', $user_id)->pluck('price')->toArray();
+        $productNamesString = implode(', ', $productNames); 
+        $data = [
+            'form_params' => [
+                'product_names' => $productNamesString,
+                'product_price' => $productPrice,
+
+            ]
+        ];
+
+    return redirect('/toyyibpay', $data);
     }
 
     //Pending
