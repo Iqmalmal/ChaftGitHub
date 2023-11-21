@@ -177,37 +177,37 @@
     <div class="sidebar">
       <ul class="menu">
         <li class="active">
-          <a href="myShipment.html">
-            <i class="fa-solid fa-truck-fast"></i>
-            <span>Shipment</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="myOrders.html">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="products.html">
+          <a href="/sellers/dashboard/{seller}/product">
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Products</span>
           </a>
         </li>
 
         <li class="active">
-          <a href="finance.html">
+          <a href="/sellers/dashboard/{seller}/order">
+            <i class="fa-solid fa-box"></i>
+            <span>Orders</span>
+          </a>
+        </li>
+
+        {{-- <li class="active">
+          <a href="myShipment.html">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Shipment</span>
+          </a>
+        </li> --}}
+
+        <li class="active">
+          <a href="/sellers/dashboard/{seller}/finance">
             <i class="fa-solid fa-wallet"></i>
             <span>Finance</span>
           </a>
         </li>
 
         <li class="logout">
-          <a href="#">
+          <a href="/profile">
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span>Back</span>
           </a>
         </li>
       </ul>
@@ -217,7 +217,7 @@
       <div class="header--wrapper">
         <div class="header--title">
           <span>Seller</span>
-          <h2>Dashboard</h2>
+          <h2>{{$seller->sellerName}}'s Order Dashboard</h2>
         </div>
       </div>
 
@@ -235,31 +235,25 @@
         <table>
           <tr>
             <th>Product</th>
-            <th>Order Total</th>
+            <th>Order Variant</th>
+            <th>Recipient</th>
             <th>Status</th>
-            <th>Countdown</th>
+            {{-- <th>Countdown</th> --}}
             <th>Actions</th>
           </tr>
+          @foreach($order as $orders)
           <tr>
-            <td>Product 1</td>
-            <td>$100</td>
-            <td>In Progress</td>
-            <td>2 days</td>
+            <td>{{$orders->product_name}}</td>
+            <td>{{$orders->variant}}</td>
+            <td>{{$orders->recipient}}</td>
+            <td>{{$orders->status}}</td>
+            {{-- <td>2 days</td> --}}
             <td>
-              <button class="edit">Edit</button>
+              <button class="edit">Complete</button>
               <button class="delete">Delete</button>
             </td>
           </tr>
-          <tr>
-            <td>Product 2</td>
-            <td>$75</td>
-            <td>Shipped</td>
-            <td>5 days</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
+          @endforeach
         </table>
       </div>
     </div>

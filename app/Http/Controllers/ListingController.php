@@ -136,16 +136,15 @@ public function update(Request $request, Listing $listing) {
     // Delete Listing
     public function destroy(Listing $listing) {
         // Make sure logged in user is owner
-        if($listing->seller_id != auth()->id()) {
+        if($listing->seller_id = auth()->id()) {
+            if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
+                Storage::disk('public')->delete($listing->logo);
+            }
+            $listing->delete();
+            return redirect('/')->with('message', 'Listing deleted successfully');
+        } else {
             abort(403, 'Unauthorized Action');
         }
-        
-        if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
-            Storage::disk('public')->delete($listing->logo);
-        }
-        $listing->delete();
-        return redirect('/')->with('message', 'Listing deleted successfully');
-        
     }
 
     // Manage Listings
@@ -236,12 +235,14 @@ public function update(Request $request, Listing $listing) {
             PendingOrder::create([
                 'user_id' => auth()->user()->id,
                 'product_id' => $cartItem->product_id,
+                'recipient' => auth()->user()->name,
                 'product_name' => $cartItem->product_name,
                 'price' => $cartItem->price,
                 'quantity' => $cartItem->quantity,
                 'variant' => $cartItem->variant,
                 'images' => $cartItem->images,
-                'totalPrice' => $request->input('totalPrice')
+                'totalPrice' => $request->input('totalPrice'),
+                'status' => 'Unpaid'
             ]);
         }
 

@@ -223,7 +223,7 @@
             </li>
 
             <li class="nav-link">
-              <a href="/sellers/dashboard/{seller}">
+              <a href="/sellers/dashboard/{seller}/product">
                 <i class="bx bx-box icon"></i>
                 <span class="text nav-text">Seller Center</span>
               </a>
@@ -246,12 +246,12 @@
         </div>
 
         <div class="bottom-content">
-          <li class="">
-            <a href="#">
+          {{-- <li class="">
+            <form action="/logout" method="POST">
               <i class="bx bx-log-out icon"></i>
-              <span class="text nav-text">Logout</span>
-            </a>
-          </li>
+              <button class="text nav-text">Logout</button>
+            </form>
+          </li> --}}
         </div>
       </div>
     </nav>

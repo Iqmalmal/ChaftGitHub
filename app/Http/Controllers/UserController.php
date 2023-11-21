@@ -243,23 +243,74 @@ class UserController extends Controller
         }
     }
 
-    //Show Seller Dashboard
-public function showSellerDashboard($sellerId) {
-    $sellerId = auth()->user()->seller->id;
-    $seller = Seller::find($sellerId);
-    $listings = Listing::where('seller_id', $sellerId);
 
-    if (!$seller) {
-        // Handle the case when the seller is not found
-        return back()->with(['message' => 'Seller not found']);
+    //Show Seller Product Dashboard
+    public function showSellerProductDashboard($sellerId) {
+        $sellerId = auth()->user()->seller->id;
+        $seller = Seller::find($sellerId);
+        $listings = Listing::where('seller_id', $sellerId);
+
+        if (!$seller) {
+            // Handle the case when the seller is not found
+            return back()->with(['message' => 'Seller not found']);
+        }
+
+        $listings = $listings->get();
+
+        //Search filter (too hard to make it work right now)
+        $searchQuery = request('search');
+    
+            // Apply the search filter if a query is present
+            if ($searchQuery) {
+                $listings = $listings->where('product_name', 'like', '%' . $searchQuery . '%');
+            }
+
+        return view('seller.seller-product-dashboard', [
+            'seller' => $seller,
+            'listings' => $listings,
+        ]);
     }
 
-    $listings = $listings->get();
+    //Show Seller Order Dashboard
+    public function showSellerOrderDashboard($sellerId){
+        $sellerId = auth()->user()->seller->id;
+        $seller = Seller::find($sellerId);
+        $listings = Listing::where('seller_id', $sellerId);
+        $order = PendingOrder::whereHas('listing', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        })->get();
 
-    return view('seller.seller-dashboard', [
-        'seller' => $seller,
-        'listings' => $listings,
-    ]);
-}
+        if (!$seller) {
+            // Handle the case when the seller is not found
+            return back()->with(['message' => 'Seller not found']);
+        }
+
+        $listings = $listings->get();
+
+        return view('seller.seller-order-dashboard', [
+            'seller' => $seller,
+            'listings' => $listings,
+            'order' => $order,
+        ]);
+    }
+
+    //Show Seller Finance Dashboard
+    public function showSellerFinanceDashboard($sellerId) {
+        $sellerId = auth()->user()->seller->id;
+        $seller = Seller::find($sellerId);
+        $listings = Listing::where('seller_id', $sellerId);
+
+        if (!$seller) {
+            // Handle the case when the seller is not found
+            return back()->with(['message' => 'Seller not found']);
+        }
+
+        $listings = $listings->get();
+
+        return view('seller.seller-finance-dashboard', [
+            'seller' => $seller,
+            'listings' => $listings,
+        ]);
+    }
 }
 

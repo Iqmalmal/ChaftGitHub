@@ -180,162 +180,43 @@
       padding: 1rem;
       margin-bottom: 2rem;
     }
-
-    .add-section span {
-      display: block;
-      font-size: 16px; /* Match the font size of the adjacent span */
-      font-family: "Poppins", sans-serif; /* Match the font family */
-    }
-
-    .add-section input[type="text"] {
-      border: none; /* Remove the border */
-      border-bottom: 1px solid #000; /* Add a bottom line */
-      background: transparent;
-      padding: 5px;
-      width: 10rem;
-      height: 40px;
-      font-size: 16px; /* Match the font size of the adjacent span */
-      font-family: "Poppins", sans-serif; /* Match the font family */
-    }
-
-    .wrapper {
-      width: 200px;
-      margin-top: 2rem;
-      background-color: transparent;
-    }
-
-    .select-btn,
-    .options li {
-      display: flex;
-      cursor: pointer;
-      align-items: center;
-    }
-
-    .select-btn {
-      height: 2.3rem;
-      font-size: 22px;
-      padding: 0 15px;
-      border-radius: 8px;
-      background: #ffffff;
-      justify-content: space-between;
-    }
-
-    .select-btn i {
-      font-size: 1rem; /* You can adjust the size as needed */
-      transition: transform 0.3s linear;
-    }
-
-    .wrapper.active .select-btn i {
-      transform: rotate(-180deg);
-    }
-
-    .content {
-      display: none;
-      padding: 1.5rem;
-      margin-top: 0.5rem;
-      border-radius: 8px;
-      background: #ffffff;
-    }
-
-    .wrapper.active .content {
-      display: block;
-    }
-
-    .content .options {
-      margin-top: 0.3rem;
-      max-height: 250px;
-      overflow-y: auto;
-      padding-right: 7px;
-    }
-
-    .options::-webkit-scrollbar {
-      width: 7px;
-    }
-
-    .options::-webkit-scrollbar-track {
-      background: #d1eaf0;
-      border-radius: 25px;
-    }
-
-    .options::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 25px;
-    }
-
-    .options li {
-      height: 40px;
-      padding: 0 13px;
-      font-size: 15px;
-      border-radius: 7px;
-    }
-
-    .options li:hover,
-    li.selected {
-      background-color: #aca8a8;
-    }
-
-    .pStock {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .pStock .stock {
-      display: flex;
-    }
-
-    .stock span {
-      padding: 0.9rem 2rem;
-    }
-
-    .stock input[type="number"] {
-      border: none;
-      border-bottom: 1px solid #000;
-      background: transparent;
-      padding: 5px;
-      margin-right: 10px;
-      width: 10rem;
-      height: 40px;
-      font-size: 16px;
-      font-family: "Poppins", sans-serif;
-    }
   </style>
 
   <body>
     <div class="sidebar">
       <ul class="menu">
         <li class="active">
-          <a href="myShipment.html">
-            <i class="fa-solid fa-truck-fast"></i>
-            <span>Shipment</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="myOrders.html">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="products.html">
+          <a href="/sellers/dashboard/{seller}/product">
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Products</span>
           </a>
         </li>
 
         <li class="active">
-          <a href="finance.html">
+          <a href="/sellers/dashboard/{seller}/order">
+            <i class="fa-solid fa-box"></i>
+            <span>Orders</span>
+          </a>
+        </li>
+{{-- 
+        <li class="active">
+          <a href="myShipment.html">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Shipment</span>
+          </a>
+        </li> --}}
+
+        <li class="active">
+          <a href="/sellers/dashboard/{seller}/finance">
             <i class="fa-solid fa-wallet"></i>
             <span>Finance</span>
           </a>
         </li>
 
         <li class="logout">
-          <a href="#">
+          <a href="/profile">
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span>Back</span>
           </a>
         </li>
       </ul>
@@ -345,77 +226,35 @@
       <div class="header--wrapper">
         <div class="header--title">
           <span>Seller</span>
-          <h2>Dashboard</h2>
+          <h2>{{$seller->sellerName}}'s Finance Dashboard</h2>
         </div>
       </div>
 
-      <div class="add-section">
-        <div class="pStock">
-          <span
-            >Product Name :
-            <input type="text" placeholder="Chips" />
-          </span>
-
-          <div class="stock">
-            <span>Stock:</span>
-            <input type="number" id="minQuantity" placeholder="Min" />
-
-            <input type="number" id="maxQuantity" placeholder="Max" />
-          </div>
-        </div>
-
-        <div class="wrapper">
-          <span>Categories</span>
-          <div class="select-btn">
-            <span>Options</span>
-            <i class="fa-solid fa-angle-down"></i>
-          </div>
-
-          <div class="content">
-            <ul class="options"></ul>
-          </div>
-        </div>
-      </div>
+      {{-- <div class="add-section"></div> --}}
 
       <div class="status-section">
-        <ul class="status-list">
+        {{-- <ul class="status-list">
           <li><span></span>All</li>
-          <li><span></span>Sold Out</li>
-
-          <li><span></span>Delisted</li>
-        </ul>
+          <li><span></span>Order Income</li>
+          <li><span></span> Withdrawals</li>
+          <li><span></span>Refund from Order</li>
+        </ul> --}}
 
         <table>
           <tr>
             <th>Product Name</th>
-            <th>Variations</th>
-            <th>Price</th>
+            <th>Type/Description</th>
+            <th>Amount</th>
             <th>Stock</th>
-            <th>Sales</th>
-            <th>Action</th>
           </tr>
+          @foreach($listings as $listing)
           <tr>
-            <td>Product 1</td>
-            <td>Blue</td>
-            <td>$100</td>
+            <td>{{$listing->product_name}}</td>
+            <td>{{$listing->description}}</td>
+            <td>RM {{$listing->price}}</td>
             <td>300</td>
-            <td>2</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
           </tr>
-          <tr>
-            <td>Product 2</td>
-            <td>Red</td>
-            <td>$75</td>
-            <td>100</td>
-            <td>2</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
+          @endforeach
         </table>
       </div>
     </div>
