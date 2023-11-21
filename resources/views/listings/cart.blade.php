@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 @php
-                $total = 0; // Initialize the total variable
+                $total = 1; // Initialize the total variable
                 @endphp
                 @unless($cartItems->isEmpty())
                 @foreach($cartItems as $item)
@@ -33,6 +33,7 @@
                 // Add the subtotal to the total
                 $total += $subtotal;
                 
+
                 $user = Auth::user(); // Retrieve the authenticated user instance
                 $user->totalPrice = $total; // Assign the value of $total to the 'total' field
                 $user->save(); // Save the user model to persist the changes
@@ -56,6 +57,8 @@
                             @csrf
                             @method('DELETE')
                             <button class="text-red-500"><i class="fa-solid fa-trash"></i> Remove</button>
+                            <input type="hidden" name="price" value="{{ $item->price }}">
+                            <input type="hidden" name="total" value="{{$total}}">
                         </form>
                     </td>
                 </tr>
@@ -73,6 +76,7 @@
         @if(!$cartItems->isEmpty())
         <div class="text-right mt-4">
             <p class="text-xl font-bold">Total: RM {{ $total }}</p>
+            <span style="font-size: 10px; color:red;">*RM1 each transaction fee*</span>
             <form action="/checkout" method="POST">
                 @csrf
                 <button class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to Checkout</button>
