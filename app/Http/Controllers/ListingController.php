@@ -136,17 +136,17 @@ public function update(Request $request, Listing $listing) {
     // Delete Listing
     public function destroy(Listing $listing) {
         // Make sure logged in user is owner
-        if($listing->seller_id != auth()->id()) {
+
+        if($listing->seller_id = auth()->id()) {
             if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
                 Storage::disk('public')->delete($listing->logo);
             }
             $listing->delete();
             return redirect('/')->with('message', 'Listing deleted successfully');
-            
+
         } else {
             abort(403, 'Unauthorized Action');
         }
-
     }
 
     // Manage Listings
@@ -251,7 +251,6 @@ public function update(Request $request, Listing $listing) {
                 'images' => $cartItem->images,
                 'totalPrice' => $request->input('totalPrice'),
                 'status' => 'Unpaid'
-
             ]);
         }
 

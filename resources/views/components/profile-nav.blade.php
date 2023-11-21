@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <title>Profile</title>
   </head>
-
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Poppins:wght@300;400;700&display=swap");
 
@@ -17,39 +23,26 @@
       font-family: "Poppins", sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      outline: none;
     }
 
     :root {
-      --body-color: #e4e9f7;
-      --sidebar-color: #fff;
-      --primary-color: #7bb4e3;
-      --primary-color-light: #bbd2ec;
-      --toggle-color: #ddd;
-      --text-color: #707070;
+      --body-colour: #e4e9f7;
+      --sidebar-colour: #fff;
+      --primary-colour: #695cfe;
+      --primary-colour-light: #f6f5ff;
+      --toggle-colour: #ddd;
+      --text-colour: #707070;
 
-      --trans-02: all 0.2s ease;
-      --trans-03: all 0.3s ease;
-      --trans-04: all 0.4s ease;
-      --trans-05: all 0.5s ease;
+      --tran-02: all 0.2s ease;
+      --tran-03: all 0.3s ease;
+      --tran-04: all 0.4s ease;
+      --tran-05: all 0.4s ease;
     }
+
     body {
       height: 100vh;
-      background: var(--body-color);
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-
-    .sidebar .text {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text-color);
-    }
-
-    .sidebar .image {
-      min-width: 60px;
-      display: flex;
-      align-items: center;
+      background-color: var(--body-colour);
     }
 
     .sidebar {
@@ -59,7 +52,33 @@
       height: 100%;
       width: 250px;
       padding: 10px 14px;
-      background: var(--sidebar-color);
+      background: var(--sidebar-colour);
+      transition: var(--tran-05);
+      z-index: 100;
+    }
+
+    .sidebar.close {
+      width: 70px;
+    }
+
+    .sidebar .text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-colour);
+      transition: var(--tran-03);
+      white-space: nowrap;
+      opacity: 1;
+    }
+
+    .sidebar.close .text {
+      opacity: 0;
+    }
+
+    .sidebar .image {
+      min-width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .sidebar li {
@@ -80,8 +99,8 @@
 
     .sidebar li .icon,
     .sidebar li .text {
-      color: var(--text-color);
-      transition: var(--trans-02);
+      color: var(--text-colour);
+      transition: var(--tran-02);
     }
 
     .sidebar header {
@@ -90,7 +109,6 @@
 
     .sidebar .image-text img {
       width: 40px;
-      border-radius: 6px;
     }
 
     .sidebar header .image-text {
@@ -110,32 +128,27 @@
     .sidebar header .toggle {
       position: absolute;
       top: 50%;
-      left: 225px;
-      transform: translateY(-50%);
+      right: -25px;
+      transform: translateY(-50%) rotate(180deg);
       height: 25px;
       width: 25px;
-      background: var(--primary-color);
+      background: var(--primary-colour);
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      color: var(--sidebar-color);
+      color: var(--sidebar-colour);
       font-size: 22px;
+      transition: var(--tran-03);
     }
 
-    .sidebar .search-box {
-      background: var(--primary-color-light);
+    .sidebar.close header .toggle {
+      transform: translateY(-50%);
     }
 
-    .search-box input {
-      height: 100%;
-      width: 100%;
-      outline: none;
-      border: none;
-      border-radius: 6px;
-      background: var(--primary-color-light);
+    .sidebar .menu {
+      margin-top: 35px;
     }
-
     .sidebar li a {
       height: 100%;
       width: 100%;
@@ -143,16 +156,16 @@
       align-items: center;
       text-decoration: none;
       border-radius: 6px;
-      transition: var(--trans-04);
+      transition: var(--tran-04);
     }
 
     .sidebar li a:hover {
-      background: var(--primary-color);
+      background: var(--primary-colour);
     }
 
     .sidebar li a:hover .icon,
     .sidebar li a:hover .text {
-      color: var(--sidebar-color);
+      color: var(--sidebar-colour);
     }
 
     .sidebar .menu-bar {
@@ -161,213 +174,18 @@
       flex-direction: column;
       justify-content: space-between;
     }
-    .bottom-content li {
-      margin-top: 100px;
-      padding: 5px 0;
-      border-top: 1px solid #ddd;
-    }
-
-    input:focus {
-      outline: none;
-    }
-
-    form#search input[type="search"] {
-      -webkit-border-radius: 60px 0 0 60px;
-      -moz-border-radius: 60px 0 0 60px;
-      border-radius: 60px 0 0 60px;
-      border: 1px solid #ccc;
-      height: 3em;
-      padding-left: 20px;
-      position: absolute;
-      right: 6em;
-      top: 1em;
-      width: 250px;
-      font-weight: bold;
-    }
-
-    #create {
-      width: 60%;
-      margin: 120px auto;
-    }
-
-    fieldset {
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      border: 2px solid;
-    }
-
-    legend {
-      text-align: right;
-      font-weight: bold;
-      font-size: 2em;
-    }
-
-    /* center legend in IE */
-    fieldset > legend {
-      display: table;
-      float: none;
-      margin: 0 auto;
-    }
-
-    #create #basics input {
-      width: 60%;
-      display: block;
-      padding: 5px 0 5px 10px;
-      margin-bottom: 10px;
-    }
-
-    #name {
-      font-size: 1em;
-    }
-
-    #basics label,
-    #options .grplabel {
-      width: 100px;
-      text-align: right;
-      float: left;
-      clear: left;
-      margin: 0 15px 20px 0;
-      font-weight: bolder;
-      font-size: 1.2em;
-    }
-
-    .grplabel.date-ps {
-      position: absolute;
-      right: 150px;
-      float: bottom;
-      margin-top: 25px;
-    }
-
-    #options div {
-      width: 250px;
-      float: left;
-    }
-
-    #options div label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    #create input[type="submit"] {
-      padding: 5px 20px;
-      height: 3em;
-      text-align: center;
-      background-color: #5cb4f2;
-      cursor: pointer;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      float: right;
-      border-style: none;
-      margin-top: -0.5em;
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-
-    /* FF only */
-    @media screen and (-moz-images-in-menus: 0) {
-      fieldset {
-        position: relative;
-      }
-      fieldset > legend {
-        position: absolute;
-        left: 80%;
-        top: -20px; /* depends on font size and border */
-        transform: translate(-50%, 0);
-      }
-    }
-
-    .container {
-      width: 100%;
-      height: auto;
-    }
-
-    .profile {
-      margin: 20px auto;
-      max-width: 200px;
-      position: relative;
-      border-radius: 50%;
-      left: 450px;
-      bottom: 200px;
-    }
-    .profile:hover .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    .profile:hover .overlay p {
-      display: block;
-    }
-    .profile img {
-      display: block;
-      width: 100%;
-      border-radius: 50%;
-      height: auto;
-    }
-    .profile .overlay {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      overflow: hidden;
-      height: 100%;
-      border-radius: 50%;
-    }
-    .profile .overlay input {
-      width: 100%;
-      position: absolute;
-      opacity: 0;
-      bottom: 20px;
-      z-index: 2;
-      cursor: pointer;
-    }
-    .profile .overlay p {
-      position: absolute;
-      bottom: 10px;
-      font-weight: bold;
-      text-align: center;
-      color: #fff;
-      width: 100%;
-      display: none;
-    }
-
-    .status-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    margin-bottom: 10px;
-}
-
-    .status-button{
-      display: flex;
-      align-items: center;
-      text-align: left;
-      background-color: #7bb4e3;
-      padding: 10px;
-      margin-right: 20px;
-      border-radius: 5px;
-      width: 385px;
-      height: 60px;
-
-      font-size: 15px;
-    }
-
-    .status-button:hover {
-      background-color: #c5c7c5;
-    }
   </style>
-
   <body>
-
-    <nav class="sidebar">
+    <nav class="sidebar close">
       <header>
         <div class="image-text">
-          <span class="image"> <a href="/"> <img src="images/logo.png" alt="logo" /> </span>
+          <span class="image">
+            <img src="/images/logo.png" alt="logo" />
+          </span>
 
           <div class="text header-text">
-            <span class="name">GMI Chaft</span>
+            <span class="name">GMI CHAFT</span>
           </div>
-
-        </a>
         </div>
 
         <i class="bx bx-chevron-right toggle"></i>
@@ -375,15 +193,10 @@
 
       <div class="menu-bar">
         <div class="menu">
-          <li class="search-box">
-            <i class="bx bx-search icon"></i>
-            <input type="search" placeholder="Search..." />
-          </li>
-
           <ul class="menu-links">
             <li class="nav-link">
                 <a href="/">
-                    <iconify-icon icon="mingcute:back-line" width="20" style="margin-left: 22px"></iconify-icon>
+                  <i class="bx bx-arrow-back icon"></i>
                   <span class="text nav-text"> &nbsp;  Back</span>
                 </a>
               </li>
@@ -410,6 +223,13 @@
             </li>
 
             <li class="nav-link">
+              <a href="/sellers/dashboard/{seller}/product">
+                <i class="bx bx-box icon"></i>
+                <span class="text nav-text">Seller Center</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
               <a href="mailto:chaft@chaft.online">
                 <i class="bx bx-support icon"></i>
                 <span class="text nav-text">Contact Admin</span>
@@ -417,7 +237,7 @@
             </li>
 
             <li class="nav-link">
-            <a href="mailto:admin@example.com?subject=Reqeust%20for%20account%20deletion&amp;body=I%20reqeuest%20for%20account%deletion.%0D%0AFull%20Name:%20%0D%0AStudent%20ID:%20 ">
+            <a href="mailto:admin@example.com?subject=Reqeust%20for%20account%20deletion&amp;body=I%20reqeuest%20for%20account%20deletion.%0D%0AFull%20Name:%20%0D%0AStudent%20ID:%20 ">
                 <i class="bx bx-trash icon"></i>
                 <span class="text nav-text">Account Deletion</span>
               </a>
@@ -426,32 +246,23 @@
         </div>
 
         <div class="bottom-content">
-          <li class="">
-            <a href="#">
+          {{-- <li class="">
+            <form action="/logout" method="POST">
               <i class="bx bx-log-out icon"></i>
-              <span class="text nav-text">Logout</span>
-            </a>
-          </li>
+              <button class="text nav-text">Logout</button>
+            </form>
+          </li> --}}
         </div>
       </div>
     </nav>
 
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script>
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
+      const body = document.querySelector("body"),
+        sidebar = body.querySelector(".sidebar"),
+        toggle = body.querySelector(".toggle");
 
-          reader.onload = function (e) {
-            $("#blah").attr("src", e.target.result);
-          };
-
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
-
-      $("#imgInp").change(function () {
-        readURL(this);
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
       });
     </script>
   </body>

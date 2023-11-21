@@ -33,6 +33,11 @@ class Listing extends Model
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
 
+    // Relationship With PendingOrder
+    public function pendingOrder() {
+        return $this->hasMany(PendingOrder::class, 'product_id');
+    }
+
     protected $casts = [
         'images' => 'array',
     ];

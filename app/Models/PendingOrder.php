@@ -16,4 +16,9 @@ class PendingOrder extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Relationship To Listing
+    public function listing() {
+        return $this->belongsTo(Listing::class, 'product_id');
+    }
 }
