@@ -235,7 +235,7 @@ public function update(Request $request, Listing $listing) {
     //Payment
 
     // Show checkout page
-    public function checkout(Request $request) {
+    /* public function checkout(Request $request) {
 
         $cart = ShoppingCart::where('user_id', auth()->user()->id)->get();
 
@@ -275,8 +275,8 @@ public function update(Request $request, Listing $listing) {
             ]
         ];
 
-    return redirect('/toyyibpay', $data);
-    }
+    return redirect('/toyyibpay');
+    } */
 
     //Pending
     public function pending() {

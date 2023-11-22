@@ -69,7 +69,7 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 //Payment
 
 //checkout
-Route::post('/checkout', [ListingController::class, 'checkout'])->middleware('auth');
+Route::post('/checkout', [ToyyibPayController::class, 'checkout'])->middleware('auth');
 
 //pending
 Route::post('/pending', [ListingController::class, 'pending'])->middleware('auth');
