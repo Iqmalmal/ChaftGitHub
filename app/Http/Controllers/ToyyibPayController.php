@@ -57,8 +57,8 @@ class ToyyibPayController extends Controller
             'billDescription'=>'Payment for ' . $productNamesString ,
             'billPriceSetting'=> 1,
             'billPayorInfo'=> 1,
-            'billAmount'=> $produtPrice,
-            'billReturnUrl'=> route('toyyibpay-status', ),
+            'billAmount'=> $request->input('totalPrice') * 100,
+            'billReturnUrl'=> route('toyyibpay-status'),
             'billCallbackUrl'=> route('toyyibpay-callback'),
             'billExternalReferenceNo' => 'Bill-' . uniqid(),
             'billTo'=> 'Chaft',
@@ -79,34 +79,35 @@ class ToyyibPayController extends Controller
         return redirect('https://dev.toyyibpay.com/' . $billCode);
     }
 
-    public function paymentStatus(PendingOrder $pendingOrder){
-        dd(request()->all(['status_id', 'billcode', 'order_id']));
+    public function paymentStatus(Request $request){
+        $response = $request->all(['status_id', 'billcode', 'order_id', 'uniqueGroupIds']);
+    
 
-        /* if($response['status_id'] == 1) {
+        if($response['status_id'] == 1) {
 
-            $pendingOrder->update([
+            /* $pendingOrder->update([
                 'status' => 'Paid'
-            ]);
+            ]); */
 
             return redirect('/')->with('message', 'Payment successful!');
         } elseif($response['status_id'] == 2) {
 
-            $pendingOrder->update([
+            /* $pendingOrder->update([
                 'status' => 'Pending'
-            ]);
+            ]); */
 
             return redirect('/')->with('message', 'Payment Pending!');
         
         } elseif($response['status_id'] == 3) {
                 
-            $pendingOrder->update([
+            /* $pendingOrder->update([
                 'status' => 'Failed'
-            ]);
+            ]); */
 
             return redirect('/')->with('message', 'Payment failed!');
         } else {
             return redirect('/')->with('message', 'Product Pending for Payment!');
-        } */
+        }
     }
 
     public function callback(){
