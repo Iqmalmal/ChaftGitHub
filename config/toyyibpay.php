@@ -10,3 +10,31 @@ return [
   'category' => env('CATEGORY_KEY'),
 
 ];
+
+
+
+/* if($response['status_id'] == 1) {
+
+            $pendingOrder->update([
+                'status' => 'Paid'
+            ]);
+
+            return redirect('/')->with('message', 'Payment successful!');
+        } elseif($response['status_id'] == 2) {
+
+            $pendingOrder->update([
+                'status' => 'Pending'
+            ]);
+
+            return redirect('/')->with('message', 'Payment Pending!');
+        
+        } elseif($response['status_id'] == 3) {
+                
+            $pendingOrder->update([
+                'status' => 'Failed'
+            ]);
+
+            return redirect('/')->with('message', 'Payment failed!');
+        } else {
+            return redirect('/')->with('message', 'Product Pending for Payment!');
+        } */

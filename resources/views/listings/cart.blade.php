@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 @php
-                $total = 1; // Initialize the total variable
+                $total = 0; // Initialize the total variable
                 @endphp
                 @unless($cartItems->isEmpty())
                 @foreach($cartItems as $item)
@@ -77,7 +77,7 @@
         <div class="text-right mt-4">
             <p class="text-xl font-bold">Total: RM {{ $total }}</p>
             <span style="font-size: 10px; color:red;">*RM1 each transaction fee*</span>
-            <form action="/checkout" method="POST">
+            <form action="toyyibpay" method="GET">
                 @csrf
                 <button class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block">Proceed to Checkout</button>
                 <input type="hidden" name="totalPrice" value="{{ $total }}">
