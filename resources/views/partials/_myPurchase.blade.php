@@ -13,7 +13,7 @@
         <div class="status-icon">
           <i class="bx bxs-truck"></i>
         </div>
-        <div class="status-text">To Recieve</div>
+        <div class="status-text">To Receive</div>
       </div>
 
       <div class="status-item" id="complete">

@@ -10,7 +10,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Document</title>
+    <title>Product Dashboard</title>
   </head>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Poppins:wght@300;400;700&display=swap");
@@ -319,12 +319,12 @@
           </a>
         </li>
 
-        {{-- <li class="active">
-          <a href="myShipment.html">
+        <li class="active">
+          <a href="/sellers/dashboard/{seller}/shipment">
             <i class="fa-solid fa-truck-fast"></i>
             <span>Shipment</span>
           </a>
-        </li> --}}
+        </li>
 
         <li class="active">
           <a href="/sellers/dashboard/{seller}/finance">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Listing;
 use App\Models\PendingOrder;
@@ -227,63 +228,5 @@ public function update(Request $request, Listing $listing) {
         User::where('id', auth()->user()->id)->update(['totalPrice' => $totalPrice]);
 
         return redirect('/cart')->with('message', 'Item has been removed from cart');
-    }
-
-
-
-
-    //Payment
-
-    // Show checkout page
-    /* public function checkout(Request $request) {
-
-        $cart = ShoppingCart::where('user_id', auth()->user()->id)->get();
-
-        foreach ($cart as $cartItem) {
-            PendingOrder::create([
-                'user_id' => auth()->user()->id,
-                'product_id' => $cartItem->product_id,
-                'group_id' => uniqid(),
-                'recipient' => auth()->user()->name,
-                'product_name' => $cartItem->product_name,
-                'price' => $cartItem->price,
-                'quantity' => $cartItem->quantity,
-                'variant' => $cartItem->variant,
-                'images' => $cartItem->images,
-                'totalPrice' => $request->input('totalPrice'),
-                'status' => 'Unpaid'
-            ]);
-        }
-
-        // Delete data in shopping_cart table
-        ShoppingCart::where('user_id', auth()->user()->id)->delete();
-
-        // Reset totalPrice in users table to 0
-        User::where('id', auth()->user()->id)->update(['totalPrice' => 0]);
-
-        // Retrieve the product details from the pending orders
-        $user_id = auth()->id();
-
-        // Retrieve the product names
-        $productNames = PendingOrder::where('user_id', $user_id)->pluck('product_name')->toArray();
-        $productPrice = PendingOrder::where('user_id', $user_id)->pluck('price')->toArray();
-        $productNamesString = implode(', ', $productNames); 
-        $data = [
-            'form_params' => [
-                'product_names' => $productNamesString,
-                'product_price' => $productPrice,
-
-            ]
-        ];
-
-    return redirect('/toyyibpay');
-    } */
-
-    //Pending
-    public function pending() {
-
-        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
-        PendingOrder::where('user_id', auth()->user()->id)->delete();
-        return back()->with('message', 'Your order has been placed!');
     }
 }
