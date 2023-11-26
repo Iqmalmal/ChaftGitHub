@@ -1,4 +1,5 @@
 
+@include('partials._tailwind')
 
 {{-- <div class="status-container"> --}}
     <div class="status-item" >

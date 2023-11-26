@@ -44,11 +44,6 @@ class ToyyibPayController extends Controller
         $productNames = PendingOrder::where('user_id', $user_id)->pluck('product_name')->toArray();
         $productNamesString = implode(', ', $productNames); 
         $groupIds = $cart->pluck('group_id')->toArray();
-        $uniqueGroupIds = array_unique($groupIds);
-
-        $produtPrice = PendingOrder::where('user_id', $user_id)->value('totalPrice') * 100;
-
-        /* $produtPrice = PendingOrder::where('user_id', $user_id)->whereIn('group_id', $uniqueGroupIds)->value('totalPrice') * 100; */
 
         $some_data = array(
             'userSecretKey'=> config('toyyibpay.key'),

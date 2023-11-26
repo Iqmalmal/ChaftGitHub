@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::create('pending_order', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->string('recipient')->nullable();
+            $table->unsignedBigInteger('user_id'); //relate  to user table
+            $table->unsignedBigInteger('product_id'); //relate to listing table
+            $table->string('group_id'); //give a unique id for each group of product
+            $table->string('recipient')->nullable(); 
             $table->string('product_name');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 8, 2); //price per unit
             $table->integer('quantity');
             $table->string('variant')->nullable();
             $table->longText('images')->nullable();
-            $table->decimal('totalPrice', 8, 2)->nullable();
-            $table->string('status')->nullable();
+            $table->decimal('totalPrice', 8, 2)->nullable(); //price * quantity
+            $table->string('status')->nullable(); //Status: Unpaid, Paid, Cancelled
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
