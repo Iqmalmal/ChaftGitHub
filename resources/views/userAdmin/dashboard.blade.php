@@ -146,28 +146,16 @@
       <div class="logo"></div>
       <ul class="menu">
         <li class="active">
-          <a href="/"> <img style="height: 50px;" src="images/logo.png" alt="logo" />
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="#">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Data</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="#">
-            <i class="fa fa-chart-pie"></i>
-            <span>Chat</span>
+          <a href="/">
+            <img style="height: 50px;" src="images/logo.png" alt="logo" />
+            <span><b>Chaft</b></span>
           </a>
         </li>
 
         <li class="logout">
-            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
+                <span><b>Logout</b></span>
             </a>
 
             <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -184,7 +172,6 @@
           <h2>Dashboard</h2>
         </div>
 
-        <!-- <img src="amal.jpeg" alt="" /> -->
       </div>
       <h2>Chaft Seller List</h2>
 
@@ -199,7 +186,7 @@
           <tr>
             <td>{{$sellers->id}}</td>
             <td>{{$sellers->sellerName}}</td>
-            <td>{{$sellers->user->email}}</td> {{-- fetch seller email from user db --}}
+            <td>{{$sellers->user->email}}</td>
             <td><a href="/sellers/{{$sellers->id}}">View Seller Page</a></td>
           </tr>
         @endforeach
