@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pending_order', function (Blueprint $table) {
+        Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //relate  to user table
             $table->unsignedBigInteger('product_id'); //relate to listing table
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pending_order');
+        Schema::dropIfExists('order_item');
     }
 };
