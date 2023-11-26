@@ -117,7 +117,7 @@
       font-weight: 600;
     }
 
-    .sidebar header .toggle {
+    /* .sidebar header .toggle {
       position: absolute;
       top: 50%;
       left: 225px;
@@ -131,7 +131,7 @@
       border-radius: 50%;
       color: var(--sidebar-color);
       font-size: 22px;
-    }
+    } */
 
     .sidebar .search-box {
       background: var(--primary-color-light);
