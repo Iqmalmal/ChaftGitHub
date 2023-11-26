@@ -155,27 +155,33 @@ class UserController extends Controller
     //Show To Pay Section
     public function showToPay(User $user, PendingOrder $pendingOrder) {
         $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
-        return view('users.mypurchase.toPay', compact('orders'));
+
+        $totalPrice = $orders->sum(function ($order) {
+            return $order->price * $order->quantity;
+        });
+        return view('users.mypurchase.toPay', compact('orders', 'totalPrice'));
     }
 
-    //Show To Receive Section
-    public function showToReceive(User $user) {
-        return view('users.mypurchase.toReceive', ['user' => $user]);
+    public function showToReceive(User $user, PendingOrder $pendingOrder, Listing $listing) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        return view('users.mypurchase.toReceive', compact('orders'));
     }
 
-    //Show To Ship Section
-    public function showToShip(User $user) {
-        return view('users.mypurchase.toShip', ['user' => $user]);
+    public function showToShip(User $user, PendingOrder $pendingOrder) {
+        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+        return view('users.mypurchase.toShip', compact('orders'));
     }
 
     //Show Completed Section
     public function showCompleted(User $user) {
-        return view('users.mypurchase.completed', ['user' => $user]);
+        $orders = auth()->user()->pendingOrder;
+        return view('users.mypurchase.completed', compact('orders'));
     }
 
     //Show Cancelled Section
     public function showCancelled(User $user) {
-        return view('users.mypurchase.cancelled', ['user' => $user]);
+        $orders = auth()->user()->pendingOrder;
+        return view('users.mypurchase.cancelled', compact('orders'));
     }
 
 

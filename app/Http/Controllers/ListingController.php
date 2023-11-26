@@ -243,6 +243,7 @@ public function update(Request $request, Listing $listing) {
             PendingOrder::create([
                 'user_id' => auth()->user()->id,
                 'product_id' => $cartItem->product_id,
+                'group_id' => uniqid(),
                 'recipient' => auth()->user()->name,
                 'product_name' => $cartItem->product_name,
                 'price' => $cartItem->price,
