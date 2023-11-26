@@ -42,7 +42,7 @@ class ToyyibPayController extends Controller
         $user_id = auth()->id();
 
         // Retrieve the product names
-        $productNames = PendingOrder::where('user_id', $user_id)->pluck('product_name')->toArray();
+        $productNames = PendingOrder::where('group_id', $group_id)->pluck('product_name')->toArray();
         $productNamesString = implode(', ', $productNames); 
         $groupIds = $cart->pluck('group_id')->toArray();
 
@@ -54,7 +54,7 @@ class ToyyibPayController extends Controller
             'billPriceSetting'=> 1,
             'billPayorInfo'=> 1,
             'billAmount'=> $request->input('totalPrice') * 100,
-            'billReturnUrl'=> route('toyyibpay-status'),
+            'billReturnUrl'=> route('toyyibpay-status', ['group_id=' . $group_id]),
             'billCallbackUrl'=> route('toyyibpay-callback'),
             'billExternalReferenceNo' => 'Bill-' . uniqid(),
             'billTo'=> 'Chaft',
@@ -72,16 +72,19 @@ class ToyyibPayController extends Controller
         $response = Http::asForm()->post($url, $some_data);
         $billCode = $response[0]['BillCode'];
 
-        return redirect('https://dev.toyyibpay.com/' . $billCode . '?group_id=' . $group_id);
+        return redirect('https://dev.toyyibpay.com/' . $billCode );
     }
 
     public function paymentStatus(Request $request){
         $group_id = $request->query('group_id');
         $response = $request->all(['status_id', 'billcode', 'order_id']);
-    
-        $pendingOrders = PendingOrder::where('group_id', $group_id)->get();
+        
         if($group_id) {
         if($response['status_id'] == 1) {
+
+            //Move order from pending order to order table
+            $pendingOrders = PendingOrder::where('group_id', $group_id)->get();
+
             foreach ($pendingOrders as $pendingOrder) {
                 $orderItem = ([
                 'user_id' => $pendingOrder->user_id,
@@ -94,20 +97,21 @@ class ToyyibPayController extends Controller
                 'variant' => $pendingOrder->variant,
                 'images' => $pendingOrder->images,
                 'totalPrice' => $pendingOrder->totalPrice,
-                'status' => ' '
+                'status' => ' Paid '
                 ]);
                 
                 Order::create($orderItem);
-    
-                // Update pending order status
-                $pendingOrder->update([
-                    'status' => 'Paid'
-                ]);
+                
             }
+            //Remove order from pending order table
+            PendingOrder::where('group_id', $group_id)->delete();
     
             return redirect('/')->with('message', 'Payment successful!');
         } elseif($response['status_id'] == 2) {
-            // Handle other statuses similarly
+            
+            PendingOrder::where('group_id', $group_id)->update(['status' => 'Pending']);
+    
+            return redirect('/')->with('message', 'Payment unsuccessful!');
         }
     } else {
         return redirect('/')->with('message', 'Group ID not found.');
