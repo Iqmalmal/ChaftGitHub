@@ -176,7 +176,7 @@
     }
   </style>
   <body>
-    <nav class="sidebar close">
+    <nav class="sidebar close" style="border-right: 1px solid grey; border-opacity: 1;">
       <header>
         <div class="image-text">
           <span class="image">
