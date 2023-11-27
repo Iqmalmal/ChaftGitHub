@@ -375,8 +375,8 @@
     {{-- <div class="bg-white mx-auto mt-5 mr-5 items-center rounded-5 p-20 h-1010 shadow-lg " style="width: 1760px; height: 1010px; display:inline-block; margin-left: 85px"> --}}
 
     <x-card class="mx-auto mt-5 mr-5 items-center rounded-5 p-20 h-1010 shadow-lg " style="width: 1760px; display:inline-block; margin-left: 85px">  
-      @unless($orders->isEmpty())
-        @foreach($orders as $order)
+      @unless($orderItem->isEmpty())
+        @foreach($orderItem as $order)
 
         @php
         $images = json_decode($order->images);
@@ -390,7 +390,13 @@
               <td rowspan="3"><img style="max-height: 30vh;" class="w-30" src="{{ $imagePath }}"
                 alt="Product Image"></td>
               <td style="width: 70%; font-size: 25px; font-weight: 700;">Product Name: {{$order->product_name}} </td>
-              <td rowspan="3" style="font-size: 20px; font-weight: 700;">Price: {{$order->price * $order->quantity}}</td>
+              <td rowspan="3" style="font-size: 20px; font-weight: 700;">
+                Price: {{$order->price * $order->quantity}}
+                <a href="/listings/{{$order->product_id}}">
+                  <button class="bg-amber-300 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">View Live Product</button>
+                </a>
+                  
+              </td>
             </tr>
             <tr>
               <td style="width: 70% font-size: 20px; font-weight: 700;">Product Variant: {{$order->variant}}</td>
@@ -407,11 +413,6 @@
         <div class="total-price" style="margin-left: 90%">
         </div>
 
-      <form action="toyyibpay" method="GET">
-
-        @csrf
-        <button {{-- class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block" --}} style="background: green; color: white; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; margin-left: 1600px">Pay Now</button>
-      </form>
         @else
 
           <div class="to-pay">

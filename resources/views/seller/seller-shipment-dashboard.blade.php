@@ -1,3 +1,5 @@
+@include('partials._tailwind')
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +12,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Document</title>
+    <title>Shipement Dashboard</title>
   </head>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Poppins:wght@300;400;700&display=swap");
@@ -183,41 +185,43 @@
       color: white;
     }
   </style>
+
   <body>
     <div class="sidebar">
       <ul class="menu">
-        <li class="active">
-          <a href="myShipment.html">
-            <i class="fa-solid fa-truck-fast"></i>
-            <span>Shipment</span>
-          </a>
-        </li>
 
         <li class="active">
-          <a href="myOrders.html">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="products.html">
+          <a href="/sellers/dashboard/{seller}/product">
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Products</span>
           </a>
         </li>
 
         <li class="active">
-          <a href="finance.html">
+          <a href="/sellers/dashboard/{seller}/order">
+            <i class="fa-solid fa-box"></i>
+            <span>Orders</span>
+          </a>
+        </li>
+
+        <li class="active">
+          <a href="/sellers/dashboard/{seller}/shipment">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Shipment</span>
+          </a>
+        </li>
+
+        <li class="active">
+          <a href="/sellers/dashboard/{seller}/finance">
             <i class="fa-solid fa-wallet"></i>
             <span>Finance</span>
           </a>
         </li>
 
         <li class="logout">
-          <a href="#">
+          <a href="/profile">
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span>Back</span>
           </a>
         </li>
       </ul>
@@ -227,12 +231,12 @@
       <div class="header--wrapper">
         <div class="header--title">
           <span>Seller</span>
-          <h2>Dashboard</h2>
+          <h2>{{$seller->sellerName}}'s Shipment Dashboard</h2>
         </div>
       </div>
 
       <div class="status-section">
-        <ul class="status-list">
+{{--         <ul class="status-list">
           <li><span></span>All</li>
           <li><span></span>Unpaid</li>
           <li><span></span>To Ship</li>
@@ -240,36 +244,30 @@
           <li><span></span>Completed</li>
           <li><span></span>Cancellation</li>
           <li><span></span>Return/Refund</li>
-        </ul>
+        </ul> --}}
 
         <table>
           <tr>
+            <th>Recipient</th>
             <th>Product</th>
             <th>Order Total</th>
             <th>Status</th>
-            <th>Countdown</th>
             <th>Actions</th>
           </tr>
+          @foreach($orders as $order)
           <tr>
-            <td>Product 1</td>
-            <td>$100</td>
-            <td>In Progress</td>
-            <td>2 days</td>
+            <td>{{$order->recipient}}</td>
+            <td>{{$order->product_name}}</td>
+            <td>RM{{$order->totalPrice}}</td>
+            <td>{{$order->status}}</td>
             <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
+              <form action="/sellers/dashboard/{seller}/shipment" method="GET">
+                <button class="bg-blue-500 text-white rounded w-30 h-10 py-2 px-4 hover:bg-black font-bold">Shipped</button>
+                <input type="hidden" name="group_id" value="{{$order->group_id}}">
+              </form>
             </td>
           </tr>
-          <tr>
-            <td>Product 2</td>
-            <td>$75</td>
-            <td>Shipped</td>
-            <td>5 days</td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
+          @endforeach
         </table>
       </div>
     </div>
@@ -287,5 +285,8 @@
         });
       });
     </script>
+
+  <x-flash-message />
+
   </body>
 </html>

@@ -375,11 +375,11 @@
           <h2>Total Price: RM{{ $totalPrice }}</h2>
         </div>
 
-      <form action="toyyibpay" method="GET">
+      {{-- <form action="toyyibpay" method="GET">
 
-        @csrf
-        <button {{-- class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block" --}} style="background: green; color: white; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; margin-left: 1600px">Pay Now</button>
-      </form>
+        @csrf --}}
+        <button style="background: green; color: white; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; margin-left: 1600px">Pay Now</button>
+      {{-- </form> --}}
         @else
 
           <div class="to-pay">

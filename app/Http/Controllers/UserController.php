@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Listing;
+use App\Models\Order;
 use App\Models\PendingOrder;
 use App\Models\studentEmail;
 use Illuminate\Http\Request;
@@ -162,26 +163,47 @@ class UserController extends Controller
         return view('users.mypurchase.toPay', compact('orders', 'totalPrice'));
     }
 
-    public function showToReceive(User $user, PendingOrder $pendingOrder, Listing $listing) {
+    //Show To Receive Section
+    public function showToReceive(User $user, PendingOrder $pendingOrder, Order $orderItem) {
         $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
-        return view('users.mypurchase.toReceive', compact('orders'));
+        $id = auth()->id();
+        $orderItem = Order::where('user_id', $id)->get();
+
+        //get listing for email
+        $email = Listing::all()->first();
+        return view('users.mypurchase.toReceive', compact('orders', 'orderItem', 'email'));
     }
 
-    public function showToShip(User $user, PendingOrder $pendingOrder) {
-        $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
+    //Show To Ship Section
+    public function showToShip(User $user, Order $order) {
+        $orders = auth()->user()->order; // Retrieve the pending orders for the authenticated user
         return view('users.mypurchase.toShip', compact('orders'));
     }
 
     //Show Completed Section
-    public function showCompleted(User $user) {
+    public function showCompleted(User $user, Request $request) {
         $orders = auth()->user()->pendingOrder;
-        return view('users.mypurchase.completed', compact('orders'));
+        
+        $id = auth()->id();
+        $orderItem = Order::where('user_id', $id)->where('status', 'Received')->get();
+        return view('users.mypurchase.completed', compact('orders', 'orderItem'));
     }
 
     //Show Cancelled Section
     public function showCancelled(User $user) {
         $orders = auth()->user()->pendingOrder;
         return view('users.mypurchase.cancelled', compact('orders'));
+    }
+
+
+    //updateOrderStatus
+
+    public function receiveOrder(Request $request) {
+        if($request->has('order-receive')){
+            $group_id = $request->input('order-receive');
+            Order::where('group_id', $group_id)->update(['status' => 'Received']);
+            return back()->with('message', 'Item has been Received!');
+        }
     }
 
 
@@ -316,6 +338,38 @@ class UserController extends Controller
         return view('seller.seller-finance-dashboard', [
             'seller' => $seller,
             'listings' => $listings,
+        ]);
+    }
+
+    //Show Seller Shipment Dashboard
+    public function showSellerShipmentDashboard($sellerId, Request $request) {
+        $sellerId = auth()->user()->seller->id;
+        $seller = Seller::find($sellerId);
+        
+
+        if (!$seller) {
+            // Handle the case when the seller is not found
+            return back()->with(['message' => 'Seller not found']);
+        }
+
+        $orders = Order::whereHas('listing', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        })->get();
+
+        $orderItem = $orders->first();
+
+
+        //update status
+        if($request->has('group_id')){
+            $group_id = $request->input('group_id');
+            Order::where('group_id', $group_id)->update(['status' => 'Shipped']);
+            return redirect('/sellers/dashboard/{seller}/shipment')->with('message', 'Item has been shipped!');
+        }
+
+        return view('seller.seller-shipment-dashboard', [
+            'seller' => $seller,
+            'orders' => $orders,
+            'orderItem' => $orderItem,
         ]);
     }
 }

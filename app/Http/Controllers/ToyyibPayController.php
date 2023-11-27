@@ -112,7 +112,7 @@ class ToyyibPayController extends Controller
             PendingOrder::where('group_id', $group_id)->update(['status' => 'Pending']);
     
             return redirect('/')->with('message', 'Payment unsuccessful!');
-        }
+        } 
     } else {
         return redirect('/')->with('message', 'Group ID not found.');
     }
@@ -122,4 +122,6 @@ class ToyyibPayController extends Controller
         $response = request()->all(['refno', 'status', 'reason', 'billcode', 'order_id', 'amount']);
         return redirect('/')->with('message', 'Payment successful!');
     }
+
+
 }

@@ -72,7 +72,7 @@ Route::delete('/cart/remove/{item}', [ListingController::class, 'destroyCart'])-
 Route::post('/checkout', [ToyyibPayController::class, 'checkout'])->middleware('auth');
 
 //pending
-Route::post('/pending', [ListingController::class, 'pending'])->middleware('auth');
+Route::post('/pending', [ToyyibPayController::class, 'pending'])->middleware('auth');
 
 //Toyyibpay Create Bill
 Route::get('/toyyibpay', [ToyyibPayController::class, 'createBill'])->name('toyyibpay-create');
@@ -149,7 +149,14 @@ Route::get('/sellers/dashboard/{seller}/order', [UserController::class, 'showSel
 //Show Seller Finance Dashboard
 Route::get('/sellers/dashboard/{seller}/finance', [UserController::class, 'showSellerFinanceDashboard'])->middleware('auth');
 
+//Show Seller Shipment Dashboard
+Route::get('/sellers/dashboard/{seller}/shipment', [UserController::class, 'showSellerShipmentDashboard'])->middleware('auth');
 
+
+
+
+//Update ship status
+Route::post('/ship',[ListingController::class, 'updateStatus'])->middleware('auth');
 
 
 //Show To Pay Section
@@ -166,6 +173,9 @@ Route::get('/completed', [UserController::class, 'showCompleted'])->name('comple
 
 //Show Cancelled Section
 Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancel')->middleware('auth');
+
+//Show Cancelled Section
+Route::get('/receive', [UserController::class, 'receiveOrder'])->name('cancel')->middleware('auth');
 
 
 
