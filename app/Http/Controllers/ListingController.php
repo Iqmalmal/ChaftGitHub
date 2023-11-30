@@ -76,20 +76,45 @@ class ListingController extends Controller
 
         $listingId = $listing->id;
 
+        $colours = [];
+        $sizes = [];
+        $capacities = [];
+        $stocks = [];
+
+        // Loop through the variant fields dynamically (assuming a maximum of 3 variants)
+        for ($i = 1; $i <= 3; $i++) {
+            // Gather variant data
+            $colour = $request->input('colour_' . $i);
+            $size = $request->input('size_' . $i);
+            $capacity = $request->input('capacity_' . $i);
+            $stock = $request->input('stock_' . $i);
+
+            // Check if any of the fields are not empty before adding to the respective arrays
+            if ($colour) {
+                $colours[] = $colour;
+            }
+            if ($size) {
+                $sizes[] = $size;
+            }
+            if ($capacity) {
+                $capacities[] = $capacity;
+            }
+            if ($stock) {
+                $stocks[] = $stock;
+            }
+        }
+
         $productVariantData = $request->validate([
             'colour_1' => 'nullable',
-            'colour_2' => 'nullable',
-            'colour_3' => 'nullable',
             'size_1' => 'nullable',
-            'size_2' => 'nullable',
-            'size_3' => 'nullable',
             'capacity_1' => 'nullable',
-            'capacity_2' => 'nullable',
-            'capacity_3' => 'nullable',
             'stock_1' => 'nullable',
-            'stock_2' => 'nullable',
-            'stock_3' => 'nullable',
         ]);
+
+
+        $productVariantData['colour_1'] = json_encode($colours);
+        $productVariantData['size_1'] = json_encode($sizes);
+        $productVariantData['capacity_1'] = json_encode($capacities);
 
         $productVariantData['product_id'] = $listingId;
         ProductVariant::create($productVariantData);
