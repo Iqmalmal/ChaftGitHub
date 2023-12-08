@@ -197,7 +197,7 @@ color: #069187;
                 </a>
             </div>
             <div class="item">
-                <a href="/?tag=Fasion">
+                <a href="/?tag=Fashion">
                     <img src="images/fashion.jpeg" alt=""><br>
                     <div class="image-text" style="font-size: 1.5rem; ">Fashion</div>
                 </a>

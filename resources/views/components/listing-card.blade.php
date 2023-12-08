@@ -16,6 +16,11 @@
       <div class="text-lg mt-4">
         <i class="fa-solid fa-location-dot"></i> {{$listing->location}}
       </div>
+      <br>
+      <div>
+        <a href="/listings/{{$listing->id}}"><button class="bg-cyan-500 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black font-bold ml-96">More Info</button></a>
+        {{-- <button class="bg-cyan-500 text-white rounded w-48 h-15 py-2 px-4 hover:bg-black font-bold">Add to cart</button> --}}
+      </div>
     </div>
   </div>
 </x-card>
