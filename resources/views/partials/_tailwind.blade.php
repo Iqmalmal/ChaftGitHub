@@ -6,7 +6,7 @@
             colors: {
               laravel: '#8EDAD8',
               laravelHover: '#2D8A88',
-              register: '#D1EAF0'
+              register: '#D1EAF0',
               profileBtn: '#5cb4f2'
             },
           },

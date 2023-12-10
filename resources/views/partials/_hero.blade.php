@@ -11,12 +11,16 @@
     </p>
     <div>
       @auth
+		@if(\App\Models\Seller::where('user_id', auth()->id())->exists())
       <a href="/listings/create"
         class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">Sell Your Item Now!</a>
-      @else
+		@else
+		<a href="/sellerRegister"
+        class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">Sell Your Item Now!</a>
+        @endif
+    @else	
       <a href="/register"
-        class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">Sign
-        Up to Sell Item</a>
+        class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">SignUp to Sell Item!</a>
       @endauth
     </div>
   </div>

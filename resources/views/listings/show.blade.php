@@ -133,6 +133,9 @@
           <a href="/sellers/{{$sellerListings->id ?? ''}}"><p class="product-short-des">{{$listing->sellerName}}</p></a>
           <span class="product-price">RM{{$listing->price}}</span>
           <br>
+          
+          <span class="product-price">Stock: {{$listing->stock}}</span>
+          <br><br>
 
 
           <!-- Add to cart form -->
@@ -147,24 +150,38 @@
               <span>Colour:</span>
               <div>
                 <select name="variant-select" id="variant-colour">
-                @foreach ($productVariantData as $variant)
-                  <option value="-">-</option>
-                  @foreach([$productVariantData->first()->colour_1, $productVariantData->first()->colour_2, $productVariantData->first()->colour_3] as $color)
-                    <option value="{{$color}}">{{$color}}</option>
+                  @php
+                    $firstIteration = true;
+                  @endphp
+
+                  @foreach ($productVariantData as $variant)
+                    
+                    @foreach(explode(',', str_replace(['[', ']', '"'], '', $productVariantData->first()->colour_1)) as $color)
+                      <option value="{{$color}}" @if($firstIteration) selected @endif>{{$color}}</option>
+                        @php
+                          $firstIteration = false;
+                        @endphp
+                    @endforeach
                   @endforeach
-                @endforeach
-              </select>
-            </div>
+                </select>
+              </div>
               
               <br>
               
             <span>Size:</span>
             <div>
               <select name="variant-select" id="variant-size">
+                @php
+                  $firstIteration = true;
+                @endphp
+
                 @foreach ($productVariantData as $variant)
-                  <option value="-">-</option>
-                  @foreach([$productVariantData->first()->size_1, $productVariantData->first()->size_2, $productVariantData->first()->size_3] as $size)
-                    <option value="{{$size}}">{{$size}}</option>
+                  
+                  @foreach(explode(',', str_replace(['[', ']', '"'], '', $productVariantData->first()->size_1)) as $size)
+                    <option value="{{$size}}" @if($firstIteration) selected @endif>{{$size}}</option>
+                    @php
+                      $firstIteration = false;
+                    @endphp
                   @endforeach
                 @endforeach
               </select>
@@ -175,11 +192,18 @@
             <span>Capacity:</span>
             <div>
               <select name="variant-select" id="variant-capacity">
+                @php
+                  $firstIteration = true;
+                @endphp
+
                 @foreach ($productVariantData as $variant)
-                  <option value="-">-</option>
+                  
                   @if (!empty($productVariantData->first()->capacity_1))
-                    @foreach([$productVariantData->first()->capacity_1, $productVariantData->first()->capacity_2, $productVariantData->first()->capacity_3] as $capacity)
-                      <option value="{{$capacity}}">{{$capacity}}</option>
+                    @foreach(explode(',', str_replace(['[', ']', '"'], '', $productVariantData->first()->capacity_1)) as $capacity)
+                      <option value="{{$capacity}}" @if($firstIteration) selected @endif>{{$capacity}}</option>
+                      @php
+                        $firstIteration = false;
+                      @endphp
                     @endforeach
                   @endif
                 @endforeach
@@ -187,7 +211,7 @@
             </div>
 
             @else
-              <span> empty </span>
+              <span> No Variant Available </span>
             @endif
           </div>
         </div>
