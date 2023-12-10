@@ -97,7 +97,7 @@ class ToyyibPayController extends Controller
                 'variant' => $pendingOrder->variant,
                 'images' => $pendingOrder->images,
                 'totalPrice' => $pendingOrder->totalPrice,
-                'status' => ' Paid '
+                'status' => 'Paid'
                 ]);
                 
                 Order::create($orderItem);

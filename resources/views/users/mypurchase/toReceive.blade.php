@@ -1,3 +1,7 @@
+@php
+use App\Models\Order;
+@endphp 
+
 <x-profile-nav/>
 @include('partials._myPurchase');
 @include('partials._tailwind');
@@ -392,12 +396,18 @@
               <td style="width: 70%; font-size: 25px; font-weight: 700;">Product Name: {{$order->product_name}} </td>
               <td rowspan="3" >
                 
-                <a href="mailto:{{$email->email}}?subject=Chaft: {{$email->product_name}} Shipment&body=Hello, what is the shipment status for {{$email->product_name}}?"><button class="bg-blue-600 text-white rounded w-30 h-10 py-2 px-4 hover:bg-black font-bold " style="border: 1px solid black; ">Contact Seller</button></a>
+                <a href="mailto:{{$email->email}}?subject=Chaft: {{$email->product_name}} Shipment&body=Hello, what is the shipment status for {{$email->product_name}}?"><button class="bg-blue-600 text-white rounded w-30 h-15 py-2 px-4 hover:bg-black font-bold " style="border: 1px solid black; ">Contact Seller</button></a>
                 
+
                 <form action="/receive" method="GET">
                   @csrf
+
+                  @if (Order::where('group_id', $order->group_id)->value('status') == 'Shipped')
                   <button class="bg-white-600 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">Order Received</button>
                   <input type="hidden" name="order-receive" value="{{$order->group_id}}">
+                  @else
+
+                  @endif
                 </form>
               </td>
             </tr>
@@ -436,6 +446,5 @@
         sidebar.classList.toggle("close");
       });
     </script>
-    
   </body>
 </html>
