@@ -333,13 +333,6 @@
             <p class="text-red-500 text-xs mt-1">{{$message}}</p>
           @enderror
 
-          {{-- <label for="phone">Phone</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-          /> --}}
         </fieldset>
 
         <button type="submit" value="Save" class="bg-sky-600 text-black rounded py-4 px-4 mt-2 hover:bg-sky-400 inline-block"><b>Update</b></button>
@@ -359,3 +352,18 @@
     </script>
   </body>
 </html>
+
+<script>
+// Add an event listener to the submit button
+document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+  // Prevent the default form submission
+  event.preventDefault();
+
+  // Get the input value and capitalize it
+  let blockInput = document.getElementById('name');
+  blockInput.value = blockInput.value.toUpperCase();
+
+  // Submit the form
+  event.target.closest('form').submit();
+});
+</script>

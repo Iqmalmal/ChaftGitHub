@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Listing;
@@ -111,12 +112,12 @@ class UserController extends Controller
 
 
     // Update Profile
-    public function updateProfile(Request $request, User $user) {
+    public function updateProfile( Request $request) {
         $formFields = $request->validate([
             'name' => ['min:3'],
             'course' => ['min:3'],
             'semester' => ['min:1'],
-            'block' => ['min:1' , 'max:2'],
+            'block' => ['min:1' , 'max:2', 'regex:/^A[1-7]$/'],
             'unit' => ['min:1', 'max:3','regex:/^\d+-\d+$/'],
         ], [
             'unit.regex' => 'The unit field must be in the format of number-number. Example: 1-2, 1-3, 1-4',

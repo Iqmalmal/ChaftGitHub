@@ -23,12 +23,6 @@ return new class extends Migration
             $table->string('capacity_1')->nullable();
             $table->string('capacity_2')->nullable();
             $table->string('capacity_3')->nullable();
-            $table->integer('stock_1')->nullable();
-            $table->integer('stock_2')->nullable();
-            $table->integer('stock_3')->nullable();
-            $table->string('image_1')->nullable();
-            $table->string('image_2')->nullable();
-            $table->string('image_3')->nullable();
             $table->timestamps();
         });
     }

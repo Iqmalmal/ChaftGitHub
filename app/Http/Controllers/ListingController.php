@@ -52,6 +52,7 @@ class ListingController extends Controller
             'location' => 'required',
             'price' => 'required',
             'tags' => 'required',
+            'stock' => ['required', 'min:1'],
             'description' => 'required'
         ]);
 
@@ -82,7 +83,7 @@ class ListingController extends Controller
         $stocks = [];
 
         // Loop through the variant fields dynamically (assuming a maximum of 3 variants)
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             // Gather variant data
             $colour = $request->input('colour_' . $i);
             $size = $request->input('size_' . $i);
@@ -108,7 +109,6 @@ class ListingController extends Controller
             'colour_1' => 'nullable',
             'size_1' => 'nullable',
             'capacity_1' => 'nullable',
-            'stock_1' => 'nullable',
         ]);
 
 
@@ -124,39 +124,87 @@ class ListingController extends Controller
 
     // Show Edit Form
     public function edit(Listing $listing) {
-        return view('listings.edit', ['listing' => $listing]);
+        return view('listings.edit', [
+            'listing' => $listing,
+            'productVariantData' => $listing->productVariants
+        ]);
     }
 
     // Update Listing Data
-public function update(Request $request, Listing $listing) {
-    // Make sure logged in user is the owner
-    if ($listing->seller_id != auth()->id()) {
-        abort(403, 'Unauthorized Action');
-    }
-
-    $formFields = $request->validate([
-        'product_name' => 'required',
-        'location' => 'required',
-        'price' => 'required',
-        'tags' => 'required',
-        'description' => 'required'
-    ]);
-
-    if ($request->hasFile('images')) {
-        $imagePaths = [];
-
-        foreach ($request->file('images') as $image) {
-            $imagePath = $image->store('images', 'public');
-            $imagePaths[] = $imagePath;
+    public function update(Request $request, Listing $listing) {
+        // Make sure logged in user is the owner
+        if ($listing->seller_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
         }
 
-        $formFields['images'] = json_encode($imagePaths);
+        $formFields = $request->validate([
+            'product_name' => 'required',
+            'location' => 'required',
+            'price' => 'required',
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('images', 'public');
+                $imagePaths[] = $imagePath;
+            }
+
+            $formFields['images'] = json_encode($imagePaths);
+        }
+
+        $listing->update($formFields);
+
+
+        //update product variant
+        $listingId = $listing->id;
+
+        $colours = [];
+        $sizes = [];
+        $capacities = [];
+        $stocks = [];
+
+        // Loop through the variant fields dynamically
+        for ($i = 1; $i <= 10; $i++) {
+            // Gather variant data
+            $colour = $request->input('colour_' . $i);
+            $size = $request->input('size_' . $i);
+            $capacity = $request->input('capacity_' . $i);
+            $stock = $request->input('stock_' . $i);
+
+            // Check if any of the fields are not empty before adding to the respective arrays
+            if ($colour) {
+                $colours[] = $colour;
+            }
+            if ($size) {
+                $sizes[] = $size;
+            }
+            if ($capacity) {
+                $capacities[] = $capacity;
+            }
+            if ($stock) {
+                $stocks[] = $stock;
+            }
+        }
+
+        $productVariantData = $request->validate([
+            'colour_1' => 'nullable',
+            'size_1' => 'nullable',
+            'capacity_1' => 'nullable',
+        ]);
+
+
+        $productVariantData['colour_1'] = json_encode($colours);
+        $productVariantData['size_1'] = json_encode($sizes);
+        $productVariantData['capacity_1'] = json_encode($capacities);
+        
+        $listing->productVariants()->update($productVariantData);
+
+        return back()->with('message', 'Listing updated successfully!');
     }
-
-    $listing->update($formFields);
-
-    return back()->with('message', 'Listing updated successfully!');
-}
 
 
     // Delete Listing

@@ -7,16 +7,6 @@
 
     <form method="POST" action="/listings" enctype="multipart/form-data">
       @csrf
-    
-      <!-- <div class="mb-6">
-        <label for="seller" class="inline-block text-lg mb-2">Seller Name</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="seller" placeholder="Example: John Doe"
-          value="{{old('seller')}}" />
-
-        @error('seller')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div> -->
 
       <div class="mb-6">
         <label for="product_name" class="inline-block text-lg mb-2">Product name</label>
@@ -38,17 +28,6 @@
         @enderror
       </div>
 
-      <!-- <div class="mb-6">
-        <label for="email" class="inline-block text-lg mb-2">
-          Contact Email
-        </label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="email" placeholder="john.doe@student.gmi.edu.my" value="{{old('email')}}" />
-
-        @error('email')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div> -->
-
       <div class="mb-6">
         <label for="price" class="inline-block text-lg mb-2">
           Price
@@ -65,6 +44,7 @@
         <x-card>
             <div id="variantContainer">
                 <!-- Initial variant row -->
+                <h1 class="text-lg">Product Variant &lpar;Optional &rpar;</h1> <br>
                 <div class="variant-row flex">
                   <!-- variant 1 -->
                   <div class="flex">
@@ -103,18 +83,6 @@
                       <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                       @enderror
                     </div>
-
-                    <div class="mb-6">
-                      <label for="stock_1" class="inline-block text-lg mb-2">
-                        Stock 1
-                      </label>
-                      <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock_1" placeholder="10"
-                        value="{{old('stock_1')}}" />
-
-                      @error('stock_1')
-                      <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                      @enderror
-                    </div>
                   </div>
                 </div>
             </div>
@@ -123,6 +91,17 @@
     </div>
     
 
+      <div class="mb-6">
+        <label for="stock" class="inline-block text-lg mb-2">
+          Stock
+        </label>
+        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock" placeholder="10"
+          value="{{old('stock')}}" />
+
+        @error('stock')
+        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+        @enderror
+      </div>
       
       <div class="mb-6">
         <label for="tags" class="inline-block text-lg mb-2">
@@ -183,9 +162,7 @@
           const newVariantRow = document.createElement('div');
           newVariantRow.classList.add('variant-row', 'flex');
           newVariantRow.innerHTML = `
-              <!-- Variant ${variantCount} -->
 
-              
               <div class="mb-6">
                   <label for="colour_${variantCount}" class="inline-block text-lg mb-2">
                       Variant ${variantCount}
@@ -223,21 +200,6 @@
                 value="{{old('capacity_${variantCount}')}}" />
 
               @error('capacity_${variantCount}')
-              <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-              @enderror
-            </div>
-
-
-
-            
-            <div class="mb-6">
-              <label for="stock_${variantCount}" class="inline-block text-lg mb-2">
-                Stock ${variantCount}
-              </label>
-              <input type="text" class="border border-gray-200 rounded p-2 w-full" name="stock_${variantCount}" placeholder="Stock ${variantCount}"
-                value="{{old('stock_${variantCount}')}}" />
-
-              @error('stock_${variantCount}')
               <p class="text-red-500 text-xs mt-1">{{$message}}</p>
               @enderror
             </div>
