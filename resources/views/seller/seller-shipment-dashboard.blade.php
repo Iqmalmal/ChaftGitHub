@@ -198,13 +198,6 @@
         </li>
 
         <li class="active">
-          <a href="/sellers/dashboard/{seller}/order">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
           <a href="/sellers/dashboard/{seller}/shipment">
             <i class="fa-solid fa-truck-fast"></i>
             <span>Shipment</span>
@@ -236,19 +229,11 @@
       </div>
 
       <div class="status-section">
-{{--         <ul class="status-list">
-          <li><span></span>All</li>
-          <li><span></span>Unpaid</li>
-          <li><span></span>To Ship</li>
-          <li><span></span>Shipping</li>
-          <li><span></span>Completed</li>
-          <li><span></span>Cancellation</li>
-          <li><span></span>Return/Refund</li>
-        </ul> --}}
 
         <table>
           <tr>
             <th>Recipient</th>
+            <th>Address</th>
             <th>Product</th>
             <th>Order Total</th>
             <th>Status</th>
@@ -257,14 +242,22 @@
           @foreach($orders as $order)
           <tr>
             <td>{{$order->recipient}}</td>
+            <td>{{$order->user->block}}-{{$order->user->unit}}</td>
             <td>{{$order->product_name}}</td>
             <td>RM{{$order->totalPrice}}</td>
             <td>{{$order->status}}</td>
             <td>
               <form action="/sellers/dashboard/{seller}/shipment" method="GET">
 
-                @if($order->status == 'Received' || $order->status == 'Cancelled' || $order->status == 'Shipped')
+                @if($order->status == 'Received')
+                <h1>Product has been received</h1>
 
+                @elseif($order->status == 'Cancelled')
+                <h1>Product has been cancelled</h1>
+
+                @elseif($order->status == 'Shipped')
+                <h1>Product has been shipped</h1>
+                
                 @else
                   <button class="bg-blue-500 text-white rounded w-30 h-10 py-2 px-4 hover:bg-black font-bold">Ship Product</button>
                   <input type="hidden" name="group_id" value="{{$order->group_id}}">

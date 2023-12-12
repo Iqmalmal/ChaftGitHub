@@ -318,41 +318,17 @@ class UserController extends Controller
         ]);
     }
 
-    //Show Seller Order Dashboard
-    public function showSellerOrderDashboard($sellerId){
-        $sellerId = auth()->user()->seller->id;
-        $seller = Seller::find($sellerId);
-        $listings = Listing::where('seller_id', $sellerId);
-        $order = PendingOrder::whereHas('listing', function ($query) use ($sellerId) {
-            $query->where('seller_id', $sellerId);
-        })->get();
-
-        if (!$seller) {
-            // Handle the case when the seller is not found
-            return back()->with(['message' => 'Seller not found']);
-        }
-
-        $listings = $listings->get();
-
-        return view('seller.seller-order-dashboard', [
-            'seller' => $seller,
-            'listings' => $listings,
-            'order' => $order,
-        ]);
-    }
-
     //Show Seller Finance Dashboard
     public function showSellerFinanceDashboard($sellerId) {
         $sellerId = auth()->user()->seller->id;
         $seller = Seller::find($sellerId);
-        $listings = Listing::where('seller_id', $sellerId);
+        $listings = Listing::where('seller_id', $sellerId)->get();
+        
 
         if (!$seller) {
             // Handle the case when the seller is not found
             return back()->with(['message' => 'Seller not found']);
         }
-
-        $listings = $listings->get();
 
         return view('seller.seller-finance-dashboard', [
             'seller' => $seller,
@@ -363,6 +339,7 @@ class UserController extends Controller
     //Show Seller Shipment Dashboard
     public function showSellerShipmentDashboard($sellerId, Request $request) {
         $sellerId = auth()->user()->seller->id;
+
         $seller = Seller::find($sellerId);
         
 
@@ -371,9 +348,11 @@ class UserController extends Controller
             return back()->with(['message' => 'Seller not found']);
         }
 
-        $orders = Order::whereHas('listing', function ($query) use ($sellerId) {
+        
+
+        $orders = Order::whereHas('listing', function ($query) use ($sellerId){
             $query->where('seller_id', $sellerId);
-        })->get();
+        })->with('user')->get();
 
         $orderItem = $orders->first();
 

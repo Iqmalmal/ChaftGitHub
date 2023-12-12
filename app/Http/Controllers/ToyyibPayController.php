@@ -86,6 +86,12 @@ class ToyyibPayController extends Controller
             $pendingOrders = PendingOrder::where('group_id', $group_id)->get();
 
             foreach ($pendingOrders as $pendingOrder) {
+                $listing = Listing::find($pendingOrder->product_id);
+                $listing->decrement('stock', $pendingOrder->quantity);
+                $listing->increment('sales', $pendingOrder->quantity);
+            }
+            
+            foreach ($pendingOrders as $pendingOrder) {
                 $orderItem = ([
                 'user_id' => $pendingOrder->user_id,
                 'product_id' => $pendingOrder->product_id,
