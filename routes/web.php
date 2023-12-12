@@ -186,3 +186,12 @@ use App\Http\Middleware\AdminMiddleware;
 
 // Show Admin Dashboard
 Route::get('/admin', [UserController::class, 'showAdmin'])->name('admin')->middleware(AdminMiddleware::class);
+
+
+
+//Other
+
+//About US
+Route::get('/about', function () {
+    return view('other.about');
+});
