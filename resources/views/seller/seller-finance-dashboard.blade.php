@@ -193,13 +193,6 @@
         </li>
 
         <li class="active">
-          <a href="/sellers/dashboard/{seller}/order">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
           <a href="/sellers/dashboard/{seller}/shipment">
             <i class="fa-solid fa-truck-fast"></i>
             <span>Shipment</span>
@@ -230,29 +223,27 @@
         </div>
       </div>
 
-      {{-- <div class="add-section"></div> --}}
-
       <div class="status-section">
-        {{-- <ul class="status-list">
-          <li><span></span>All</li>
-          <li><span></span>Order Income</li>
-          <li><span></span> Withdrawals</li>
-          <li><span></span>Refund from Order</li>
-        </ul> --}}
-
         <table>
           <tr>
             <th>Product Name</th>
             <th>Type/Description</th>
-            <th>Amount</th>
-            <th>Stock</th>
+            <th>Sales</th>
+            <th>Income</th>
           </tr>
           @foreach($listings as $listing)
+
+          @php
+
+          $totalPrice = $listing->price * $listing->sales;
+
+          @endphp
+
           <tr>
             <td>{{$listing->product_name}}</td>
             <td>{{$listing->description}}</td>
-            <td>RM {{$listing->price}}</td>
-            <td>300</td>
+            <td>{{$listing->sales}}</td>
+            <td>RM {{$totalPrice}}</td>
           </tr>
           @endforeach
         </table>

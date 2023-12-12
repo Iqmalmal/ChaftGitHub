@@ -313,13 +313,6 @@
         </li>
 
         <li class="active">
-          <a href="/sellers/dashboard/{seller}/order">
-            <i class="fa-solid fa-box"></i>
-            <span>Orders</span>
-          </a>
-        </li>
-
-        <li class="active">
           <a href="/sellers/dashboard/{seller}/shipment">
             <i class="fa-solid fa-truck-fast"></i>
             <span>Shipment</span>
@@ -350,37 +343,6 @@
         </div>
       </div>
 
-      {{-- <div class="add-section">
-        <div class="pStock">
-          <span
-            >Product Name :
-            <form action="/sellers/{{$seller->id}}" method="GET">
-              @csrf
-              <input type="text" placeholder="Chips" />
-            </form>
-          </span>
-
-          <div class="stock">
-            <span>Stock:</span>
-            <input type="number" id="minQuantity" placeholder="Min" />
-
-            <input type="number" id="maxQuantity" placeholder="Max" />
-          </div>
-        </div>
-
-        <div class="wrapper">
-          <span>Categories</span>
-          <div class="select-btn">
-            <span>Options</span>
-            <i class="fa-solid fa-angle-down"></i>
-          </div>
-
-          <div class="content">
-            <ul class="options"></ul>
-          </div>
-        </div>
-      </div> --}}
-
       <div class="status-section">
         <ul class="status-list">
           <li><span></span>All</li>
@@ -395,7 +357,6 @@
             <th>Variations</th>
             <th>Price</th>
             <th>Stock</th>
-            <th>Sales</th>
             <th>Action</th>
           </tr>
 
@@ -409,15 +370,17 @@
                       <td>{{$listing->product_name}}</td>
                       <td>{{$listing->description}}</td>
                       <td>RM {{$listing->price}}</td>
-                      <td>300</td>
-                      <td>2</td>
+                      <td>{{$listing->stock}}</td>
                       <td>
-                          <button class="edit"><a href="/listings/{{$listing->id}}/edit">Edit</a></button>
-                          <form method="POST" action="/listings/{{$listing->id}}">
-                              @csrf
-                              @method('DELETE')
-                              <button class="delete">Delete</button>
-                          </form>
+                        <form action="/listings/{{$listing->id}}/edit">
+                          <button class="edit">Edit</button>
+                        </form>
+                        <br>
+                        <form method="POST" action="/listings/{{$listing->id}}">
+                          @csrf
+                            @method('DELETE')
+                            <button class="delete">Delete</button>
+                        </form>
                       </td>
                   </tr>
               @endforeach
