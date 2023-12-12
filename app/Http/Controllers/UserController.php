@@ -168,8 +168,9 @@ class UserController extends Controller
     public function showToReceive(User $user, PendingOrder $pendingOrder, Order $orderItem) {
         $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
         $id = auth()->id();
-        $orderItem = Order::where('user_id', $id)->get();
+        $orderItem = Order::where('user_id', $id)->where('status', 'Shipped')->orWhere('status', 'Paid')->get();
 
+        
         //get listing for email
         $email = Listing::all()->first();
         return view('users.mypurchase.toReceive', compact('orders', 'orderItem', 'email'));

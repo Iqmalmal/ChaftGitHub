@@ -379,7 +379,7 @@ use App\Models\Order;
         <table class="m-12 p-4" style="margin-left: 50px; padding:15px; width: 95%; align-items: center;">
           <tbody>
             <tr>
-              <td rowspan="4"><img style="max-height: 30vh; padding-right:15px" class="w-30" src="{{ $imagePath }}"
+              <td rowspan="4"><img style="max-height: 50vh; padding-right:15px" class="w-30" src="{{ $imagePath }}"
                 alt="Product Image"></td>
               <td style="width: 70%; font-size: 25px; font-weight: 700;">Product Name: {{$order->product_name}} </td>
               <td rowspan="3" >

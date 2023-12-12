@@ -401,7 +401,7 @@
               </td>
             </tr>
             <tr>
-              <td style="width: 70% font-size: 20px; font-weight: 700;">Product Variant: {{$order->status}}</td>
+              <td style="width: 70% font-size: 20px; font-weight: 700;">Product Status: {{$order->status}}</td>
             </tr>
             <tr>
               <td style="width: 70% font-size: 20px; font-weight: 700;">Product Variant: {{$order->variant}}</td>

@@ -1,3 +1,7 @@
+@php
+  use App\Models\Order;
+@endphp
+
 <x-profile-nav/>
 @include('partials._myPurchase');
 @include('partials._tailwind');
@@ -399,20 +403,25 @@
                 <form action="/receiveOrder" method="GET">
                   @csrf
 
-                  @if (Order::where('group_id', $order->group_id)->value('status') == 'Shipped')
+                  @if ($order->status ==  'Shipped')
                   <button class="bg-white-600 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">Order Received</button>
                   <input type="hidden" name="order-receive" value="{{$order->group_id}}">
+                
+                  @else
+
+                  @endif
+
                 </form>
 
                 <form action="/cancelOrder" method="GET">
                 @csrf
 
-                  @if (Order::where('id', $order->id)->value('status') == 'Shipped')
+                  @if ($order->status ==  'Shipped')
                     
                   @else
                   <button class="bg-red-600 text-white rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">Cancel</button>
                     <input type="hidden" name="order-cancel" value="{{$order->id}}">
-                    @endif
+                  @endif
                 
                 </form>
               </td>
