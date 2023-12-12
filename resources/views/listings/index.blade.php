@@ -11,7 +11,9 @@
     @unless(count($listings) == 0)
 
     @foreach($listings as $listing)
-    <x-listing-card :listing="$listing" />
+      @if($listing->stock > 0)
+        <x-listing-card :listing="$listing" />
+      @endif
     @endforeach
 
     @else
