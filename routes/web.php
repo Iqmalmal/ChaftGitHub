@@ -117,7 +117,7 @@ Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
 Route::get('/address', [UserController::class, 'showAddress'])->middleware('auth');
 
 //Show My Purchase Section
-Route::get('/mypurchase', [UserController::class, 'showMyPurchase'])->middleware('auth');
+Route::get('/toReceive', [UserController::class, 'showMyPurchase'])->middleware('auth');
 
 //Update Profile
 Route::post('/profile/update', [UserController::class, 'updateProfile'])->middleware('auth');
@@ -172,10 +172,13 @@ Route::get('/toShip', [UserController::class, 'showToShip'])->name('toShip')->mi
 Route::get('/completed', [UserController::class, 'showCompleted'])->name('completed')->middleware('auth');
 
 //Show Cancelled Section
-Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancel')->middleware('auth');
+Route::get('/cancelled', [UserController::class, 'showCancelled'])->name('cancelled')->middleware('auth');
 
-//Show Cancelled Section
-Route::get('/receive', [UserController::class, 'receiveOrder'])->name('cancel')->middleware('auth');
+//Update status to receive
+Route::get('/receiveOrder', [UserController::class, 'receiveOrder'])->name('receiveOrder')->middleware('auth');
+
+//Update Status to cancel
+Route::get('/cancelOrder', [UserController::class, 'cancelOrder'])->name('cancelOrder')->middleware('auth');
 
 
 

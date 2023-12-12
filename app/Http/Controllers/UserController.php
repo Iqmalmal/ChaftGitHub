@@ -153,7 +153,7 @@ class UserController extends Controller
             return $order->price * $order->quantity;
         });
 
-        return view('users.mypurchase.toPay', compact('orders', 'totalPrice'));
+        return view('users.mypurchase.toReceive', compact('orders', 'totalPrice'));
     }
 
     //Show To Pay Section
@@ -170,8 +170,11 @@ class UserController extends Controller
     public function showToReceive(User $user, PendingOrder $pendingOrder, Order $orderItem) {
         $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
         $id = auth()->id();
-        $orderItem = Order::where('user_id', $id)->whereIn('status', ['Paid', 'Shipped'])->get();
 
+        $orderItem = Order::where('user_id', $id)->where('status', 'Shipped')->orWhere('status', 'Paid')->get();
+
+
+        
         //get listing for email
         $email = Listing::all()->first();
         return view('users.mypurchase.toReceive', compact('orders', 'orderItem', 'email'));
@@ -189,13 +192,18 @@ class UserController extends Controller
         
         $id = auth()->id();
         $orderItem = Order::where('user_id', $id)->where('status', 'Received')->get();
-        return view('users.mypurchase.completed', compact('orders', 'orderItem'));
+        $email = Listing::all()->first();
+        return view('users.mypurchase.completed', compact('orders', 'orderItem', 'email'));
     }
 
     //Show Cancelled Section
     public function showCancelled(User $user) {
         $orders = auth()->user()->pendingOrder;
-        return view('users.mypurchase.cancelled', compact('orders'));
+        $id = auth()->id();
+        $orderItem = Order::where('user_id', $id)->whereIn('status', ['Cancelled'])->get();
+
+        $email = Listing::all()->first();
+        return view('users.mypurchase.cancelled', compact('orders', 'orderItem', 'email'));
     }
 
 
@@ -206,6 +214,14 @@ class UserController extends Controller
             $group_id = $request->input('order-receive');
             Order::where('group_id', $group_id)->update(['status' => 'Received']);
             return back()->with('message', 'Item has been Received!');
+        }
+    }
+
+    public function cancelOrder(Request $request) {
+        if($request->has('order-cancel')){
+            $id = $request->input('order-cancel');
+            Order::where('id', $id)->update(['status' => 'Cancelled']);
+            return back()->with('message', 'Item has been Cancelled!');
         }
     }
 

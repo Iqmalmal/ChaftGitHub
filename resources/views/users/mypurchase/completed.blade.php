@@ -326,7 +326,7 @@
       padding: 10px 20px;
       border-radius: 5px;
       margin-bottom: 10px;
-      width: calc(20% - 10px);
+      width: 550px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
     .status-item:hover {
@@ -376,6 +376,7 @@
 
     <x-card class="mx-auto mt-5 mr-5 items-center rounded-5 p-20 h-1010 shadow-lg " style="width: 1760px; display:inline-block; margin-left: 85px">  
       @unless($orderItem->isEmpty())
+      <h1 class="text-3xl font-bold">COMPLETED ORDER</h1> <br>
         @foreach($orderItem as $order)
 
         @php
@@ -387,11 +388,12 @@
         <table class="m-12 p-4" style="margin-left: 50px; padding:15px; width: 95%; align-items: center;">
           <tbody>
             <tr>
-              <td rowspan="3"><img style="max-height: 30vh;" class="w-30" src="{{ $imagePath }}"
+              <td rowspan="4"><img style="max-height: 70vh;" class="w-30" src="{{ $imagePath }}"
                 alt="Product Image"></td>
               <td style="width: 70%; font-size: 25px; font-weight: 700;">Product Name: {{$order->product_name}} </td>
               <td rowspan="3" style="font-size: 20px; font-weight: 700;">
-                Price: {{$order->price * $order->quantity}}
+                Price: {{$order->price * $order->quantity}} <br>
+                <a href="mailto:{{$email->email}}?subject=Chaft: {{$email->product_name}} Shipment&body=Hello, what is the shipment status for {{$email->product_name}}?"><button class="bg-blue-600 text-white rounded w-30 h-15 py-2 px-4 hover:bg-black font-bold " style="border: 1px solid black; ">Contact Seller</button></a>
                 <a href="/listings/{{$order->product_id}}">
                   <button class="bg-amber-300 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">View Live Product</button>
                 </a>
@@ -399,10 +401,13 @@
               </td>
             </tr>
             <tr>
+              <td style="width: 70% font-size: 20px; font-weight: 700;">Product Status: {{$order->status}}</td>
+            </tr>
+            <tr>
               <td style="width: 70% font-size: 20px; font-weight: 700;">Product Variant: {{$order->variant}}</td>
             </tr>
             <tr>
-              <td style="width: 70% font-size: 20px; font-weight: 700;">Quantity: {{$order->quantity}}</td>
+              <td style="width: 70% font-size: 20px; font-weight: 700;=">Quantity: {{$order->quantity}}</td>
             </tr>
           </tbody>
           <div class="border border-solid"></div>
