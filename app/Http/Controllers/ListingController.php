@@ -240,39 +240,44 @@ class ListingController extends Controller
 
     // Add to cart
     public function addToCart(Request $request) {
-        $user = auth()->user();
-        $productId = $request->input('listing-id');
-        $productName = $request->input('listing-name');
-        $price = $request->input('listing-price');
-        $variants = $request->input('selected-variants');
-        $quantity = 1; 
 
-        // Serialize the variants to a string for comparison
-        $serializedVariants = implode(', ', $variants);
-
-        // Check if the item already exists in the cart for the user
-        $cartItem = ShoppingCart::where('user_id', $user->id)
-            ->where('product_id', $productId)
-            ->where('variant', $serializedVariants)
-            ->first();
-
-        if ($cartItem) {
-            // Variants are the same, update quantity
-            $cartItem->increment('quantity', $quantity);
+        if(Listing::find($request->input('listing-id'))->stock == 0) {
+            return back()->with('message', 'Item is out of stock!');
         } else {
-            // Variants are different or the item doesn't exist, create a new cart item
-            ShoppingCart::create([
-                'user_id' => $user->id,
-                'product_id' => $productId,
-                'product_name' => $productName,
-                'price' => $price,
-                'quantity' => $quantity,
-                'variant' => $serializedVariants,
-                'images' => Listing::find($productId)->images
-            ]);
-        }
+            $user = auth()->user();
+            $productId = $request->input('listing-id');
+            $productName = $request->input('listing-name');
+            $price = $request->input('listing-price');
+            $variants = $request->input('selected-variants');
+            $quantity = 1; 
 
-        return back()->with('message', 'Added to cart!');
+            // Serialize the variants to a string for comparison
+            $serializedVariants = implode(', ', $variants);
+
+            // Check if the item already exists in the cart for the user
+            $cartItem = ShoppingCart::where('user_id', $user->id)
+                ->where('product_id', $productId)
+                ->where('variant', $serializedVariants)
+                ->first();
+
+            if ($cartItem) {
+                // Variants are the same, update quantity
+                $cartItem->increment('quantity', $quantity);
+            } else {
+                // Variants are different or the item doesn't exist, create a new cart item
+                ShoppingCart::create([
+                    'user_id' => $user->id,
+                    'product_id' => $productId,
+                    'product_name' => $productName,
+                    'price' => $price,
+                    'quantity' => $quantity,
+                    'variant' => $serializedVariants,
+                    'images' => Listing::find($productId)->images
+                ]);
+            }
+
+            return back()->with('message', 'Added to cart!');
+        }      
     }
 
     // Remove an item from the shopping cart
