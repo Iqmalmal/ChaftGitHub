@@ -53,10 +53,18 @@ footer {
 /* Copyright text styles */
 footer p {
     margin-left: 0.5rem; /* Adjust as needed */
+    font-size: 20px; /* Adjust as needed */
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+footer a {
+    margin-left: 28%; /* Adjust as needed */
+    font-size: 20px; /* Adjust as needed */
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 /* Sell button styles */
-footer a {
+ #sellBtn {
     position: absolute;
     top: 33%; /* Adjust as needed */
     right: 1.25rem; /* Adjust as needed */
@@ -127,8 +135,9 @@ footer a {
   @else
   <footer>
     <p>Copyright &copy; 2022, All Rights reserved</p>
+    <a href="/about"> About Us</a>
 
-    <a href="/sellerRegister">Sell</a>
+    <a href="/sellerRegister" id="sellBtn">Sell</a>
   </footer>
   @endif
   

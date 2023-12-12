@@ -78,6 +78,8 @@ class UserController extends Controller
     }
 
 
+    
+
     // Authenticate User
     public function authenticate(Request $request, User $user, studentEmail $email) {
         $formFields = $request->validate([
@@ -168,7 +170,9 @@ class UserController extends Controller
     public function showToReceive(User $user, PendingOrder $pendingOrder, Order $orderItem) {
         $orders = auth()->user()->pendingOrder; // Retrieve the pending orders for the authenticated user
         $id = auth()->id();
+
         $orderItem = Order::where('user_id', $id)->where('status', 'Shipped')->orWhere('status', 'Paid')->get();
+
 
         
         //get listing for email

@@ -406,7 +406,6 @@
                   @if ($order->status ==  'Shipped')
                   <button class="bg-white-600 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">Order Received</button>
                   <input type="hidden" name="order-receive" value="{{$order->group_id}}">
-                
                   @else
 
                   @endif
@@ -464,6 +463,5 @@
         sidebar.classList.toggle("close");
       });
     </script>
-    
   </body>
 </html>
