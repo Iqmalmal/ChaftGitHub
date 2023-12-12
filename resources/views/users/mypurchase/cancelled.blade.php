@@ -1,3 +1,7 @@
+@php
+use App\Models\Order;
+@endphp 
+
 <x-profile-nav/>
 @include('partials._myPurchase');
 @include('partials._tailwind');
@@ -326,7 +330,7 @@
       padding: 10px 20px;
       border-radius: 5px;
       margin-bottom: 10px;
-      width: calc(20% - 10px);
+      width: 550px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
     .status-item:hover {
@@ -341,19 +345,6 @@
       font-size: 18px;
       color: #333;
     }
-
-    /* .box {
-      background-color: white;
-      margin: 0 auto;
-      margin-top: 5px;
-      margin-right: 5px;
-      align-items: center;
-      border-radius: 5px;
-      padding: 20px;
-      width: 1760px;
-      height: 1010px;
-      box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-    } */
 
     #pay-img {
       max-width: 500px;
@@ -375,8 +366,9 @@
     {{-- <div class="bg-white mx-auto mt-5 mr-5 items-center rounded-5 p-20 h-1010 shadow-lg " style="width: 1760px; height: 1010px; display:inline-block; margin-left: 85px"> --}}
 
     <x-card class="mx-auto mt-5 mr-5 items-center rounded-5 p-20 h-1010 shadow-lg " style="width: 1760px; display:inline-block; margin-left: 85px">  
-      @unless($orders->isEmpty())
-        @foreach($orders as $order)
+      @unless($orderItem->isEmpty())
+        <h1 class="text-3xl font-bold">CANCELLED ORDER</h1> <br>
+        @foreach($orderItem as $order)
 
         @php
         $images = json_decode($order->images);
@@ -387,10 +379,21 @@
         <table class="m-12 p-4" style="margin-left: 50px; padding:15px; width: 95%; align-items: center;">
           <tbody>
             <tr>
-              <td rowspan="3"><img style="max-height: 30vh;" class="w-30" src="{{ $imagePath }}"
+              <td rowspan="4"><img style="max-height: 30vh; padding-right:15px" class="w-30" src="{{ $imagePath }}"
                 alt="Product Image"></td>
               <td style="width: 70%; font-size: 25px; font-weight: 700;">Product Name: {{$order->product_name}} </td>
-              <td rowspan="3" style="font-size: 20px; font-weight: 700;">Price: {{$order->price * $order->quantity}}</td>
+              <td rowspan="3" >
+                
+                <a href="mailto:{{$email->email}}?subject=Chaft: {{$email->product_name}} Shipment&body=Hello, an Item about {{$email->product_name}}?"><button class="bg-blue-600 text-white rounded w-30 h-15 py-2 px-4 hover:bg-black font-bold " style="border: 1px solid black; ">Contact Seller</button></a>
+
+                <a href="/listings/{{$order->product_id}}">
+                  <button class="bg-amber-300 text-black rounded w-30 h-15 py-2 px-4 mt-2 hover:bg-black hover:text-white font-bold" style="border: 1px solid black;">View Live Product</button>
+                </a>
+
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 70% font-size: 20px; font-weight: 700;">Product Status: {{$order->status}}</td>
             </tr>
             <tr>
               <td style="width: 70% font-size: 20px; font-weight: 700;">Product Variant: {{$order->variant}}</td>
@@ -406,12 +409,6 @@
 
         <div class="total-price" style="margin-left: 90%">
         </div>
-
-      <form action="toyyibpay" method="GET">
-
-        @csrf
-        <button {{-- class="bg-green-600 text-white rounded py-2 px-4 mt-2 hover:bg-black inline-block" --}} style="background: green; color: white; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; margin-left: 1600px">Pay Now</button>
-      </form>
         @else
 
           <div class="to-pay">
@@ -433,6 +430,5 @@
         sidebar.classList.toggle("close");
       });
     </script>
-    
   </body>
 </html>

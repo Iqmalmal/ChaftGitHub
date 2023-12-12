@@ -216,7 +216,7 @@
             </li>
 
             <li class="nav-link">
-              <a href="/mypurchase">
+              <a href="/toReceive">
                 <i class="bx bx-wallet icon"></i>
                 <span class="text nav-text">My Purchase</span>
               </a>

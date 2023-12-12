@@ -1,13 +1,13 @@
 <div class="container">
-    <h1 class="font-bold text-4xl">Order Status</h1>
+    <h1 class="font-bold text-5xl">Order Status</h1>
     <br>
     <div class="status-container" >
-      <div class="status-item" id="toPay">
+      {{-- <div class="status-item" id="toPay">
         <div class="status-icon">
           <i class="bx bx-cart"></i>
         </div>
         <div class="status-text">To Pay</div>
-      </div>
+      </div> --}}
 
       <div class="status-item" id="toReceive">
         <div class="status-icon">

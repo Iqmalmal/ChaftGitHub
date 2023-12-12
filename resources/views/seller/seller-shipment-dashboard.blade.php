@@ -262,8 +262,13 @@
             <td>{{$order->status}}</td>
             <td>
               <form action="/sellers/dashboard/{seller}/shipment" method="GET">
-                <button class="bg-blue-500 text-white rounded w-30 h-10 py-2 px-4 hover:bg-black font-bold">Shipped</button>
-                <input type="hidden" name="group_id" value="{{$order->group_id}}">
+
+                @if($order->status == 'Received' || $order->status == 'Cancelled' || $order->status == 'Shipped')
+
+                @else
+                  <button class="bg-blue-500 text-white rounded w-30 h-10 py-2 px-4 hover:bg-black font-bold">Ship Product</button>
+                  <input type="hidden" name="group_id" value="{{$order->group_id}}">
+                @endif
               </form>
             </td>
           </tr>
